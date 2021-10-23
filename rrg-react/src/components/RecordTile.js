@@ -29,10 +29,13 @@ const RecordTile = (props) => {
                     {record.favorite && <span className="star-fav">&#9733;</span>}
                 </h2>
                 <h3>{record.artist}</h3>
-                <p>{record.genre}</p>
-                <p>{record.year}</p>
-                <p><a target="_blank" rel="noreferrer" href={record.link}>More Info</a></p>
+                <h4>{record.genre}</h4>
+                <h4>{record.year}</h4>
+                <h4><a target="_blank" rel="noreferrer" href={record.link}>More Info</a></h4>
             </div>
+            {!props.showFooter &&
+                <div><strong>&#9836; ENJOY!! &#9836;</strong></div>
+            }
             {props.showFooter && <div className="tile-footer">
                 <Link to={`/edit-record/${record._id}`} className="btn btn-info btn-sm btn-block">
                     Edit Record

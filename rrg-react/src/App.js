@@ -6,12 +6,14 @@ import RecordManager from './components/RecordManager';
 import AddRecord from './components/AddRecord';
 import EditRecord from './components/EditRecord';
 import RandomRecordGenerator from './components/RandomRecordGenerator';
+import AppHeader from './components/AppHeader';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div>
+          <AppHeader></AppHeader>
           <Route exact path='/' component={RandomRecordGenerator} />
           <Route path='/manage-records' component={RecordManager} />
           <Route path='/add-record' component={AddRecord} />

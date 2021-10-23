@@ -73,19 +73,13 @@ class RecordManager extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <br />
-                            <h2 className="display-4 text-center">Manage Records</h2>
+                            <h1 className="display-5 text-center">Manage Records</h1>
                         </div>
-                        <div className="col-md-11">
-                            <Link to="/" className="btn btn-outline-warning float-left">
-                                Generate a Record!
-                            </Link>
-                            <Link to="/add-record" className="btn btn-outline-warning float-right">
+                        <div className="col-md-12">
+                            <Link to="/add-record" className="btn btn-warning float-right">
                                 + Add New Record
                             </Link>
                             <br />
-                            <br />
-                            <hr />
                         </div>
 
                     </div>

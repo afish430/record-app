@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import RecordTile from './RecordTile';
 
 class RandomRecordGenerator extends Component {
@@ -54,13 +53,11 @@ class RandomRecordGenerator extends Component {
             <div className="RandomRecordGenerator">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Random Record Generator</h1>
-                            <Link to="/manage-records" className="btn btn-outline-warning float-left m-2">
-                                Manage Records
-                            </Link>
+                        <div className="col-md-8 m-auto text-center">
+                            <h1 className="display-5">Random Record Generator</h1>
+                            <br />
                             <button
-                                className="btn btn-info btn-lg btn-block m-2"
+                                className="btn btn-info btn-lg m-2"
                                 onClick={this.generateRecord}
                             >
                                 Generate Record!
@@ -69,9 +66,9 @@ class RandomRecordGenerator extends Component {
                                 <svg viewBox="0 0 400 400">
                                     <g id="record">
                                         <circle r="200" cx="200" cy="200" />
-                                        <circle class="line" r="180" cx="200" cy="200" />
-                                        <circle class="line" r="160" cx="200" cy="200" />
-                                        <circle class="line" r="140" cx="200" cy="200" />
+                                        <circle className="line" r="180" cx="200" cy="200" />
+                                        <circle className="line" r="160" cx="200" cy="200" />
+                                        <circle className="line" r="140" cx="200" cy="200" />
                                         <circle id="label" cx="200" cy="200" r="65" />
                                         <text y="180" x="165">Record Is</text>
                                         <text y="230" x="160">Generating</text>

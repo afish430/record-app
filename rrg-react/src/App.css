@@ -1,28 +1,47 @@
 
 body {
-  background-color: green;
+  background-image: url("./images/wood-background.jpg");
+  background-size:1000px;
+}
+
+.alt-font {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.AppHeader {
+  color: white;
+}
+
+.AppHeader img {
+  width: 125px;
+}
+
+.AppHeader h1 {
+  font-size: 4.5em;
+  margin-top: 10px;
+  text-shadow: 2px 2px 8px black;
 }
 
 .RandomRecordGenerator {
-  background-color: green;
   min-height: 100vh;
   color: white;
 }
 
+.RandomRecordGenerator .btn-lg{
+  width: 200px;
+}
+
 .AddRecord {
-  background-color: green;
   min-height: 100vh;
   color: white;
 }
 
 .EditRecord {
-  background-color: green;
   min-height: 100vh;
   color: white;
 }
 
 .RecordManager {
-  background-color: green;
   height: 100%;
   width: 100%;
   min-height: 100vh;
@@ -44,7 +63,6 @@ body {
   margin: 20px auto;
   padding: 5px;
   background-color: white;
-  /* border-radius: 5px; */
 }
 
 .record-tile-container img {
@@ -56,17 +74,17 @@ body {
   height: 225px;
 }
 
-.record-tile-container a, .record-tile-container a:visited {
-  color: cyan;
+.record-tile-container .desc a, .record-tile-container .desc a:visited {
+  color: darkcyan;
 }
 
 .star-fav {
   float: right;
-  color: yellow;
+  color: goldenrod;
 }
 
 .desc {
-  height: 200px;
+  max-height: 200px;
   padding: 10px;
 }
 
@@ -74,27 +92,31 @@ body {
   color: purple;
   font-size: 1.1em;
   font-weight: 500;
-  padding-bottom: 8px;
+  padding-bottom: 5px;
 }
 
 .desc h3 {
   color: black;
   font-size: 1.1em;
   font-weight: 500;
-  padding-bottom: 8px;
+  padding-bottom: 5px;
 }
 
-.desc p {
+.desc h4 {
   color: black;
   font-size: 1.1em;
   font-weight: 400;
 }
 
+.record-tile-container strong {
+  color: red;
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
 svg {
   width: 400px;
   height: 400px;
-  /* border: 1px solid black;
-  background: tomato; */
 }
 
 #label {

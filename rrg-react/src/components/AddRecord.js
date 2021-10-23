@@ -60,9 +60,8 @@ class AddRecord extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <br />
-                            <Link to="/manage-records" className="btn btn-outline-warning float-left">
-                                Manage Records
+                            <Link to="/manage-records" className="btn btn-warning float-left">
+                                &#8592; Back to Records List
                             </Link>
                         </div>
                         <div className="col-md-8 m-auto">
@@ -148,7 +147,7 @@ class AddRecord extends Component {
 
                                 <input
                                     type="submit"
-                                    className="btn btn-outline-warning btn-block mt-4"
+                                    className="btn btn-warning btn-block mt-4"
                                 />
                             </form>
                         </div>

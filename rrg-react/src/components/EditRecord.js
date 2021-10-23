@@ -71,16 +71,12 @@ class EditRecord extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <br />
-                            <Link to="/manage-records" className="btn btn-outline-warning float-left">
-                                Manage Records
+                            <Link to="/manage-records" className="btn btn-warning float-left">
+                                &#8592; Back to Records List
                             </Link>
                         </div>
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center">Edit Record</h1>
-                            <p className="lead text-center">
-                                Update Records's Info
-                            </p>
                         </div>
                     </div>
 
@@ -170,7 +166,7 @@ class EditRecord extends Component {
                                 />
                             </div>
 
-                            <button type="submit" className="btn btn-outline-info btn-lg btn-block">Update Record Info</button>
+                            <button type="submit" className="btn btn-warning btn-lg btn-block">Update Record</button>
                         </form>
                     </div>
 
