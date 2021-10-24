@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import '../App.css';
+import '../styles/App.scss';
+import '../styles/spinning-record.css';
 import axios from 'axios';
 import RecordTile from './RecordTile';
 

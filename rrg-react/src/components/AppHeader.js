@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../styles/App.scss';
 import turntable from './../images/turntable.png';
 
 class AppHeader extends Component {

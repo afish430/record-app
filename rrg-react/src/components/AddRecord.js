@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../styles/App.scss';
 import axios from 'axios';
-
 
 class AddRecord extends Component {
     constructor() {

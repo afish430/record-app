@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../styles/App.scss';
 import axios from 'axios';
 
 const RecordTile = (props) => {
@@ -33,14 +33,14 @@ const RecordTile = (props) => {
                 <h4>{record.year}</h4>
                 <h4><a target="_blank" rel="noreferrer" href={record.link}>More Info</a></h4>
                 {!props.showFooter &&
-                    <div className="mt-3"><strong>ENJOY THE RECORD!<br></br>&#9836;&#9836;&#9836;</strong></div>
+                    <div className="mt-3"><strong>Enjoy your record!<br></br>&#9836;&#9836;&#9836;</strong></div>
                 }
             </div>
             {props.showFooter && <div className="tile-footer">
                 <Link to={`/edit-record/${record._id}`} className="btn btn-info btn-sm btn-block">
                     Edit Record
                 </Link>
-                <button type="button" className="btn btn-danger btn-sm btn-block" onClick={onDeleteClick.bind(this, record._id)}>Remove Record</button>
+                <button type="button" className="btn btn-danger btn-sm btn-block mb-1" onClick={onDeleteClick.bind(this, record._id)}>Remove Record</button>
             </div>}
         </div>
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import './App.css';
+import './styles/App.scss';
 
 import RecordManager from './components/RecordManager';
 import AddRecord from './components/AddRecord';
