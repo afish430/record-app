@@ -41,6 +41,10 @@ body {
   color: white;
 }
 
+form label {
+  font-weight: 600;
+}
+
 .RecordManager {
   height: 100%;
   width: 100%;
@@ -90,7 +94,7 @@ body {
 
 .desc h2 {
   color: purple;
-  font-size: 1.1em;
+  font-size: 1.2em;
   font-weight: 500;
   padding-bottom: 5px;
 }

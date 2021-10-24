@@ -9,7 +9,9 @@ class RandomRecordGenerator extends Component {
         this.state = {
             records: [],
             selectedRecord: {},
-            message: ''
+            generating: false,
+            errorMessage: '',
+            selectedGenre: 'Any'
         };
     }
 
@@ -26,24 +28,47 @@ class RandomRecordGenerator extends Component {
             })
     };
 
+    onChange = e => {
+        this.setState({
+            selectedGenre: e.target.value,
+        });
+    };
+
     generateRecord = () => {
         if (this.state.records.length) {
             var nameIndex = Math.floor(Math.random() * this.state.records.length);
+            var filteredRecords = JSON.parse(JSON.stringify(this.state.records));
+
+            if (this.state.selectedGenre !== 'Any') {
+                filteredRecords = filteredRecords.filter(rec => rec.genre === this.state.selectedGenre);
+                if (filteredRecords.length === 0) {
+                    this.setState({
+                        selectedRecord: {},
+                        errorMessage: 'Record could not be generated. Try changing your filter.',
+                    });
+                    return;
+                }
+
+                nameIndex = Math.floor(Math.random() * filteredRecords.length);
+            }
 
             this.setState({
                 selectedRecord: {},
-                message: 'Generating Record...'
+                generating: true,
+                errorMessage: ''
             });
 
             setTimeout(() => {
                 this.setState({
-                    selectedRecord: this.state.records[nameIndex],
-                    message: ''
+                    selectedRecord: filteredRecords[nameIndex],
+                    generating: false
                 });
             }, 2500);
 
         } else {
-            alert('Record could not be generated');
+            this.setState({
+                errorMessage: 'Record could not be generated.',
+            });
         }
 
     };
@@ -51,10 +76,32 @@ class RandomRecordGenerator extends Component {
     render() {
         return (
             <div className="RandomRecordGenerator">
-                <div className="container">
+                <div className="container mb-5">
                     <div className="row">
                         <div className="col-md-8 m-auto text-center">
                             <h1 className="display-5">Random Record Generator</h1>
+                            <form className="form-inline justify-content-center">
+                                <div className='form-group'>
+                                    <label htmlFor="favorite">Filter by Genre:</label>
+                                    <select
+                                        className="form-control ml-3"
+                                        name="genre"
+                                        value={this.state.selectedGenre}
+                                        onChange={this.onChange}
+                                    >
+                                        <option value="Any">Any</option>
+                                        <option value="Classic Rock">Classic Rock</option>
+                                        <option value="Rock">Rock</option>
+                                        <option value="Folk">Folk</option>
+                                        <option value="Country">Country</option>
+                                        <option value="Pop">Pop</option>
+                                        <option value="Soul">Soul</option>
+                                        <option value="Holiday">Holiday</option>
+                                        <option value="Childrens">Children's</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </form>
                             <br />
                             <button
                                 className="btn btn-info btn-lg m-2"
@@ -62,7 +109,7 @@ class RandomRecordGenerator extends Component {
                             >
                                 Generate Record!
                             </button>
-                            {this.state.message && <div className="text-center mt-4">
+                            {this.state.generating && <div className="text-center mt-4">
                                 <svg viewBox="0 0 400 400">
                                     <g id="record">
                                         <circle r="200" cx="200" cy="200" />
@@ -70,14 +117,15 @@ class RandomRecordGenerator extends Component {
                                         <circle className="line" r="160" cx="200" cy="200" />
                                         <circle className="line" r="140" cx="200" cy="200" />
                                         <circle id="label" cx="200" cy="200" r="65" />
-                                        <text y="180" x="165">Record Is</text>
+                                        <text y="180" x="165">Record is</text>
                                         <text y="230" x="160">Generating</text>
                                         <circle id="dot" cx="200" cy="200" r="6" />
                                     </g>
 
                                 </svg>
                             </div>}
-                            {this.state.selectedRecord.title && <RecordTile record={this.state.selectedRecord} key={this.state.selectedRecord.title} />}
+                            {this.state.selectedRecord && this.state.selectedRecord.title && <RecordTile record={this.state.selectedRecord} key={this.state.selectedRecord.title} />}
+                            <div><strong className="text-danger">{this.state.errorMessage}</strong></div>
                         </div>
                     </div>
                 </div>

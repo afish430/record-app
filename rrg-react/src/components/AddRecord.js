@@ -10,11 +10,12 @@ class AddRecord extends Component {
         this.state = {
             title: '',
             artist: '',
-            genre: '',
+            genre: 'Classic Rock',
             year: '',
             link: '',
             image: '',
-            favorite: ''
+            favorite: false,
+            errorMessage: ''
         };
     }
 
@@ -24,6 +25,11 @@ class AddRecord extends Component {
 
     onSubmit = e => {
         e.preventDefault();
+
+        if (!this.state.title || !this.state.artist) {
+            this.setState({ errorMessage: 'Album and Artist names are required.' });
+            return;
+        }
 
         const data = {
             title: this.state.title,
@@ -45,7 +51,8 @@ class AddRecord extends Component {
                     year: '',
                     link: '',
                     image: '',
-                    favorite: ''
+                    favorite: '',
+                    errorMessage: ''
                 })
                 this.props.history.push('/manage-records');
             })
@@ -57,7 +64,7 @@ class AddRecord extends Component {
     render() {
         return (
             <div className="AddRecord">
-                <div className="container">
+                <div className="container mb-5">
                     <div className="row">
                         <div className="col-md-8 m-auto">
                             <Link to="/manage-records" className="btn btn-warning float-left">
@@ -66,23 +73,24 @@ class AddRecord extends Component {
                         </div>
                         <div className="col-md-8 m-auto">
                             <h1 className="display-4 text-center">Add a Record</h1>
-                            <form noValidate onSubmit={this.onSubmit}>
+                            <form onSubmit={this.onSubmit}>
                                 <div className='form-group'>
+                                    <label htmlFor="title">Album Title</label>
                                     <input
+                                        required
                                         type='text'
-                                        placeholder='Album Title'
                                         name='title'
                                         className='form-control'
                                         value={this.state.title}
                                         onChange={this.onChange}
                                     />
                                 </div>
-                                <br />
 
                                 <div className='form-group'>
+                                    <label htmlFor="artist">Band or Artist Name</label>
                                     <input
+                                        required
                                         type='text'
-                                        placeholder='Band or Artist Name'
                                         name='artist'
                                         className='form-control'
                                         value={this.state.artist}
@@ -91,20 +99,30 @@ class AddRecord extends Component {
                                 </div>
 
                                 <div className='form-group'>
-                                    <input
-                                        type='text'
-                                        placeholder='Genre'
-                                        name='genre'
-                                        className='form-control'
+                                    <label htmlFor="favorite">Genre</label>
+                                    <select
+                                        className="form-control"
+                                        id="genre"
+                                        name="genre"
                                         value={this.state.genre}
                                         onChange={this.onChange}
-                                    />
+                                    >
+                                        <option value="Classic Rock">Classic Rock</option>
+                                        <option value="Rock">Rock</option>
+                                        <option value="Folk">Folk</option>
+                                        <option value="Country">Country</option>
+                                        <option value="Pop">Pop</option>
+                                        <option value="Soul">Soul</option>
+                                        <option value="Holiday">Holiday</option>
+                                        <option value="Childrens">Children's</option>
+                                        <option value="Other">Other</option>
+                                    </select>
                                 </div>
 
                                 <div className='form-group'>
+                                    <label htmlFor="year">Year Released</label>
                                     <input
-                                        type='text'
-                                        placeholder='Album Release Year'
+                                        type='number'
                                         name='year'
                                         className='form-control'
                                         value={this.state.year}
@@ -113,9 +131,10 @@ class AddRecord extends Component {
                                 </div>
 
                                 <div className='form-group'>
+                                    <label htmlFor="link">URL for More Info</label>
                                     <input
                                         type='text'
-                                        placeholder='Album Info URL'
+                                        placeholder='ex. Wikipedia'
                                         name='link'
                                         className='form-control'
                                         value={this.state.link}
@@ -124,9 +143,9 @@ class AddRecord extends Component {
                                 </div>
 
                                 <div className='form-group'>
+                                    <label htmlFor="image">Image URL</label>
                                     <input
                                         type='text'
-                                        placeholder='Image URL'
                                         name='image'
                                         className='form-control'
                                         value={this.state.image}
@@ -135,20 +154,24 @@ class AddRecord extends Component {
                                 </div>
 
                                 <div className='form-group'>
-                                    <input
-                                        type='text'
-                                        placeholder='Is this a Favorite?'
-                                        name='favorite'
-                                        className='form-control'
+                                    <label htmlFor="favorite">Is this a Favorite?</label>
+                                    <select
+                                        className="form-control"
+                                        id="favorite"
+                                        name="favorite"
                                         value={this.state.favorite}
                                         onChange={this.onChange}
-                                    />
+                                    >
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                    </select>
                                 </div>
 
                                 <input
                                     type="submit"
-                                    className="btn btn-warning btn-block mt-4"
+                                    className="btn btn-info btn-block mt-4 mb-2"
                                 />
+                                <strong className="text-danger">{this.state.errorMessage}</strong>
                             </form>
                         </div>
                     </div>

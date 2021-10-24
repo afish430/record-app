@@ -10,10 +10,11 @@ class EditRecord extends Component {
             title: '',
             artist: '',
             genre: '',
-            year: 0,
+            year: '',
             link: '',
             image: '',
-            favorite: false
+            favorite: '',
+            errorMessage: ''
         };
     }
 
@@ -43,6 +44,11 @@ class EditRecord extends Component {
     onSubmit = e => {
         e.preventDefault();
 
+        if (!this.state.title || !this.state.artist) {
+            this.setState({ errorMessage: 'Album and Artist names are required.' });
+            return;
+        }
+
         const data = {
             title: this.state.title,
             artist: this.state.artist,
@@ -68,7 +74,7 @@ class EditRecord extends Component {
     render() {
         return (
             <div className="EditRecord">
-                <div className="container">
+                <div className="container mb-5">
                     <div className="row">
                         <div className="col-md-8 m-auto">
                             <Link to="/manage-records" className="btn btn-warning float-left">
@@ -81,25 +87,22 @@ class EditRecord extends Component {
                     </div>
 
                     <div className="col-md-8 m-auto">
-                        <form noValidate onSubmit={this.onSubmit}>
+                        <form onSubmit={this.onSubmit}>
                             <div className='form-group'>
-                                <label htmlFor="title">Title</label>
+                                <label htmlFor="title">Album Title</label>
                                 <input
                                     type='text'
-                                    placeholder='Album Title'
                                     name='title'
                                     className='form-control'
                                     value={this.state.title}
                                     onChange={this.onChange}
                                 />
                             </div>
-                            <br />
 
                             <div className='form-group'>
-                                <label htmlFor="artist">Artist</label>
+                                <label htmlFor="artist">Band or Artist Name</label>
                                 <input
                                     type='text'
-                                    placeholder='Band or Artist'
                                     name='artist'
                                     className='form-control'
                                     value={this.state.artist}
@@ -108,22 +111,30 @@ class EditRecord extends Component {
                             </div>
 
                             <div className='form-group'>
-                                <label htmlFor="author">Genre</label>
-                                <input
-                                    type='text'
-                                    placeholder='Genre'
-                                    name='genre'
-                                    className='form-control'
+                                <label for="favorite">Genre</label>
+                                <select
+                                    className="form-control"
+                                    id="genre"
+                                    name="genre"
                                     value={this.state.genre}
                                     onChange={this.onChange}
-                                />
+                                >
+                                    <option value="Classic Rock">Classic Rock</option>
+                                    <option value="Rock">Rock</option>
+                                    <option value="Folk">Folk</option>
+                                    <option value="Country">Country</option>
+                                    <option value="Pop">Pop</option>
+                                    <option value="Soul">Soul</option>
+                                    <option value="Holiday">Holiday</option>
+                                    <option value="Childrens">Children's</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
 
                             <div className='form-group'>
                                 <label htmlFor="year">Year Released</label>
                                 <input
-                                    type='text'
-                                    placeholder='Year Released'
+                                    type='number'
                                     name='year'
                                     className='form-control'
                                     value={this.state.year}
@@ -132,10 +143,10 @@ class EditRecord extends Component {
                             </div>
 
                             <div className='form-group'>
-                                <label htmlFor="link">More Info Link</label>
+                                <label htmlFor="link">URL for More Info</label>
                                 <input
                                     type='text'
-                                    placeholder='Info Link'
+                                    placeholder='ex. Wikipedia'
                                     name='link'
                                     className='form-control'
                                     value={this.state.link}
@@ -146,7 +157,6 @@ class EditRecord extends Component {
                                 <label htmlFor="image">Image URL</label>
                                 <input
                                     type='text'
-                                    placeholder='Image URL'
                                     name='image'
                                     className='form-control'
                                     value={this.state.image}
@@ -155,18 +165,21 @@ class EditRecord extends Component {
                             </div>
 
                             <div className='form-group'>
-                                <label htmlFor="favorite">Favorite?</label>
-                                <input
-                                    type='text'
-                                    placeholder='Is a Favorite?'
-                                    name='favorite'
-                                    className='form-control'
+                                <label htmlFor="favorite">Is this a Favorite?</label>
+                                <select
+                                    className="form-control"
+                                    id="favorite"
+                                    name="favorite"
                                     value={this.state.favorite}
                                     onChange={this.onChange}
-                                />
+                                >
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
                             </div>
 
-                            <button type="submit" className="btn btn-warning btn-lg btn-block">Update Record</button>
+                            <button type="submit" className="btn btn-info btn-block mb-2">Update Record</button>
+                            <strong className="text-danger">{this.state.errorMessage}</strong>
                         </form>
                     </div>
 
