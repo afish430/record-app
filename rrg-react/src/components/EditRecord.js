@@ -111,7 +111,7 @@ class EditRecord extends Component {
                             </div>
 
                             <div className='form-group'>
-                                <label for="favorite">Genre</label>
+                                <label htmlFor="favorite">Genre</label>
                                 <select
                                     className="form-control"
                                     id="genre"
@@ -125,6 +125,7 @@ class EditRecord extends Component {
                                     <option value="Country">Country</option>
                                     <option value="Pop">Pop</option>
                                     <option value="Soul">Soul</option>
+                                    <option value="Reggae">Reggae</option>
                                     <option value="Holiday">Holiday</option>
                                     <option value="Childrens">Children's</option>
                                     <option value="Other">Other</option>
