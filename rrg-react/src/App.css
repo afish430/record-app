@@ -63,14 +63,16 @@ form label {
 
 .record-tile-container {
   width: 250px;
+  height: 520px;
   border: 2px solid yellow;
   margin: 20px auto;
-  padding: 5px;
   background-color: white;
+  position: relative;
 }
 
 .record-tile-container img {
   width: 100%;
+  padding: 5px;
 }
 
 .record-tile-container .no-img {
@@ -88,7 +90,7 @@ form label {
 }
 
 .desc {
-  max-height: 200px;
+  height: 240px;
   padding: 10px;
 }
 
@@ -110,6 +112,12 @@ form label {
   color: black;
   font-size: 1.1em;
   font-weight: 400;
+}
+
+.tile-footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 }
 
 .record-tile-container strong {

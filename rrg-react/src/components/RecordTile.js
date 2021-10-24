@@ -32,10 +32,10 @@ const RecordTile = (props) => {
                 <h4>{record.genre}</h4>
                 <h4>{record.year}</h4>
                 <h4><a target="_blank" rel="noreferrer" href={record.link}>More Info</a></h4>
+                {!props.showFooter &&
+                    <div className="mt-3"><strong>ENJOY THE RECORD!<br></br>&#9836;&#9836;&#9836;</strong></div>
+                }
             </div>
-            {!props.showFooter &&
-                <div><strong>&#9836; ENJOY!! &#9836;</strong></div>
-            }
             {props.showFooter && <div className="tile-footer">
                 <Link to={`/edit-record/${record._id}`} className="btn btn-info btn-sm btn-block">
                     Edit Record
