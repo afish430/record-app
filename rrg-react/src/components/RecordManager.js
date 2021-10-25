@@ -39,6 +39,7 @@ class RecordManager extends Component {
         let artistA = a.artist;
         let artistB = b.artist;
 
+        // don't consider "The" when sorting
         if (artistA.split(' ')[0] === 'The') {
             artistA = artistA.slice(4);
         }
@@ -47,10 +48,17 @@ class RecordManager extends Component {
             artistB = artistB.slice(4);
         }
 
+        // sort by artist name, then by year
         if (artistA < artistB) {
             return -1;
         }
-        if (artistA > artistB) {
+        else if (artistA > artistB) {
+            return 1;
+        }
+        else if (a.year < b.year) {
+            return -1;
+        }
+        else if (a.year > b.year) {
             return 1;
         }
         return 0;
