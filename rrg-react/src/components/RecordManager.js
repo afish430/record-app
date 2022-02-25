@@ -6,15 +6,16 @@ import RecordTile from './RecordTile';
 
 function RecordManager() {
     const [records, setRecords] = useState([]);
-    // const [selectedGenre, setSelectedGenre] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState('AllButSpecialty');
+    const [filteredRecords, setFilteredRecords] = useState([]);
 
     useEffect(() => {
         axios
             .get('http://localhost:8082/api/records')
             .then(res => {
                 let sortedRecords = res.data.sort(sortByArtist);
-                let filteredRecords = sortedRecords.filter(r => r.genre !== 'Holiday' && r.genre !== 'Childrens');
-                setRecords(filteredRecords);
+                setRecords(sortedRecords);
+                setFilteredRecords(sortedRecords.filter(r => r.genre !== 'Holiday' && r.genre !== 'Childrens'));
             })
             .catch(err => {
                 console.log('Error from RecordManager');
@@ -55,9 +56,16 @@ function RecordManager() {
         return 0;
     }
 
-    // const onChange = e => {
-    //     setSelectedGenre(e.target.value);
-    // };
+    const onChange = e => {
+        if (e.target.value === 'AllButSpecialty') {
+            setFilteredRecords(records.filter(rec => rec.genre !== 'Holiday' && rec.genre !== 'Childrens'));
+        } else if (e.target.value === 'Any') {
+            setFilteredRecords(records.map(rec => rec));
+        } else {
+            setFilteredRecords(records.filter(rec => rec.genre === e.target.value));
+        } 
+        setSelectedGenre(e.target.value);
+    };
 
     return (
         <div className="RecordManager">
@@ -66,8 +74,8 @@ function RecordManager() {
                     <div className="col-md-12">
                         <h1 className="display-5 text-center">Manage Records</h1>
                     </div>
-                    <div className="col-md-12">
-                        {/* <form className="form-inline justify-content-center">
+                    <div className="col-md-6">
+                        <form className="form-inline justify-content-left">
                             <div className='form-group'>
                                 <label htmlFor="favorite">Filter by Genre:</label>
                                 <select
@@ -90,7 +98,9 @@ function RecordManager() {
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
-                        </form> */}
+                        </form>
+                    </div>
+                    <div className="col-md-6">
                         <Link to="/add-record" className="btn btn-warning float-right">
                             + Add New Record
                         </Link>
@@ -100,7 +110,7 @@ function RecordManager() {
                 </div>
 
                 <div className="list">
-                    {records.map((record, k) =>
+                    {filteredRecords.map((record, k) =>
                         <RecordTile record={record} removeRecord={removeRecord} showFooter={true} key={k} />
                     )}
                 </div>
