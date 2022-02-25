@@ -26,14 +26,14 @@ const RecordTile = (props) => {
             <div className="desc">
                 <h2>
                     {record.title}
-                    {record.favorite && <span className="star-fav">&#9733;</span>}
+                    {record.favorite && <span className="star-fav" title="This is a favorite!">&#9733;</span>}
                 </h2>
                 <h3>{record.artist}</h3>
                 <h4>{record.genre}</h4>
                 <h4>{record.year}</h4>
                 <h4><a target="_blank" rel="noreferrer" href={record.link}>More Info</a></h4>
                 {!props.showFooter &&
-                    <div className="mt-3"><strong>Enjoy your record!<br></br>&#9836;&#9836;&#9836;</strong></div>
+                    <div className="mt-3"><strong className="pulsate">Enjoy your record!<br></br>&#9836;&#9836;&#9836;</strong></div>
                 }
             </div>
             {props.showFooter && <div className="tile-footer">

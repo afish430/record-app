@@ -1,18 +1,25 @@
-
 body {
-  background-image: url("../images/wood-background.jpg");
-  background-size:1000px;
-}
-
-.alt-font {
+  background-image: url('../images/vinyl-wallpaper.jpg');
   font-family: Georgia, 'Times New Roman', Times, serif;
+
+  .btn {
+    font-weight: 600;
+  }
+
+  .btn-warning {
+    color: white;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
 }
 
 .AppHeader {
   color: white;
 
   img {
-    width: 125px;
+    width: 80px;
   }
 
   h1 {
@@ -26,8 +33,44 @@ body {
   min-height: 100vh;
   color: white;
 
-  .btn-lg{
-    width: 200px;
+  .btn-lg {
+    width: 220px;
+  }
+
+  .record-tile-container {
+    width: 450px;
+    height: 800px;
+    padding: 20px;
+
+    .desc h2 {
+      font-size: 2em;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .desc h3,
+    .desc h4 {
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+
+    .pulsate {
+      -webkit-animation: color_change 1s infinite alternate;
+      -moz-animation: color_change 1s infinite alternate;
+      -ms-animation: color_change 1s infinite alternate;
+      -o-animation: color_change 1s infinite alternate;
+      animation: color_change 1s infinite alternate;
+      font-size: 2em;
+    }
+
+    @keyframes color_change {
+      from {
+        color: yellow;
+      }
+      to {
+        color: red;
+      }
+    }
   }
 }
 
@@ -55,16 +98,18 @@ form label {
   .list {
     display: grid;
     margin: 20px 0 50px 0;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 1fr;
-    grid-gap: 2em;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 2em;
+  }
+
+  .record-tile-container {
+    width: 250px;
+    height: 520px;
+    border: 2px solid yellow;
   }
 }
 
 .record-tile-container {
-  width: 250px;
-  height: 520px;
-  border: 2px solid yellow;
   margin: 20px auto;
   background-color: white;
   position: relative;
@@ -93,7 +138,8 @@ form label {
     height: 240px;
     padding: 10px;
 
-    a, a:visited {
+    a,
+    a:visited {
       color: darkcyan;
     }
 
@@ -116,11 +162,5 @@ form label {
       font-size: 1.1em;
       font-weight: 400;
     }
-  }
-
-  strong {
-    color: red;
-    font-size: 1.4em;
-    font-weight: 500;
   }
 }

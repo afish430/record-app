@@ -12,7 +12,7 @@ class RandomRecordGenerator extends Component {
             selectedRecord: {},
             generating: false,
             errorMessage: '',
-            selectedGenre: 'Any'
+            selectedGenre: 'AllButSpecialty'
         };
     }
 
@@ -41,7 +41,11 @@ class RandomRecordGenerator extends Component {
             var filteredRecords = JSON.parse(JSON.stringify(this.state.records));
 
             if (this.state.selectedGenre !== 'Any') {
-                filteredRecords = filteredRecords.filter(rec => rec.genre === this.state.selectedGenre);
+                if (this.state.selectedGenre === 'AllButSpecialty') {
+                    filteredRecords = filteredRecords.filter(rec => rec.genre !== 'Holiday' && rec.genre !== 'Childrens');
+                } else {
+                    filteredRecords = filteredRecords.filter(rec => rec.genre === this.state.selectedGenre);
+                } 
                 if (filteredRecords.length === 0) {
                     this.setState({
                         selectedRecord: {},
@@ -90,6 +94,7 @@ class RandomRecordGenerator extends Component {
                                         value={this.state.selectedGenre}
                                         onChange={this.onChange}
                                     >
+                                        <option value="AllButSpecialty">Any (Non Specialty)</option>
                                         <option value="Any">Any</option>
                                         <option value="Classic Rock">Classic Rock</option>
                                         <option value="Rock">Rock</option>
@@ -106,7 +111,7 @@ class RandomRecordGenerator extends Component {
                             </form>
                             <br />
                             <button
-                                className="btn btn-info btn-lg m-2"
+                                className="btn btn-warning btn-lg m-2"
                                 onClick={this.generateRecord}
                             >
                                 Generate Record!

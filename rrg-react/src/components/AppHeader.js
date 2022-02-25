@@ -23,10 +23,9 @@ class AppHeader extends Component {
         return (
             <div className="AppHeader text-center">
                 <div className="container">
-                    <h1 className="alt-font">The Vinylator</h1>
-                    <img src={turntable} alt="recordplayer"></img>
+                    <h1>The Vinylator<img src={turntable} alt="recordplayer"></img></h1>
                     <div className="row">
-                        <Link to="/" className={"btn float-left mr-2 " + (this.state.activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={this.setGenerateActive}>
+                        <Link to="/" className={"btn float-left mr-2 " + (this.state.activeRoute === "Generate" ? "btn-info" : "btn-light")} onClick={this.setGenerateActive}>
                             Generate a Record!
                         </Link>
                         <Link to="/manage-records" className={"btn float-left " + (this.state.activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={this.setManageActive}>

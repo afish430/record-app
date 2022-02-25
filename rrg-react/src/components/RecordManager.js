@@ -16,8 +16,10 @@ class RecordManager extends Component {
         axios
             .get('http://localhost:8082/api/records')
             .then(res => {
+                let sortedRecords = res.data.sort(this.sortByArtist);
+                let filteredRecords = sortedRecords.filter(r => r.genre !== 'Holiday' && r.genre !== 'Childrens');
                 this.setState({
-                    records: res.data.sort(this.sortByArtist)
+                    records: filteredRecords
                 })
             })
             .catch(err => {
@@ -27,12 +29,9 @@ class RecordManager extends Component {
     };
 
     removeRecord = (id) => {
-        console.log(this.state.records);
-        console.log("removing record " + id);
         this.setState({
             records: this.state.records.filter(rec => rec._id !== id)
         });
-        console.log(this.state.records);
     }
 
     sortByArtist = (a, b) => {
