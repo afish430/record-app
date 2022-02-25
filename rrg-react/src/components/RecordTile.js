@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/App.scss';
 import axios from 'axios';
 
-const RecordTile = (props) => {
+function RecordTile(props) {
     const record = props.record;
 
     const onDeleteClick = (id) => {
