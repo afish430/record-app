@@ -21,7 +21,7 @@ function RandomRecordGenerator(props) {
             .catch(err => {
                 console.log('Error from RandomRecordGenerator');
             })
-    });
+    }, []);
 
     const onChange = e => {
         setSelectedGenre(e.target.value);

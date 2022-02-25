@@ -6,6 +6,7 @@ import RecordTile from './RecordTile';
 
 function RecordManager() {
     const [records, setRecords] = useState([]);
+    // const [selectedGenre, setSelectedGenre] = useState([]);
 
     useEffect(() => {
         axios
@@ -19,7 +20,7 @@ function RecordManager() {
                 console.log('Error from RecordManager');
                 console.log(err);
             })
-    });
+    }, []);
 
     const removeRecord = (id) => {
         setRecords(records.filter(rec => rec._id !== id));
@@ -54,6 +55,10 @@ function RecordManager() {
         return 0;
     }
 
+    // const onChange = e => {
+    //     setSelectedGenre(e.target.value);
+    // };
+
     return (
         <div className="RecordManager">
             <div className="container">
@@ -62,6 +67,30 @@ function RecordManager() {
                         <h1 className="display-5 text-center">Manage Records</h1>
                     </div>
                     <div className="col-md-12">
+                        {/* <form className="form-inline justify-content-center">
+                            <div className='form-group'>
+                                <label htmlFor="favorite">Filter by Genre:</label>
+                                <select
+                                    className="form-control ml-3"
+                                    name="genre"
+                                    value={selectedGenre}
+                                    onChange={onChange}
+                                >
+                                    <option value="AllButSpecialty">Any (Non Specialty)</option>
+                                    <option value="Any">Any</option>
+                                    <option value="Classic Rock">Classic Rock</option>
+                                    <option value="Rock">Rock</option>
+                                    <option value="Folk">Folk</option>
+                                    <option value="Country">Country</option>
+                                    <option value="Pop">Pop</option>
+                                    <option value="Soul">Soul</option>
+                                    <option value="Reggae">Reggae</option>
+                                    <option value="Holiday">Holiday</option>
+                                    <option value="Childrens">Children's</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </form> */}
                         <Link to="/add-record" className="btn btn-warning float-right">
                             + Add New Record
                         </Link>
