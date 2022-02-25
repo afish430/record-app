@@ -71,7 +71,7 @@ class AddRecord extends Component {
                             </Link>
                         </div>
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Add a Record</h1>
+                            <h1 className="text-center">Add a Record</h1>
                             <form onSubmit={this.onSubmit}>
                                 <div className='form-group'>
                                     <label htmlFor="title">Album Title</label>

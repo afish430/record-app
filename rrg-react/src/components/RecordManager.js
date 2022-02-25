@@ -1,40 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/App.scss';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RecordTile from './RecordTile';
 
-class RecordManager extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            records: []
-        };
-    }
+function RecordManager() {
+    const [records, setRecords] = useState([]);
 
-    componentDidMount() {
+    useEffect(() => {
         axios
             .get('http://localhost:8082/api/records')
             .then(res => {
-                let sortedRecords = res.data.sort(this.sortByArtist);
+                let sortedRecords = res.data.sort(sortByArtist);
                 let filteredRecords = sortedRecords.filter(r => r.genre !== 'Holiday' && r.genre !== 'Childrens');
-                this.setState({
-                    records: filteredRecords
-                })
+                setRecords(filteredRecords);
             })
             .catch(err => {
                 console.log('Error from RecordManager');
                 console.log(err);
             })
-    };
+    });
 
-    removeRecord = (id) => {
-        this.setState({
-            records: this.state.records.filter(rec => rec._id !== id)
-        });
+    const removeRecord = (id) => {
+        setRecords(records.filter(rec => rec._id !== id));
     }
 
-    sortByArtist = (a, b) => {
+    const sortByArtist = (a, b) => {
         let artistA = a.artist;
         let artistB = b.artist;
 
@@ -63,41 +54,30 @@ class RecordManager extends Component {
         return 0;
     }
 
-    render() {
-        const records = this.state.records;
-        let recordList;
-
-        if (!records) {
-            recordList = "there is no record!";
-        } else {
-            recordList = records.map((record, k) =>
-                <RecordTile record={record} removeRecord={this.removeRecord} showFooter={true} key={k} />
-            );
-        }
-
-        return (
-            <div className="RecordManager">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="display-5 text-center">Manage Records</h1>
-                        </div>
-                        <div className="col-md-12">
-                            <Link to="/add-record" className="btn btn-warning float-right">
-                                + Add New Record
-                            </Link>
-                            <br />
-                        </div>
-
+    return (
+        <div className="RecordManager">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12">
+                        <h1 className="display-5 text-center">Manage Records</h1>
+                    </div>
+                    <div className="col-md-12">
+                        <Link to="/add-record" className="btn btn-warning float-right">
+                            + Add New Record
+                        </Link>
+                        <br />
                     </div>
 
-                    <div className="list">
-                        {recordList}
-                    </div>
+                </div>
+
+                <div className="list">
+                    {records.map((record, k) =>
+                        <RecordTile record={record} removeRecord={removeRecord} showFooter={true} key={k} />
+                    )}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default RecordManager;

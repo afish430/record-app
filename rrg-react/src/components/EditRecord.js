@@ -82,7 +82,7 @@ class EditRecord extends Component {
                             </Link>
                         </div>
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Edit Record</h1>
+                            <h1 className="text-center">Edit Record</h1>
                         </div>
                     </div>
 
