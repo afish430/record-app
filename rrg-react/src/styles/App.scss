@@ -39,7 +39,7 @@ body {
 
   .record-tile-container {
     width: 450px;
-    height: 800px;
+    height: 820px;
     padding: 20px;
 
     .desc h2 {
@@ -48,27 +48,27 @@ body {
       margin-top: 10px;
     }
 
-    .desc h3,
+    .desc h3 {
+      font-size: 2em;
+      font-weight: 600;
+    }
+
     .desc h4 {
       font-size: 1.5em;
       font-weight: 600;
     }
 
     .pulsate {
-      -webkit-animation: color_change 1s infinite alternate;
-      -moz-animation: color_change 1s infinite alternate;
-      -ms-animation: color_change 1s infinite alternate;
-      -o-animation: color_change 1s infinite alternate;
-      animation: color_change 1s infinite alternate;
+      animation: color_change 0.5s infinite alternate;
       font-size: 2em;
     }
 
     @keyframes color_change {
       from {
-        color: yellow;
+        color: purple;
       }
       to {
-        color: red;
+        color: cyan;
       }
     }
   }
@@ -116,7 +116,7 @@ form label {
 
   .star-fav {
     position: absolute;
-    left: 5%;
+    left: 2%;
     color: gold;
   }
 
