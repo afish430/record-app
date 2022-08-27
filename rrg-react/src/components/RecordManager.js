@@ -24,7 +24,7 @@ function RecordManager() {
     }, []);
 
     const removeRecord = (id) => {
-        setRecords(records.filter(rec => rec._id !== id));
+        setFilteredRecords(records.filter(rec => rec._id !== id));
     }
 
     const sortByArtist = (a, b) => {
