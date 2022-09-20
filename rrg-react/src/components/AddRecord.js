@@ -40,8 +40,6 @@ class AddRecord extends Component {
             favorite: this.state.favorite
         };
 
-        // const scrollHash = this.state.artist + this.state.title;
-
         axios
             .post('http://localhost:8082/api/records', data)
             .then(res => {
