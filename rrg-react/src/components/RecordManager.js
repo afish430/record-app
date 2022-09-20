@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/App.scss';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import RecordTile from './RecordTile';
 
 function RecordManager() {
     const [records, setRecords] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState('AllButSpecialty');
     const [filteredRecords, setFilteredRecords] = useState([]);
+    const recordIdFromHash = useLocation().hash;
 
     useEffect(() => {
         axios
@@ -16,12 +17,22 @@ function RecordManager() {
                 let sortedRecords = res.data.sort(sortByArtist);
                 setRecords(sortedRecords);
                 setFilteredRecords(sortedRecords.filter(r => r.genre !== 'Holiday' && r.genre !== 'Childrens'));
+                if(recordIdFromHash){
+                    executeScroll(recordIdFromHash.substring(1)); // remove # part
+                }
             })
             .catch(err => {
                 console.log('Error from RecordManager');
                 console.log(err);
             })
     }, []);
+
+    const executeScroll = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    }
 
     const removeRecord = (id) => {
         setFilteredRecords(records.filter(rec => rec._id !== id));
@@ -110,8 +121,13 @@ function RecordManager() {
                 </div>
 
                 <div className="list">
-                    {filteredRecords.map((record, k) =>
-                        <RecordTile record={record} removeRecord={removeRecord} showFooter={true} key={k} />
+                    {filteredRecords.map((record, i) =>
+                        <RecordTile
+                            record={record}
+                            removeRecord={removeRecord}
+                            showFooter={true}
+                            key={i}
+                        />
                     )}
                 </div>
             </div>

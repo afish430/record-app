@@ -40,6 +40,8 @@ class AddRecord extends Component {
             favorite: this.state.favorite
         };
 
+        // const scrollHash = this.state.artist + this.state.title;
+
         axios
             .post('http://localhost:8082/api/records', data)
             .then(res => {
@@ -53,7 +55,7 @@ class AddRecord extends Component {
                     favorite: '',
                     errorMessage: ''
                 })
-                this.props.history.push('/manage-records');
+                this.props.history.push('/manage-records#' + res.data._id);
             })
             .catch(err => {
                 console.log("Error in AddRecord!");

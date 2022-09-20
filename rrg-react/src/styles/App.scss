@@ -38,29 +38,37 @@ body {
   }
 
   .record-tile-container {
-    width: 450px;
-    height: 820px;
-    padding: 20px;
+    width: 430px;
+    height: 690px;
+    padding: 15px;
+
+    img {
+      width: 90%;
+    }
 
     .desc h2 {
-      font-size: 2em;
+      font-size: 1.75em;
       font-weight: 600;
       margin-top: 10px;
     }
 
     .desc h3 {
-      font-size: 2em;
+      font-size: 1.75em;
       font-weight: 600;
     }
 
     .desc h4 {
-      font-size: 1.5em;
+      font-size: 1.25em;
       font-weight: 600;
     }
 
     .pulsate {
       animation: color_change 0.5s infinite alternate;
-      font-size: 2em;
+      font-size: 1.75em;
+    }
+
+    .mt-3 {
+      margin-top: 0 !important;
     }
 
     @keyframes color_change {

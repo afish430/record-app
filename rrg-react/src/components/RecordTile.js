@@ -20,7 +20,7 @@ function RecordTile(props) {
     };
 
     return (
-        <div className="record-tile-container">
+        <div className="record-tile-container" id={record._id}>
             <img src={record.image} alt="" />
             {!record.image && <div className="no-img text-center">No Image Available</div>}
             <div className="desc">
@@ -33,7 +33,7 @@ function RecordTile(props) {
                 <h4>{record.year}</h4>
                 <h4><a target="_blank" rel="noreferrer" href={record.link}>More Info</a></h4>
                 {!props.showFooter &&
-                    <div className="mt-3"><strong className="pulsate">Enjoy your record!<br></br>&#9836;&#9836;&#9836;</strong></div>
+                    <div className="mt-3"><strong className="pulsate">&#9836; Enjoy your record! &#9836;</strong></div>
                 }
             </div>
             {props.showFooter && <div className="tile-footer">

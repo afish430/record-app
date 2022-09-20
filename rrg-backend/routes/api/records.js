@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 // @access Public
 router.post('/', (req, res) => {
     Record.create(req.body)
-        .then(record => res.json({ msg: 'Record added successfully' }))
+        .then(record => res.json(record))
         .catch(err => res.status(400).json({ error: 'Unable to add this record' }));
 });
 
