@@ -108,6 +108,7 @@ function RecordManager() {
                                     <option value="Childrens">Children's</option>
                                     <option value="Other">Other</option>
                                 </select>
+                                <label>&nbsp;&nbsp;({filteredRecords.length} Records)</label>
                             </div>
                         </form>
                     </div>
