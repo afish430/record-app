@@ -11,7 +11,12 @@ body {
   }
 
   h1 {
-    font-size: 3em;
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+
+  .container select.form-control {
+    height: 35px !important;
   }
 }
 
@@ -26,7 +31,12 @@ body {
   h1 {
     font-size: 4.5em;
     margin-top: 10px;
+    margin-left: 5%;
     text-shadow: 2px 2px 8px black;
+  }
+
+  .row {
+    justify-content: center;
   }
 }
 
