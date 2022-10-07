@@ -22,11 +22,13 @@ function RecordTile(props) {
     return (
         <div className="record-tile-container" id={record._id}>
             <img src={record.image} alt="" />
-            {!record.image && <div className="no-img text-center">No Image Available</div>}
+            {!record.image && 
+                <div className="no-img text-center">No Image Available</div>}
+            {record.favorite &&
+                <span className="star-fav" title="This is a favorite!">&#9733;</span>}
             <div className="desc">
                 <h2>
                     {record.title}
-                    {record.favorite && <span className="star-fav" title="This is a favorite!">&#9733;</span>}
                 </h2>
                 <h3>{record.artist}</h3>
                 <h4>{record.genre}</h4>

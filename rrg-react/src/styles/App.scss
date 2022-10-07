@@ -124,9 +124,10 @@ form label {
 
   .star-fav {
     position: absolute;
-    left: 2%;
-    margin-top: -1px;
-    color: gold;
+    right: 2%;
+    font-size: 30px;
+    color: yellow;
+    text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
   }
 
   img {
