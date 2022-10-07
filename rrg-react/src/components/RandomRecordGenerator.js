@@ -100,8 +100,15 @@ function RandomRecordGenerator(props) {
                         </button>
                         {generating && <div className="text-center mt-4">
                             <svg viewBox="0 0 400 400">
+                                <defs>
+                                <linearGradient id="yellowRedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0" className="start-color"/>
+                                    <stop offset="1" className="end-color"/>
+                                </linearGradient>
+                                </defs>
                                 <g id="record">
-                                    <circle r="200" cx="200" cy="200" />
+                                    <circle className="line" r="200" cx="200" cy="200" />
+                                    <circle r="198" cx="200" cy="200" />
                                     <circle className="line" r="180" cx="200" cy="200" />
                                     <circle className="line" r="160" cx="200" cy="200" />
                                     <circle className="line" r="140" cx="200" cy="200" />

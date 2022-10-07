@@ -1,14 +1,24 @@
 svg {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
 }
 
 #label {
-  fill: yellow;
+  fill: url(#yellowRedGradient);
 }
 
-@keyFrames spin {
-  100%{transform: rotate(360deg);}
+#yellowRedGradient stop.start-color {
+  stop-color: yellow;
+}
+
+#yellowRedGradient stop.end-color {
+  stop-color: red;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 #record {

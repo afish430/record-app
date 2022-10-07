@@ -62,7 +62,7 @@ class EditRecord extends Component {
         axios
             .put('http://localhost:8082/api/records/' + this.props.match.params.id, data)
             .then(res => {
-                this.props.history.push('/manage-records/' + this.props.match.params.id);
+                this.props.history.push('/manage-records#' + this.props.match.params.id);
             })
             .catch(err => {
                 console.log("Error in EditRecord");

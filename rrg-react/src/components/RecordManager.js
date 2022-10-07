@@ -30,12 +30,13 @@ function RecordManager() {
     const executeScroll = (id) => {
         const element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
         }
     }
 
     const removeRecord = (id) => {
-        setFilteredRecords(records.filter(rec => rec._id !== id));
+        setRecords(records.filter(rec => rec._id !== id));
+        setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
     }
 
     const sortByArtist = (a, b) => {

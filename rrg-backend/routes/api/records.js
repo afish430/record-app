@@ -9,7 +9,9 @@ const Record = require('../../models/Record');
 router.get('/', (req, res) => {
     Record.find()
         .then(records => res.json(records))
-        .catch(err => res.status(404).json({ norecordsfound: 'No Records found' }));
+        .catch(err => 
+            res.status(404).json({ norecordsfound: 'No Records found' })
+        );
 });
 
 // @route GET api/records/:id
@@ -18,7 +20,9 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     Record.findById(req.params.id)
         .then(record => res.json(record))
-        .catch(err => res.status(404).json({ norecordfound: 'No Record found' }));
+        .catch(err => 
+            res.status(404).json({ norecordfound: 'No Record found' })
+        );
 });
 
 // @route POST api/records
@@ -27,7 +31,9 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     Record.create(req.body)
         .then(record => res.json(record))
-        .catch(err => res.status(400).json({ error: 'Unable to add this record' }));
+        .catch(err => 
+            res.status(400).json({ error: 'Unable to add this record' })
+        );
 });
 
 // @route PUT api/records/:id
@@ -35,9 +41,9 @@ router.post('/', (req, res) => {
 // @access Public
 router.put('/:id', (req, res) => {
     Record.findByIdAndUpdate(req.params.id, req.body)
-        .then(record => res.json({ msg: 'Updated successfully' }))
+        .then(record => res.json(record))
         .catch(err =>
-            res.status(400).json({ error: 'Unable to update the Database' })
+            res.status(400).json({ error: 'Unable to update this record' })
         );
 });
 
@@ -46,8 +52,10 @@ router.put('/:id', (req, res) => {
 // @access Public
 router.delete('/:id', (req, res) => {
     Record.findByIdAndRemove(req.params.id, req.body)
-        .then(record => res.json({ mgs: 'record entry deleted successfully' }))
-        .catch(err => res.status(404).json({ error: 'No such a record' }));
+        .then(record => res.json({ mgs: 'record deleted successfully' }))
+        .catch(err => 
+            res.status(404).json({ error: 'No such a record' })
+        );
 });
 
 module.exports = router;
