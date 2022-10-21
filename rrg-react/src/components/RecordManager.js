@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/App.scss';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
@@ -9,6 +9,7 @@ function RecordManager() {
     const [selectedGenre, setSelectedGenre] = useState('AllButSpecialty');
     const [filteredRecords, setFilteredRecords] = useState([]);
     const recordIdFromHash = useLocation().hash;
+    const searchInputRef = useRef(null);
 
     // fetch and sort all records on page load
     useEffect(() => {
@@ -67,6 +68,24 @@ function RecordManager() {
         setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
     }
 
+    const searchRecords = (e) => {
+        e.preventDefault();
+        setSelectedGenre('Any');
+        setTimeout(() => {
+            const searchTerm = searchInputRef.current.value.toLowerCase();
+            setFilteredRecords(records.filter(
+                rec => rec.artist.toLowerCase().indexOf(searchTerm) !== -1 || rec.title.toLowerCase().indexOf(searchTerm) !== -1)
+            );
+        }, 100);
+    }
+
+    const clearSearch = (e) => {
+        e.preventDefault();
+        setSelectedGenre('AllButSpecialty');
+        setFilteredRecords(records);
+        searchInputRef.current.value = "";
+    }
+
     const sortByArtist = (a, b) => {
         let artistA = a.artist;
         let artistB = b.artist;
@@ -97,6 +116,7 @@ function RecordManager() {
     }
 
     const onFilterChange = e => {
+        searchInputRef.current.value = "";
         setSelectedGenre(e.target.value); // see useEffect() for actual changes
     };
 
@@ -107,12 +127,12 @@ function RecordManager() {
                     <div className="col-md-12">
                         <h1 className="display-5 text-center">Manage Records</h1>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <form className="form-inline justify-content-left">
                             <div className='form-group'>
-                                <label htmlFor="favorite">Filter by Genre:</label>
+                                <label htmlFor="favorite">Filter:</label>
                                 <select
-                                    className="form-control ml-3"
+                                    className="form-control ml-2"
                                     name="genre"
                                     value={selectedGenre}
                                     onChange={onFilterChange}
@@ -134,17 +154,31 @@ function RecordManager() {
                                     <option value="80s">80s</option>
                                     <option value="90s">90s to Present</option>
                                 </select>
-                                <label>&nbsp;&nbsp;({filteredRecords.length} Records)</label>
                             </div>
                         </form>
                     </div>
-                    <div className="col-md-6">
+
+                    <div className="col-md-4 text-center">
+                        <form className="form-inline justify-content-left">
+                            <input className="form-control" ref={searchInputRef} placeholder="artist or album name"/>
+                            <button className="searchBtn btn btn-warning" onClick={searchRecords}>Search</button>
+                            <button className="searchBtn btn btn-warning" onClick={clearSearch}>Clear</button>
+                        </form>
+                    </div>
+
+                    <div className="col-md-4">
                         <Link to="/add-record" className="btn btn-warning float-right">
                             + Add New Record
                         </Link>
                         <br />
                     </div>
 
+                </div>
+
+                <div className="text-center">
+                    <label className="recordCount">
+                        (Showing {filteredRecords.length} Records)
+                    </label>
                 </div>
 
                 <div className="list">

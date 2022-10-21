@@ -21,6 +21,12 @@ body {
   .container select.form-control {
     height: 35px !important;
   }
+
+  .searchBtn {
+    height: 35px;
+    font-size: 15px;
+    margin-left: 2px;
+  }
 }
 
 .AppHeader {
@@ -117,9 +123,15 @@ form label {
   min-width: 100px;
   color: white;
 
+  label.recordCount {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
   .list {
     display: grid;
-    margin: 20px 0 50px 0;
+    margin-bottom: 50px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-column-gap: 2em;
     grid-column-gap: 2em;
