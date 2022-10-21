@@ -8,6 +8,9 @@ body {
 
   .btn-warning {
     color: white;
+    &:hover {
+      color: red !important;
+    }
   }
 
   h1 {

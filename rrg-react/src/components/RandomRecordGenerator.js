@@ -23,7 +23,7 @@ function RandomRecordGenerator(props) {
             })
     }, []);
 
-    const onChange = e => {
+    const onFilterChange = e => {
         setSelectedGenre(e.target.value);
     };
 
@@ -35,9 +35,23 @@ function RandomRecordGenerator(props) {
             if (selectedGenre !== 'Any') {
                 if (selectedGenre === 'AllButSpecialty') {
                     filteredRecords = filteredRecords.filter(rec => rec.genre !== 'Holiday' && rec.genre !== 'Childrens');
-                } else {
-                    filteredRecords = filteredRecords.filter(rec => rec.genre === selectedGenre);
                 } 
+                else if (selectedGenre === '60s') {
+                    filteredRecords = filteredRecords.filter(rec => rec.year >= 1960 && rec.year < 1970);
+                }
+                else if (selectedGenre === '70s') {
+                    filteredRecords = filteredRecords.filter(rec => rec.year >= 1970 && rec.year < 1980);
+                }
+                else if (selectedGenre === '80s') {
+                    filteredRecords = filteredRecords.filter(rec => rec.year >= 1980 && rec.year < 1990);
+                }
+                else if (selectedGenre === '90s') {
+                    filteredRecords = filteredRecords.filter(rec => rec.year >= 1990);
+                }
+                else {
+                    filteredRecords = filteredRecords.filter(rec => rec.genre === selectedGenre);
+                }
+                
                 if (filteredRecords.length === 0) {
                     setSelectedRecord({});
                     setErrorMessage('Record could not be generated. Try changing your filter.');
@@ -74,7 +88,7 @@ function RandomRecordGenerator(props) {
                                     className="form-control ml-3"
                                     name="genre"
                                     value={selectedGenre}
-                                    onChange={onChange}
+                                    onChange={onFilterChange}
                                 >
                                     <option value="AllButSpecialty">Any (Non Specialty)</option>
                                     <option value="Any">Any</option>
@@ -88,6 +102,10 @@ function RandomRecordGenerator(props) {
                                     <option value="Holiday">Holiday</option>
                                     <option value="Childrens">Children's</option>
                                     <option value="Other">Other</option>
+                                    <option value="60s">60s</option>
+                                    <option value="70s">70s</option>
+                                    <option value="80s">80s</option>
+                                    <option value="90s">90s to Present</option>
                                 </select>
                             </div>
                         </form>

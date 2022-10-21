@@ -10,6 +10,7 @@ function RecordManager() {
     const [filteredRecords, setFilteredRecords] = useState([]);
     const recordIdFromHash = useLocation().hash;
 
+    // fetch and sort all records on page load
     useEffect(() => {
         axios
             .get('http://localhost:8082/api/records')
@@ -26,6 +27,33 @@ function RecordManager() {
                 console.log(err);
             })
     }, []);
+
+    // update filtered records on filter change
+    useEffect(() => {
+        if (selectedGenre === 'AllButSpecialty') {
+            setFilteredRecords(records.filter(rec => rec.genre !== 'Holiday' && rec.genre !== 'Childrens'));
+        }
+        else if (selectedGenre === 'Any') {
+            setFilteredRecords(records.map(rec => rec));
+        }
+        else if (selectedGenre === '60s') {
+            console.log('is 60s');
+            setFilteredRecords(records.filter(rec => rec.year >= 1960 && rec.year < 1970));
+        }
+        else if (selectedGenre === '70s') {
+            console.log('is 70s');
+            setFilteredRecords(records.filter(rec => rec.year >= 1970 && rec.year < 1980));
+        }
+        else if (selectedGenre === '80s') {
+            setFilteredRecords(records.filter(rec => rec.year >= 1980 && rec.year < 1990));
+        }
+        else if (selectedGenre === '90s') {
+            setFilteredRecords(records.filter(rec => rec.year >= 1990));
+        }
+        else {
+            setFilteredRecords(records.filter(rec => rec.genre === selectedGenre));
+        } 
+    }, [selectedGenre]);
 
     const executeScroll = (id) => {
         const element = document.getElementById(id);
@@ -68,15 +96,8 @@ function RecordManager() {
         return 0;
     }
 
-    const onChange = e => {
-        if (e.target.value === 'AllButSpecialty') {
-            setFilteredRecords(records.filter(rec => rec.genre !== 'Holiday' && rec.genre !== 'Childrens'));
-        } else if (e.target.value === 'Any') {
-            setFilteredRecords(records.map(rec => rec));
-        } else {
-            setFilteredRecords(records.filter(rec => rec.genre === e.target.value));
-        } 
-        setSelectedGenre(e.target.value);
+    const onFilterChange = e => {
+        setSelectedGenre(e.target.value); // see useEffect() for actual changes
     };
 
     return (
@@ -94,7 +115,7 @@ function RecordManager() {
                                     className="form-control ml-3"
                                     name="genre"
                                     value={selectedGenre}
-                                    onChange={onChange}
+                                    onChange={onFilterChange}
                                 >
                                     <option value="AllButSpecialty">Any (Non Specialty)</option>
                                     <option value="Any">Any</option>
@@ -108,6 +129,10 @@ function RecordManager() {
                                     <option value="Holiday">Holiday</option>
                                     <option value="Childrens">Children's</option>
                                     <option value="Other">Other</option>
+                                    <option value="60s">60s</option>
+                                    <option value="70s">70s</option>
+                                    <option value="80s">80s</option>
+                                    <option value="90s">90s to Present</option>
                                 </select>
                                 <label>&nbsp;&nbsp;({filteredRecords.length} Records)</label>
                             </div>
