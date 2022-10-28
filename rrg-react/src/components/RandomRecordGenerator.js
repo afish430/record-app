@@ -25,6 +25,7 @@ function RandomRecordGenerator(props) {
 
     const onFilterChange = e => {
         setSelectedGenre(e.target.value);
+        setSelectedRecord(null);
     };
 
     const generateRecord = () => {

@@ -159,10 +159,21 @@ function RecordManager() {
                     </div>
 
                     <div className="col-md-4 text-center">
-                        <form className="form-inline justify-content-left">
-                            <input className="form-control" ref={searchInputRef} placeholder="artist or album name"/>
-                            <button className="searchBtn btn btn-warning" onClick={searchRecords}>Search</button>
-                            <button className="searchBtn btn btn-warning" onClick={clearSearch}>Clear</button>
+                        <form className="form-inline justify-content-center">
+                            <div class="input-group">
+                                <input type="search" className="form-control searchInput" ref={searchInputRef} placeholder="artist or album name"/>
+                                <div className="input-group-append">
+                                    <div className="input-group-text clearBtn">
+                                        {
+                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre != "AllButSpecialty")
+                                        && <i className="fa fa-times" onClick={clearSearch}></i>
+                                        }
+                                    </div>
+                                    <button className="btn btn-warning" type="button" onClick={searchRecords}>
+                                        <i className="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </form>
                     </div>
 

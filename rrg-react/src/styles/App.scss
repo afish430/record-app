@@ -22,10 +22,17 @@ body {
     height: 35px !important;
   }
 
-  .searchBtn {
-    height: 35px;
-    font-size: 15px;
-    margin-left: 2px;
+  .searchInput {
+    border: 0;
+  }
+
+  .clearBtn {
+    background-color: white;
+    border: 0;
+    width: 35px;
+    i {
+      cursor: pointer;
+    }
   }
 }
 

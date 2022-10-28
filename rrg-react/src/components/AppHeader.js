@@ -23,7 +23,7 @@ function AppHeader() {
                     <Link to="/" className={"btn mr-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
                         Record Generator
                     </Link>
-                    <Link to="/manage-records" className={"btn " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
+                    <Link to="/manage-records" className={"btn ml-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
                         Record Manager
                     </Link>
                 </div>
