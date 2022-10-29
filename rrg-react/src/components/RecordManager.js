@@ -51,6 +51,9 @@ function RecordManager() {
         else if (selectedGenre === '90s') {
             setFilteredRecords(records.filter(rec => rec.year >= 1990));
         }
+        else if (selectedGenre === 'Favorites') {
+            setFilteredRecords(records.filter(rec => rec.favorite == true));
+        }
         else {
             setFilteredRecords(records.filter(rec => rec.genre === selectedGenre));
         } 
@@ -148,11 +151,11 @@ function RecordManager() {
                                     <option value="Reggae">Reggae</option>
                                     <option value="Holiday">Holiday</option>
                                     <option value="Childrens">Children's</option>
-                                    <option value="Other">Other</option>
                                     <option value="60s">60s</option>
                                     <option value="70s">70s</option>
                                     <option value="80s">80s</option>
                                     <option value="90s">90s to Present</option>
+                                    <option value="Favorites">Favorites</option>
                                 </select>
                             </div>
                         </form>
