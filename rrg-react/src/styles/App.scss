@@ -136,6 +136,10 @@ form label {
     margin-bottom: 0;
   }
 
+  #searchInput:focus { 
+    box-shadow: none;
+  }
+
   .list {
     display: grid;
     margin-bottom: 50px;

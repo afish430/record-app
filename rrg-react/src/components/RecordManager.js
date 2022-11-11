@@ -71,8 +71,19 @@ function RecordManager() {
         setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
     }
 
-    const searchRecords = (e) => {
+    const handleSearchKeyDown = (e) => {
+        if (e.key == 'Enter') {
+            searchRecords();
+            e.preventDefault();
+        }
+    }
+
+    const handleSearchClick = (e) => {
         e.preventDefault();
+        searchRecords();
+    }
+
+    const searchRecords = () => {
         setSelectedGenre('Any');
         setTimeout(() => {
             const searchTerm = searchInputRef.current.value.toLowerCase();
@@ -163,8 +174,8 @@ function RecordManager() {
 
                     <div className="col-md-4 text-center">
                         <form className="form-inline justify-content-center">
-                            <div class="input-group">
-                                <input type="search" className="form-control searchInput" ref={searchInputRef} placeholder="artist or album name"/>
+                            <div className="input-group">
+                                <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="artist or album name"/>
                                 <div className="input-group-append">
                                     <div className="input-group-text clearBtn">
                                         {
@@ -172,7 +183,7 @@ function RecordManager() {
                                         && <i className="fa fa-times" onClick={clearSearch}></i>
                                         }
                                     </div>
-                                    <button className="btn btn-warning" type="button" onClick={searchRecords}>
+                                    <button className="btn btn-warning" type="button" onClick={handleSearchClick}>
                                         <i className="fa fa-search"></i>
                                     </button>
                                 </div>
