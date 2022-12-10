@@ -65,12 +65,7 @@ class AddRecord extends Component {
             <div className="AddRecord">
                 <div className="container mb-5">
                     <div className="row">
-                        <div className="col-md-8 m-auto">
-                            <Link to="/manage-records" className="btn btn-warning float-left">
-                                &#8592; Back to Records List
-                            </Link>
-                        </div>
-                        <div className="col-md-8 m-auto">
+                        <div className="col-md-6 m-auto">
                             <h1 className="text-center">Add a Record</h1>
                             <form onSubmit={this.onSubmit}>
                                 <div className='form-group'>
@@ -167,10 +162,10 @@ class AddRecord extends Component {
                                     </select>
                                 </div>
 
-                                <input
-                                    type="submit"
-                                    className="btn btn-info btn-block mt-4 mb-2"
-                                />
+                                <Link to="/manage-records" className="btn btn-light float-left">
+                                    Cancel
+                                </Link>
+                                <button type="submit" className="btn btn-info mb-2 float-right">Add Record</button>
                                 <strong className="text-danger">{this.state.errorMessage}</strong>
                             </form>
                         </div>

@@ -77,16 +77,11 @@ class EditRecord extends Component {
                 <div className="container mb-5">
                     <div className="row">
                         <div className="col-md-8 m-auto">
-                            <Link to="/manage-records" className="btn btn-warning float-left">
-                                &#8592; Back to Records List
-                            </Link>
-                        </div>
-                        <div className="col-md-8 m-auto">
                             <h1 className="text-center">Edit Record</h1>
                         </div>
                     </div>
 
-                    <div className="col-md-8 m-auto">
+                    <div className="col-md-6 m-auto">
                         <form onSubmit={this.onSubmit}>
                             <div className='form-group'>
                                 <label htmlFor="title">Album Title</label>
@@ -179,7 +174,10 @@ class EditRecord extends Component {
                                 </select>
                             </div>
 
-                            <button type="submit" className="btn btn-info btn-block mb-2">Update Record</button>
+                            <Link to={"/manage-records/#" + this.props.match.params.id} className="btn btn-light float-left">
+                               Cancel
+                            </Link>
+                            <button type="submit" className="btn btn-info mb-2 float-right">Update Record</button>
                             <strong className="text-danger">{this.state.errorMessage}</strong>
                         </form>
                     </div>

@@ -175,7 +175,7 @@ function RecordManager() {
                     <div className="col-md-4 text-center">
                         <form className="form-inline justify-content-center">
                             <div className="input-group">
-                                <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="artist or album name"/>
+                                <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="search by artist or album"/>
                                 <div className="input-group-append">
                                     <div className="input-group-text clearBtn">
                                         {

@@ -14,16 +14,17 @@ body {
   }
 
   h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
+    font-size: 2.5em;
+    margin-bottom: 20px;
   }
 
   .container select.form-control {
     height: 35px !important;
   }
 
-  .searchInput {
+  #searchInput {
     border: 0;
+    width: 220px;
   }
 
   .clearBtn {
@@ -142,7 +143,7 @@ form label {
     margin-bottom: 0;
   }
 
-  #searchInput:focus { 
+  #searchInput:focus, .btn:focus { 
     box-shadow: none;
   }
 
@@ -150,7 +151,6 @@ form label {
     display: grid;
     margin-bottom: 50px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-column-gap: 2em;
     grid-column-gap: 2em;
   }
 
