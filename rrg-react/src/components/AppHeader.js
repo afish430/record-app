@@ -33,7 +33,7 @@ function AppHeader() {
                         Record Manager
                     </Link>
                 </div>
-                <Button variant="light" className="aboutBtn" onClick={handleShow}>
+                <Button variant="info" className="aboutBtn" onClick={handleShow}>
                     About
                 </Button>
             </div>
@@ -46,10 +46,10 @@ function AppHeader() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    The Vinylator is your own personal record collection manager and random record generator.
+                    The Vinylator is your own personal record collection manager and listening helper.
                     Add, edit and delete records to manage your vinyl collection.
-                    You can also easily search and filter your collection, and even mark certain records as favorites.
-                    When you just aren't sure what to listen to, the Random Record Generator feature is your best friend.
+                    You can easily search and filter your collection, and even mark certain records as favorites.
+                    When you just aren't sure what to listen to, the "Random Record Generator" feature is your best friend.
                     Just hit the "Generate" button and let the music come to you. Happy listening!
                 </Modal.Body>
                 <Modal.Footer className="text-center">
