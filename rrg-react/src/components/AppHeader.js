@@ -6,7 +6,7 @@ import '../styles/App.scss';
 import turntable from './../images/turntable.png';
 
 function AppHeader() {
-    let currentRoute = window.location.pathname === "/" ? "Generate" : "Manage";
+    let currentRoute = window.location.pathname === "/" ? "Manage" : "Generate";
     const [activeRoute, setActiveRoute] = useState(currentRoute);
 
     const setGenerateActive = () => {
@@ -26,11 +26,11 @@ function AppHeader() {
             <div className="container">
                 <h1>The Vinylator<img src={turntable} alt="recordplayer"></img></h1>
                 <div className="row">
-                    <Link to="/" className={"btn mr-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
-                        Record Generator
-                    </Link>
-                    <Link to="/manage-records" className={"btn ml-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
+                    <Link to="/" className={"btn mr-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
                         Record Manager
+                    </Link>
+                    <Link to="/generator" className={"btn ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
+                        Record Generator
                     </Link>
                 </div>
                 <Button variant="info" className="aboutBtn" onClick={handleShow}>
@@ -42,7 +42,7 @@ function AppHeader() {
             <Modal show={showModal} onHide={handleClose} centered>
                 <Modal.Header>
                     <Modal.Title className="m-auto">
-                        The Vinylator
+                        About The Vinylator
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

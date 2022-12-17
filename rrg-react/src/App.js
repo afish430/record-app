@@ -14,8 +14,8 @@ class App extends Component {
       <Router>
         <div>
           <AppHeader></AppHeader>
-          <Route exact path='/' component={RandomRecordGenerator} />
-          <Route path='/manage-records' component={RecordManager} />
+          <Route exact path='/' component={RecordManager} />
+          <Route path='/generator' component={RandomRecordGenerator} />
           <Route path='/add-record' component={AddRecord} />
           <Route path='/edit-record/:id' component={EditRecord} />
         </div>

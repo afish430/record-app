@@ -53,7 +53,7 @@ class AddRecord extends Component {
                     favorite: '',
                     errorMessage: ''
                 })
-                this.props.history.push('/manage-records#' + res.data._id);
+                this.props.history.push('/#' + res.data._id);
             })
             .catch(err => {
                 console.log("Error in AddRecord!");
@@ -162,7 +162,7 @@ class AddRecord extends Component {
                                     </select>
                                 </div>
 
-                                <Link to="/manage-records" className="btn btn-light float-left">
+                                <Link to="/" className="btn btn-light float-left">
                                     Cancel
                                 </Link>
                                 <button type="submit" className="btn btn-info mb-2 float-right">Add Record</button>
