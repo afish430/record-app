@@ -27,7 +27,7 @@ function RecordManager() {
                 console.log('Error from RecordManager');
                 console.log(err);
             })
-    }, []);
+    }, [recordIdFromHash]);
 
     // update filtered records on filter change
     useEffect(() => {
@@ -57,7 +57,7 @@ function RecordManager() {
         else {
             setFilteredRecords(records.filter(rec => rec.genre === selectedGenre));
         } 
-    }, [selectedGenre]);
+    }, [selectedGenre, records]);
 
     const executeScroll = (id) => {
         const element = document.getElementById(id);

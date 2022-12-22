@@ -142,7 +142,9 @@ function RandomRecordGenerator(props) {
 
                             </svg>
                         </div>}
+                        <div className={generating ? "tile-wrapper hidden-wrapper" : "tile-wrapper"}>
                         {selectedRecord && selectedRecord.title && <RecordTile record={selectedRecord} key={selectedRecord.title} />}
+                        </div>
                         <div><strong className="text-danger">{errorMessage}</strong></div>
                     </div>
                 </div>

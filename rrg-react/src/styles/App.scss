@@ -67,6 +67,15 @@ body {
   min-height: 100vh;
   color: white;
 
+  .tile-wrapper {
+    opacity: 1;
+    transition: opacity 2s;
+  
+    &.hidden-wrapper {
+      opacity: 0;
+    }
+  }
+
   .btn-lg {
     width: 220px;
   }
@@ -75,6 +84,11 @@ body {
     width: 430px;
     height: 688px;
     padding: 15px;
+
+    &:hover {
+      transform: scale(1.03);
+      transition: all 0.2s ease-out;
+    }
 
     img {
       width: 90%;
