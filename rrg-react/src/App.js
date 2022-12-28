@@ -7,6 +7,8 @@ import AddRecord from './components/AddRecord';
 import EditRecord from './components/EditRecord';
 import RandomRecordGenerator from './components/RandomRecordGenerator';
 import AppHeader from './components/AppHeader';
+import LoginPage from './components/LoginPage';
+import CreateUserPage from './components/CreateUserPage';
 
 class App extends Component {
   render() {
@@ -18,6 +20,8 @@ class App extends Component {
           <Route path='/generator' component={RandomRecordGenerator} />
           <Route path='/add-record' component={AddRecord} />
           <Route path='/edit-record/:id' component={EditRecord} />
+          <Route path='/login' component={LoginPage} />
+          <Route path='/create-account' component={CreateUserPage} />
         </div>
       </Router>
     );

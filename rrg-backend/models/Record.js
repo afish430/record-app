@@ -24,6 +24,10 @@ const RecordSchema = new mongoose.Schema({
     favorite: {
         type: Boolean,
         default: false
+    },
+    userid: {
+        type: String,
+        default: null
     }
 });
 
