@@ -50,7 +50,7 @@ function RandomRecordGenerator(props) {
                     filteredRecords = filteredRecords.filter(rec => rec.year >= 1990);
                 }
                 else if (selectedGenre === 'Favorites') {
-                    filteredRecords = filteredRecords.filter(rec => rec.favorite == true);
+                    filteredRecords = filteredRecords.filter(rec => rec.favorite === true);
                 }
                 else {
                     filteredRecords = filteredRecords.filter(rec => rec.genre === selectedGenre);

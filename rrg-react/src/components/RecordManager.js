@@ -52,7 +52,7 @@ function RecordManager() {
             setFilteredRecords(records.filter(rec => rec.year >= 1990));
         }
         else if (selectedGenre === 'Favorites') {
-            setFilteredRecords(records.filter(rec => rec.favorite == true));
+            setFilteredRecords(records.filter(rec => rec.favorite === true));
         }
         else {
             setFilteredRecords(records.filter(rec => rec.genre === selectedGenre));
@@ -72,7 +72,7 @@ function RecordManager() {
     }
 
     const handleSearchKeyDown = (e) => {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             searchRecords();
             e.preventDefault();
         }
@@ -142,7 +142,7 @@ function RecordManager() {
                         <h1 className="display-5 text-center">Manage Records</h1>
                     </div>
                     <div className="col-md-4">
-                        <form className="form-inline justify-content-left">
+                        <form className="form justify-content-left">
                             <div className='form-group'>
                                 <label htmlFor="favorite">Filter:</label>
                                 <select
@@ -179,7 +179,7 @@ function RecordManager() {
                                 <div className="input-group-append">
                                     <div className="input-group-text clearBtn">
                                         {
-                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre != "AllButSpecialty")
+                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "AllButSpecialty")
                                         && <i className="fa fa-times" onClick={clearSearch}></i>
                                         }
                                     </div>
