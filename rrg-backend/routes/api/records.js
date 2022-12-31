@@ -29,6 +29,14 @@ router.get('/:id', (req, res) => {
 // @description add/save record
 // @access Public
 router.post('/', (req, res) => {
+
+    // Record.updateMany({}, {$set:{"userId": "63b09828d6c1868ba5a531c7"}}).then(record => {
+    //     console.log("updated records!");
+    // })
+    // .catch(err => 
+    //     console.log(err)
+    // );
+    
     Record.create(req.body)
         .then(record => res.json(record))
         .catch(err => 

@@ -25,7 +25,7 @@ const RecordSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    userid: {
+    userId: {
         type: String,
         default: null
     }

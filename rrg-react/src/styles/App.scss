@@ -130,12 +130,7 @@ body {
   }
 }
 
-.AddRecord {
-  min-height: 100vh;
-  color: white;
-}
-
-.EditRecord {
+.AddRecord, .EditRecord, .LoginPage, .CreateUserPage {
   min-height: 100vh;
   color: white;
 }

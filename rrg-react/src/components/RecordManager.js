@@ -142,7 +142,7 @@ function RecordManager() {
                         <h1 className="display-5 text-center">Manage Records</h1>
                     </div>
                     <div className="col-md-4">
-                        <form className="form justify-content-left">
+                        <form className="form-inline justify-content-left">
                             <div className='form-group'>
                                 <label htmlFor="favorite">Filter:</label>
                                 <select

@@ -37,7 +37,7 @@ function CreateUserPage(props) {
     };
 
     return (
-        <div className="create-user-page">
+        <div className="CreateUserPage">
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-4 m-auto text-center">
@@ -101,14 +101,13 @@ function CreateUserPage(props) {
                 </div>
                 <div className="row">
                     <div className="col-md-4">
-                        <Link to="/login" className="btn btn-warning float-right">
+                        <Link to="/login" className="btn btn-warning">
                             Back to Login
                         </Link>
                     </div>
                 </div>
             </div>
         </div>
-
     )
 }
 
