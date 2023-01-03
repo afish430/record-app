@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../../models/User');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-// @route POST api/auth
+// @route POST api/auth/signup
 // @description create a new user account
 // @access Public
 router.post('/signup', (req, res) => {
+    console.log('Creating new user...');
     let { userName, email, password, password2, isAdmin } = req.body;
     
     User.findOne({userName: userName})
-    .then(user=>{
+    .then(user => {
         if (user) {
             return res.status(422).json({ errors: [{ user: "userName already exists" }] });
         }
@@ -36,7 +36,7 @@ router.post('/signup', (req, res) => {
                         success: true,
                         result: response
                     })
-                    console.log('user created!');
+                    console.log('User created!');
                 })
                 .catch(err => {
                     res.status(500).json({errors: [{ error: err }]});
@@ -44,6 +44,38 @@ router.post('/signup', (req, res) => {
                 });
             });
         }
+    });
+});
+
+// @route POST api/auth/login
+// @description logs a user in
+// @access Public
+router.post('/login', (req, res) => {
+    console.log('Logging in user...');
+    let { userName, password } = req.body;
+
+    User.findOne({userName: userName})
+    .then(user => {
+        if (!user) {
+            console.log('User not found...');
+            return res.status(404).json({errors: [{ user: "not found" }],});
+        }
+        else {
+            bcrypt.compare(password, user.password).then(isMatch => {
+                if (!isMatch) {
+                    console.log('Passwords do not match...');
+                    return res.status(400).json({ errors: [{ password:"incorrect" }]});
+                }
+                console.log('Login successful!');
+                return res.status(200).json({
+                    success: true,
+                    result: user
+                });
+            });
+        }
+    }).catch(err => {
+        console.log('An error occurred on the server...');
+        res.status(500).json({ errors: err });
     });
 });
 

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, useHistory  } from 'react-router-dom';
 import './styles/App.scss';
 
 import RecordManager from './components/RecordManager';
@@ -10,22 +10,38 @@ import AppHeader from './components/AppHeader';
 import LoginPage from './components/LoginPage';
 import CreateUserPage from './components/CreateUserPage';
 
-class App extends Component {
-  render() {
+function App(props) {
+
+  const [user, setUser] = useState({});
+  let history = useHistory();
+
+  const setCurrentUser = (user) => {
+    console.log('setting current user to...');
+    console.log(user);
+    setUser(user);
+  }
+
     return (
       <Router>
         <div>
-          <AppHeader></AppHeader>
-          <Route exact path='/' component={RecordManager} />
-          <Route path='/generator' component={RandomRecordGenerator} />
-          <Route path='/add-record' component={AddRecord} />
+          <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
+          <Route exact path='/'>
+            <RecordManager user={user}/>
+          </Route>
+          <Route path='/generator'>
+            <RandomRecordGenerator user={user}/>
+          </Route>
+          <Route path='/add-record'>
+            <AddRecord user={user}/>
+          </Route>
           <Route path='/edit-record/:id' component={EditRecord} />
-          <Route path='/login' component={LoginPage} />
+          <Route path="/login">
+            <LoginPage setCurrentUser={setCurrentUser} />
+          </Route>
           <Route path='/create-account' component={CreateUserPage} />
         </div>
       </Router>
     );
   }
-}
 
 export default App;

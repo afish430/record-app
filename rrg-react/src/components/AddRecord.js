@@ -14,6 +14,7 @@ class AddRecord extends Component {
             link: '',
             image: '',
             favorite: false,
+            userId: '',
             errorMessage: ''
         };
     }
@@ -37,7 +38,8 @@ class AddRecord extends Component {
             year: this.state.year,
             link: this.state.link,
             image: this.state.image,
-            favorite: this.state.favorite
+            favorite: this.state.favorite,
+            userId: this.props.user._id
         };
 
         axios
@@ -51,6 +53,7 @@ class AddRecord extends Component {
                     link: '',
                     image: '',
                     favorite: '',
+                    userId: '',
                     errorMessage: ''
                 })
                 this.props.history.push('/#' + res.data._id);

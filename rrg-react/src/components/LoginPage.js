@@ -1,18 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import '../styles/App.scss';
 import axios from 'axios';
 
 function LoginPage(props) {
 
     const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
 
     const handleSubmit = e => {
         e.preventDefault();
-        setSuccessMessage("You have logged in");
+        setErrorMessage("");
+        let user = {
+            userName,
+            password
+        };
+        
+        axios
+            .post('http://localhost:8082/api/auth/login', user)
+            .then(res => {
+                setUserName("");
+                setPassword("");
+                props.setCurrentUser(res.data.result);
+                history.push('/');
+            })
+            .catch(err => {
+                setErrorMessage("The user could not be logged in.");
+            })
     };
 
     return (
@@ -48,12 +64,11 @@ function LoginPage(props) {
                                 type="submit"
                                 className="btn btn-warning btn-lg m-2"
                             >
-                            Create User!
+                            Login!
                         </button>
                         </form>
                         <br />
                         <div><strong className="text-danger">{errorMessage}</strong></div>
-                        <div><strong className="text-success">{successMessage}</strong></div>
                     </div>
                 </div>
                 <div className="row">

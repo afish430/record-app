@@ -14,6 +14,7 @@ class EditRecord extends Component {
             link: '',
             image: '',
             favorite: '',
+            userId: '',
             errorMessage: ''
         };
     }
@@ -29,7 +30,8 @@ class EditRecord extends Component {
                     year: res.data.year,
                     link: res.data.link,
                     image: res.data.image,
-                    favorite: res.data.favorite
+                    favorite: res.data.favorite,
+                    userId: res.data.userId
                 })
             })
             .catch(err => {
@@ -56,7 +58,8 @@ class EditRecord extends Component {
             year: this.state.year,
             link: this.state.link,
             image: this.state.image,
-            favorite: this.state.favorite
+            favorite: this.state.favorite,
+            userId: this.state.userId
         };
 
         axios

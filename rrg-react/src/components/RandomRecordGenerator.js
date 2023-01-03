@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/App.scss';
 import '../styles/spinning-record.css';
 import axios from 'axios';
+import {useHistory } from 'react-router-dom';
 import RecordTile from './RecordTile';
 
 function RandomRecordGenerator(props) {
@@ -11,10 +12,17 @@ function RandomRecordGenerator(props) {
     const [generating, setGenerating] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [selectedGenre, setSelectedGenre] = useState('AllButSpecialty');
+    const history = useHistory();
 
     useEffect(() => {
+        // make sure user is logged in
+        if (!props.user || !props.user._id) {
+            history.push('/login');
+        }
+
+        // fetch all records for this user
         axios
-            .get('http://localhost:8082/api/records')
+            .get(`http://localhost:8082/api/records?userId=${props.user._id}`)
             .then(res => {
                 setRecords(res.data);
             })
