@@ -72,8 +72,9 @@ function LoginPage(props) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-4">
-                        <Link to="/create-account" className="btn btn-warning">
+                    <div className="col-md-4 text-center m-auto">
+                        <div>Or</div>
+                        <Link to="/create-account" className="btn-link login-link">
                             Create an Account
                         </Link>
                     </div>

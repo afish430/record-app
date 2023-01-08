@@ -45,8 +45,10 @@ function AppHeader(props) {
                 <Button variant="info" className="aboutBtn" onClick={handleShow}>
                     About
                 </Button>
-                <span>{props.user.userName}</span>
-                <button className="btn-link" onClick={logout}>Logout</button>
+                <span className="logout">
+                    <Button variant="danger" onClick={logout}>Logout</Button>
+                    <span>  [{props.user.userName}]</span>
+                </span>
                 </>}
             </div>
             <hr></hr>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, useHistory  } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './styles/App.scss';
 
 import RecordManager from './components/RecordManager';
@@ -10,10 +10,9 @@ import AppHeader from './components/AppHeader';
 import LoginPage from './components/LoginPage';
 import CreateUserPage from './components/CreateUserPage';
 
-function App(props) {
+function App() {
 
   const [user, setUser] = useState({});
-  let history = useHistory();
 
   const setCurrentUser = (user) => {
     console.log('setting current user to...');

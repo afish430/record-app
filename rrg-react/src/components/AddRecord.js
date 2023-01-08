@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import '../styles/App.scss';
 import axios from 'axios';
 
 class AddRecord extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             title: '',
             artist: '',
@@ -17,6 +17,11 @@ class AddRecord extends Component {
             userId: '',
             errorMessage: ''
         };
+
+        // make sure user is logged in
+        if (!props.user || !props.user._id) {
+            this.props.history.push('/login');
+        }
     }
 
     onChange = e => {
@@ -27,7 +32,7 @@ class AddRecord extends Component {
         e.preventDefault();
 
         if (!this.state.title || !this.state.artist) {
-            this.setState({ errorMessage: 'Album and Artist names are required.' });
+            this.setState({ errorMessage: 'Album and Artist names are required.'});
             return;
         }
 
@@ -59,7 +64,8 @@ class AddRecord extends Component {
                 this.props.history.push('/#' + res.data._id);
             })
             .catch(err => {
-                console.log("Error in AddRecord!");
+                this.setState({ errorMessage: 'An Error Occurred.'});
+                console.log(err);
             })
     };
 
@@ -169,8 +175,12 @@ class AddRecord extends Component {
                                     Cancel
                                 </Link>
                                 <button type="submit" className="btn btn-info mb-2 float-right">Add Record</button>
-                                <strong className="text-danger">{this.state.errorMessage}</strong>
                             </form>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-6 m-auto text-center">
+                            <strong className="text-danger">{this.state.errorMessage}</strong>
                         </div>
                     </div>
                 </div>
@@ -179,4 +189,4 @@ class AddRecord extends Component {
     }
 }
 
-export default AddRecord;
+export default withRouter(AddRecord);

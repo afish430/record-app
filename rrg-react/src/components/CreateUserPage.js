@@ -22,6 +22,7 @@ function CreateUserPage(props) {
             password,
             password2
         };
+        
         axios
             .post('http://localhost:8082/api/auth/signup', newUser)
             .then(res => {
@@ -100,8 +101,8 @@ function CreateUserPage(props) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-4">
-                        <Link to="/login" className="btn btn-warning">
+                    <div className="col-md-4 text-center m-auto">
+                        <Link to="/login" className="btn-link login-link">
                             Back to Login
                         </Link>
                     </div>

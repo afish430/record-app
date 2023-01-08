@@ -35,6 +35,12 @@ body {
       cursor: pointer;
     }
   }
+
+  .login-link {
+    color: #e0a800;
+    font-weight: bold;
+    font-size: 18px;
+  }
 }
 
 .AppHeader {
@@ -60,6 +66,12 @@ body {
     position: absolute;
     top: 30px;
     right: 60px;
+  }
+
+  .logout {
+    position: absolute;
+    top: 30px;
+    left: 60px;
   }
 }
 
