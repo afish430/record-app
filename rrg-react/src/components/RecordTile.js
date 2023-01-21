@@ -7,16 +7,18 @@ function RecordTile(props) {
     const record = props.record;
 
     const onDeleteClick = (id) => {
-        axios
-            .delete('http://localhost:8082/api/records/' + id)
-            .then(res => {
-                console.log("Deletion successful");
-                props.removeRecord(id);
-            })
-            .catch(err => {
-                console.log("Error in RecordTile_deleteClick");
-                console.log(err);
-            })
+        if (window.confirm('Are you sure you want to delete this record?')) {
+            axios
+                .delete('http://localhost:8082/api/records/' + id)
+                .then(res => {
+                    console.log("Deletion successful");
+                    props.removeRecord(id);
+                })
+                .catch(err => {
+                    console.log("Error in RecordTile_deleteClick");
+                    console.log(err);
+                })
+        }
     };
 
     return (

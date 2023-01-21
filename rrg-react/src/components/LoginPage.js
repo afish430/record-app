@@ -27,7 +27,7 @@ function LoginPage(props) {
                 history.push('/');
             })
             .catch(err => {
-                setErrorMessage("The user could not be logged in.");
+                setErrorMessage(err.response.data.error);
             })
     };
 

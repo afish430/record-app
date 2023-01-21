@@ -33,7 +33,7 @@ function CreateUserPage(props) {
                 setPassword2("");
             })
             .catch(err => {
-                setErrorMessage("The user could not be created");
+                setErrorMessage(err.response.data.error);
             })
     };
 
@@ -78,7 +78,7 @@ function CreateUserPage(props) {
                                 </input>
                             </div>
                             <div className='form-group'>
-                                <label htmlFor="password2">Password:</label>
+                                <label htmlFor="password2">Confirm Password:</label>
                                 <input
                                     required
                                     name="password2"

@@ -14,10 +14,13 @@ router.post('/signup', (req, res) => {
     User.findOne({userName: userName})
     .then(user => {
         if (user) {
-            return res.status(422).json({ errors: [{ user: "userName already exists" }] });
+            return res.status(422).json({ error: 'UserName already exists'});
         }
         else if (password !== password2) {
-            return res.status(422).json({ errors: [{ user: "passwords do not match" }] });
+            return res.status(422).json({ error:'Passwords do not match'});
+        }
+        else if (password.length < 8) {
+            return res.status(422).json({ error: 'Password must be at least 8 characters'});
         }
         else {
             const user = new User({
@@ -39,7 +42,7 @@ router.post('/signup', (req, res) => {
                     console.log('User created!');
                 })
                 .catch(err => {
-                    res.status(500).json({errors: [{ error: err }]});
+                    res.status(500).json({error: 'An error occurred on the server'});
                     });
                 });
             });
@@ -58,13 +61,13 @@ router.post('/login', (req, res) => {
     .then(user => {
         if (!user) {
             console.log('User not found...');
-            return res.status(404).json({errors: [{ user: "not found" }],});
+            return res.status(400).json({error: 'Incorrect user name or password'});
         }
         else {
             bcrypt.compare(password, user.password).then(isMatch => {
                 if (!isMatch) {
                     console.log('Passwords do not match...');
-                    return res.status(400).json({ errors: [{ password:"incorrect" }]});
+                    return res.status(400).json({ error: 'Incorrect user name or password'});
                 }
                 console.log('Login successful!');
                 return res.status(200).json({
@@ -74,8 +77,8 @@ router.post('/login', (req, res) => {
             });
         }
     }).catch(err => {
-        console.log('An error occurred on the server...');
-        res.status(500).json({ errors: err });
+        console.log('An error occurred on the server');
+        res.status(500).json({ error: err });
     });
 });
 
