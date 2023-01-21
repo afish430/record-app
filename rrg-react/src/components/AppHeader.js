@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import '../styles/App.scss';
 import turntable from './../images/turntable.png';
 
-function AppHeader() {
-    let currentRoute = window.location.pathname === "/" ? "Manage" : "Generate";
+function AppHeader(props) {
+    let currentRoute = window.location.pathname === "generator" ? "Generate" : "Manage";
     const [activeRoute, setActiveRoute] = useState(currentRoute);
+    const history = useHistory();
 
     const setGenerateActive = () => {
         setActiveRoute('Generate');
@@ -20,11 +21,19 @@ function AppHeader() {
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
+    
+    const logout = () => {
+        props.setCurrentUser({});
+        setActiveRoute('Manage');
+        history.push('/login');
+    }
   
     return (
         <div className="AppHeader text-center">
             <div className="container">
                 <h1>The Vinylator<img src={turntable} alt="recordplayer"></img></h1>
+                { props.user.userName && 
+                <>
                 <div className="row">
                     <Link to="/" className={"btn mr-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
                         Record Manager
@@ -36,6 +45,11 @@ function AppHeader() {
                 <Button variant="info" className="aboutBtn" onClick={handleShow}>
                     About
                 </Button>
+                <span className="logout">
+                    <Button variant="danger" onClick={logout}>Logout</Button>
+                    <span>  [{props.user.userName}]</span>
+                </span>
+                </>}
             </div>
             <hr></hr>
 

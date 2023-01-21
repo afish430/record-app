@@ -1,20 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/App.scss';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import RecordTile from './RecordTile';
 
-function RecordManager() {
+function RecordManager(props) {
     const [records, setRecords] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState('AllButSpecialty');
     const [filteredRecords, setFilteredRecords] = useState([]);
     const recordIdFromHash = useLocation().hash;
     const searchInputRef = useRef(null);
+    const history = useHistory();
 
-    // fetch and sort all records on page load
     useEffect(() => {
+        // make sure user is logged in
+        if (!props.user || !props.user._id) {
+            history.push('/login');
+        }
+
+        // fetch and sort all records on page load
         axios
-            .get('http://localhost:8082/api/records')
+            .get(`http://localhost:8082/api/records?userId=${props.user._id}`)
             .then(res => {
                 let sortedRecords = res.data.sort(sortByArtist);
                 setRecords(sortedRecords);
@@ -52,7 +58,7 @@ function RecordManager() {
             setFilteredRecords(records.filter(rec => rec.year >= 1990));
         }
         else if (selectedGenre === 'Favorites') {
-            setFilteredRecords(records.filter(rec => rec.favorite == true));
+            setFilteredRecords(records.filter(rec => rec.favorite === true));
         }
         else {
             setFilteredRecords(records.filter(rec => rec.genre === selectedGenre));
@@ -72,7 +78,7 @@ function RecordManager() {
     }
 
     const handleSearchKeyDown = (e) => {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             searchRecords();
             e.preventDefault();
         }
@@ -179,7 +185,7 @@ function RecordManager() {
                                 <div className="input-group-append">
                                     <div className="input-group-text clearBtn">
                                         {
-                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre != "AllButSpecialty")
+                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "AllButSpecialty")
                                         && <i className="fa fa-times" onClick={clearSearch}></i>
                                         }
                                     </div>

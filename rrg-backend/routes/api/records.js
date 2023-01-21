@@ -7,10 +7,11 @@ const Record = require('../../models/Record');
 // @description Get all records
 // @access Public
 router.get('/', (req, res) => {
-    Record.find()
+    let userId = req.query.userId;
+    Record.find({userId: userId})
         .then(records => res.json(records))
         .catch(err => 
-            res.status(404).json({ norecordsfound: 'No Records found' })
+            res.status(404).json({ error: 'No records found' })
         );
 });
 
@@ -21,7 +22,7 @@ router.get('/:id', (req, res) => {
     Record.findById(req.params.id)
         .then(record => res.json(record))
         .catch(err => 
-            res.status(404).json({ norecordfound: 'No Record found' })
+            res.status(404).json({ error: 'No record found' })
         );
 });
 
@@ -29,6 +30,14 @@ router.get('/:id', (req, res) => {
 // @description add/save record
 // @access Public
 router.post('/', (req, res) => {
+
+    // Record.updateMany({}, {$set:{"userId": "63b09828d6c1868ba5a531c7"}}).then(record => {
+    //     console.log("updated records!");
+    // })
+    // .catch(err => 
+    //     console.log(err)
+    // );
+    
     Record.create(req.body)
         .then(record => res.json(record))
         .catch(err => 
@@ -52,7 +61,7 @@ router.put('/:id', (req, res) => {
 // @access Public
 router.delete('/:id', (req, res) => {
     Record.findByIdAndRemove(req.params.id, req.body)
-        .then(record => res.json({ mgs: 'record deleted successfully' }))
+        .then(record => res.json({ mgs: 'Record deleted successfully' }))
         .catch(err => 
             res.status(404).json({ error: 'No such a record' })
         );

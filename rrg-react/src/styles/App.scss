@@ -35,6 +35,12 @@ body {
       cursor: pointer;
     }
   }
+
+  .login-link {
+    color: #e0a800;
+    font-weight: bold;
+    font-size: 18px;
+  }
 }
 
 .AppHeader {
@@ -61,6 +67,12 @@ body {
     top: 30px;
     right: 60px;
   }
+
+  .logout {
+    position: absolute;
+    top: 30px;
+    left: 60px;
+  }
 }
 
 .RandomRecordGenerator {
@@ -82,7 +94,7 @@ body {
 
   .record-tile-container {
     width: 430px;
-    height: 688px;
+    height: 670px;
     padding: 15px;
 
     &:hover {
@@ -130,12 +142,7 @@ body {
   }
 }
 
-.AddRecord {
-  min-height: 100vh;
-  color: white;
-}
-
-.EditRecord {
+.AddRecord, .EditRecord, .LoginPage, .CreateUserPage {
   min-height: 100vh;
   color: white;
 }
