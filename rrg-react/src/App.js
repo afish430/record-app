@@ -13,11 +13,14 @@ import CreateUserPage from './components/CreateUserPage';
 function App() {
 
   const [user, setUser] = useState({});
+  const [mode, setMode] = useState('');
 
   const setCurrentUser = (user) => {
-    console.log('setting current user to...');
-    console.log(user);
     setUser(user);
+  }
+
+  const setViewMode = (mode) => {
+    setMode(mode);
   }
 
     return (
@@ -25,7 +28,7 @@ function App() {
         <div>
           <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
           <Route exact path='/'>
-            <RecordManager user={user}/>
+            <RecordManager user={user} mode={mode} setViewMode={setViewMode}/>
           </Route>
           <Route path='/generator'>
             <RandomRecordGenerator user={user}/>

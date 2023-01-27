@@ -3,6 +3,7 @@ import '../styles/App.scss';
 import axios from 'axios';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import RecordTile from './RecordTile';
+import RecordTable from './RecordTable';
 
 function RecordManager(props) {
     const [records, setRecords] = useState([]);
@@ -16,6 +17,10 @@ function RecordManager(props) {
         // make sure user is logged in
         if (!props.user || !props.user._id) {
             history.push('/login');
+        }
+
+        if(!props.mode) {
+            props.setViewMode("Tile");
         }
 
         // fetch and sort all records on page load
@@ -140,16 +145,28 @@ function RecordManager(props) {
         setSelectedGenre(e.target.value); // see useEffect() for actual changes
     };
 
+    const toggleMode = () => {
+        if(props.mode === "Table") {
+           props.setViewMode("Tile");
+        }
+        else if (props.mode === "Tile") {
+            props.setViewMode("Table");
+        }
+    }
+
     return (
         <div className="RecordManager">
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-12 text-center">
                         <h1 className="display-5 text-center">Manage Records</h1>
+                        <button className="btn btn-link" onClick={toggleMode}>
+                            Switch to {props.mode === "Table" ? "Tile" : "Table"} Mode
+                        </button>
                     </div>
                     <div className="col-md-4">
                         <form className="form-inline justify-content-left">
-                            <div className='form-group'>
+                            <div className="form-group">
                                 <label htmlFor="favorite">Filter:</label>
                                 <select
                                     className="form-control ml-2"
@@ -211,9 +228,19 @@ function RecordManager(props) {
                         (Showing {filteredRecords.length} Records)
                     </label>
                 </div>
+                
+                <div>
+                    {
+                        props.mode === "Table" &&
+                        <RecordTable
+                            records={filteredRecords}
+                            removeRecord={removeRecord}>
+                        </RecordTable>
+                    }
+                </div>
 
                 <div className="list">
-                    {filteredRecords.map((record, i) =>
+                    {props.mode === "Tile" && filteredRecords.map((record, i) =>
                         <RecordTile
                             record={record}
                             removeRecord={removeRecord}

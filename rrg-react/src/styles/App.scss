@@ -179,6 +179,11 @@ form label {
     width: 250px;
     height: 520px;
   }
+
+  .btn-link {
+    color: yellow;
+    text-decoration: none;
+  }
 }
 
 .record-tile-container {
@@ -246,5 +251,14 @@ form label {
       font-size: 1.1em;
       font-weight: 400;
     }
+  }
+}
+
+.RecordTableBody {
+  td {
+    vertical-align: middle;
+  }
+  .CoverThumbnail {
+    padding-right: 0;
   }
 }
