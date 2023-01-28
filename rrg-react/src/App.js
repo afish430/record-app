@@ -17,6 +17,7 @@ function App() {
 
   const setCurrentUser = (user) => {
     setUser(user);
+    setViewMode("Tile");
   }
 
   const setViewMode = (mode) => {

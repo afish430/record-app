@@ -254,6 +254,12 @@ form label {
   }
 }
 
+.RecordTableHead {
+  th.sortable {
+    cursor: pointer;
+  }
+}
+
 .RecordTableBody {
   td {
     vertical-align: middle;

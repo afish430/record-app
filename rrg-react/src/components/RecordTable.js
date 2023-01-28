@@ -1,9 +1,27 @@
+import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import '../styles/App.scss';
 import axios from 'axios';
 
 function RecordTable(props) {
+
+    const defaultSortInfo = {
+        sortField: "artist",
+        direction: "ASC"
+    }
+    const [recordList, setRecordList] = useState(props.records);
+    const [sortInfo, setSortInfo] = useState(defaultSortInfo);
+
+    useEffect(() => {
+        setRecordList(props.records);
+        setTimeout(() => {
+            if(props.recordIdFromHash){
+                executeScroll(props.recordIdFromHash.substring(1)); // remove # part
+            }
+        }, 0);
+         
+    }, [props.records, props.recordIdFromHash]);
 
     const onDeleteClick = (id) => {
         if (window.confirm('Are you sure you want to delete this record?')) {
@@ -20,24 +38,63 @@ function RecordTable(props) {
         }
     };
 
+    const sortRecordTable = (sortField) => {
+        let records= [...recordList];
+        let direction = "ASC";
+        if (sortInfo.sortField === sortField && sortInfo.direction === "ASC") {
+           direction = "DESC";
+        }
+        if (direction === "ASC")
+        {
+            records.sort((a, b) => {
+                if ( a[sortField] < b[sortField] ){
+                    return -1;
+                  }
+                else if ( a[sortField] > b[sortField] ){
+                    return 1;
+                }
+                return 0;
+            });
+        } else {
+            records.sort((a, b) => {
+                if ( a[sortField] > b[sortField] ){
+                    return -1;
+                  }
+                else if ( a[sortField] < b[sortField] ){
+                    return 1;
+                }
+                return 0;
+            });
+        }
+        setSortInfo({sortField, direction});
+        setRecordList(records);
+    }
+
+    const executeScroll = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }
+
   return (
     <Table striped bordered hover size="sm">
-      <thead>
+      <thead className="RecordTableHead">
         <tr>
           <th></th>
-          <th>Artist</th>
-          <th>Album Name</th>
-          <th>Year</th>
-          <th>Genre</th>
-          <th>Favorite?</th>
+          <th className="sortable" onClick={() => sortRecordTable("artist")}>Artist</th>
+          <th className="sortable" onClick={() => sortRecordTable("title")}>Album Name</th>
+          <th className="sortable" onClick={() => sortRecordTable("year")}>Year</th>
+          <th className="sortable" onClick={() => sortRecordTable("genre")}>Genre</th>
+          <th className="sortable" onClick={() => sortRecordTable("favorite")}>Favorite?</th>
           <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
       <tbody className="RecordTableBody">
       {
-      props.records.map(( record ) => 
-            <tr key={record.id}>
+        recordList.map(( record ) => 
+            <tr key={record._id} id={record._id}>
               <td className="CoverThumbnail">
                 <img width="50" height="50" src={record.image} alt=""></img>
               </td>

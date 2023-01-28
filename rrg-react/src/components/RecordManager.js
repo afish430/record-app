@@ -10,6 +10,7 @@ function RecordManager(props) {
     const [selectedGenre, setSelectedGenre] = useState('AllButSpecialty');
     const [filteredRecords, setFilteredRecords] = useState([]);
     const recordIdFromHash = useLocation().hash;
+    const [hashId, setHashId] = useState(recordIdFromHash);
     const searchInputRef = useRef(null);
     const history = useHistory();
 
@@ -28,17 +29,17 @@ function RecordManager(props) {
             .get(`http://localhost:8082/api/records?userId=${props.user._id}`)
             .then(res => {
                 let sortedRecords = res.data.sort(sortByArtist);
-                setRecords(sortedRecords);
+                setRecords([...sortedRecords]);
                 setFilteredRecords(sortedRecords.filter(r => r.genre !== 'Holiday' && r.genre !== 'Childrens'));
-                if(recordIdFromHash){
-                    executeScroll(recordIdFromHash.substring(1)); // remove # part
+                if(hashId){
+                    executeScroll(hashId.substring(1)); // remove # part
                 }
             })
             .catch(err => {
                 console.log('Error from RecordManager');
                 console.log(err);
             })
-    }, [recordIdFromHash]);
+    }, [hashId]);
 
     // update filtered records on filter change
     useEffect(() => {
@@ -146,6 +147,7 @@ function RecordManager(props) {
     };
 
     const toggleMode = () => {
+        setHashId(null);
         if(props.mode === "Table") {
            props.setViewMode("Tile");
         }
@@ -234,20 +236,23 @@ function RecordManager(props) {
                         props.mode === "Table" &&
                         <RecordTable
                             records={filteredRecords}
-                            removeRecord={removeRecord}>
+                            removeRecord={removeRecord}
+                            recordIdFromHash={hashId}>
                         </RecordTable>
                     }
                 </div>
 
                 <div className="list">
-                    {props.mode === "Tile" && filteredRecords.map((record, i) =>
-                        <RecordTile
-                            record={record}
-                            removeRecord={removeRecord}
-                            showFooter={true}
-                            key={i}
-                        />
-                    )}
+                    {
+                        props.mode === "Tile" && filteredRecords.map((record, i) =>
+                            <RecordTile
+                                record={record}
+                                removeRecord={removeRecord}
+                                showFooter={true}
+                                key={i}
+                            />
+                        )
+                    }
                 </div>
             </div>
         </div>
