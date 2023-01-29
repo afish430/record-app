@@ -257,14 +257,27 @@ form label {
 .RecordTableHead {
   th.sortable {
     cursor: pointer;
+    min-width: 85px;
+    i.fa {
+      margin-left: 4px;
+    }
   }
+  th.buttonColumn {
+    min-width: 80px;
+    text-align: center;
+  }
+}
+
+table.table {
+  margin-top: 10px;
 }
 
 .RecordTableBody {
   td {
     vertical-align: middle;
+    padding-left: 4px;
   }
   .CoverThumbnail {
-    padding-right: 0;
+    padding-right: 2px;
   }
 }

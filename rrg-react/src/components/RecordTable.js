@@ -82,13 +82,43 @@ function RecordTable(props) {
       <thead className="RecordTableHead">
         <tr>
           <th></th>
-          <th className="sortable" onClick={() => sortRecordTable("artist")}>Artist</th>
-          <th className="sortable" onClick={() => sortRecordTable("title")}>Album Name</th>
-          <th className="sortable" onClick={() => sortRecordTable("year")}>Year</th>
-          <th className="sortable" onClick={() => sortRecordTable("genre")}>Genre</th>
-          <th className="sortable" onClick={() => sortRecordTable("favorite")}>Favorite?</th>
-          <th>Edit</th>
-          <th>Delete</th>
+          <th
+            className="sortable"
+            onClick={() => sortRecordTable("artist")}>
+             Artist
+             {sortInfo.sortField === "artist" && sortInfo.direction === "ASC" && <i className="fa fa-caret-up"></i>}
+             {sortInfo.sortField === "artist" && sortInfo.direction === "DESC" && <i className="fa fa-caret-down"></i>}
+          </th>
+          <th
+            className="sortable"
+            onClick={() => sortRecordTable("title")}>
+            Album Name
+            {sortInfo.sortField === "title" && sortInfo.direction === "ASC" && <i className="fa fa-caret-up"></i>}
+            {sortInfo.sortField === "title" && sortInfo.direction === "DESC" && <i className="fa fa-caret-down"></i>}
+          </th>
+          <th
+            className="sortable"
+            onClick={() => sortRecordTable("year")}>
+            Year
+            {sortInfo.sortField === "year" && sortInfo.direction === "ASC" && <i className="fa fa-caret-up"></i>}
+            {sortInfo.sortField === "year" && sortInfo.direction === "DESC" && <i className="fa fa-caret-down"></i>}
+          </th>
+          <th
+            className="sortable"
+            onClick={() => sortRecordTable("genre")}>
+            Genre
+            {sortInfo.sortField === "genre" && sortInfo.direction === "ASC" && <i className="fa fa-caret-up"></i>}
+            {sortInfo.sortField === "genre" && sortInfo.direction === "DESC" && <i className="fa fa-caret-down"></i>}
+          </th>
+          <th
+            className="sortable"
+            onClick={() => sortRecordTable("favorite")}>
+            Favorite
+            {sortInfo.sortField === "favorite" && sortInfo.direction === "ASC" && <i className="fa fa-caret-up"></i>}
+            {sortInfo.sortField === "favorite" && sortInfo.direction === "DESC" && <i className="fa fa-caret-down"></i>}
+          </th>
+          <th className="buttonColumn">Edit</th>
+          <th className="buttonColumn">Delete</th>
         </tr>
       </thead>
       <tbody className="RecordTableBody">
