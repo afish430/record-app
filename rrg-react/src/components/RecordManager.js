@@ -7,7 +7,7 @@ import RecordTable from './RecordTable';
 
 function RecordManager(props) {
     const [records, setRecords] = useState([]);
-    const [selectedGenre, setSelectedGenre] = useState('AllButSpecialty');
+    const [selectedGenre, setSelectedGenre] = useState('Any');
     const [filteredRecords, setFilteredRecords] = useState([]);
     const recordIdFromHash = useLocation().hash;
     const [hashId, setHashId] = useState(recordIdFromHash);
@@ -43,10 +43,7 @@ function RecordManager(props) {
 
     // update filtered records on filter change
     useEffect(() => {
-        if (selectedGenre === 'AllButSpecialty') {
-            setFilteredRecords(records.filter(rec => rec.genre !== 'Holiday' && rec.genre !== 'Childrens'));
-        }
-        else if (selectedGenre === 'Any') {
+        if (selectedGenre === 'Any') {
             setFilteredRecords(records.map(rec => rec));
         }
         else if (selectedGenre === '60s') {
@@ -107,7 +104,7 @@ function RecordManager(props) {
 
     const clearSearch = (e) => {
         e.preventDefault();
-        setSelectedGenre('AllButSpecialty');
+        setSelectedGenre('Any');
         setFilteredRecords(records);
         searchInputRef.current.value = "";
     }
@@ -156,6 +153,30 @@ function RecordManager(props) {
         }
     }
 
+    const hasGenre = (genre) => {
+        if (genre === "Favorites") {
+            return records.filter(rec => rec.favorite === true).length > 0;
+        }
+        else if (genre === "60s") {
+            return records.filter(rec => rec.year >= 1960 && rec.year < 1970).length > 0;
+        }
+        else if (genre === "70s") {
+            return records.filter(rec => rec.year >= 1970 && rec.year < 1980).length > 0;
+        }
+        else if (genre === "80s") {
+            return records.filter(rec => rec.year >= 1980 && rec.year < 1990).length > 0;
+        }
+        else if (genre === "90s") {
+            return records.filter(rec => rec.year >= 1990).length > 0;
+        }
+        else if (genre === "Favorites") {
+            return records.filter(rec => rec.favorite === true).length > 0;
+        }
+        else {
+            return records.filter(rec => rec.genre === genre).length > 0;
+        } 
+    }
+
     return (
         <div className="RecordManager">
             <div className="container">
@@ -176,22 +197,17 @@ function RecordManager(props) {
                                     value={selectedGenre}
                                     onChange={onFilterChange}
                                 >
-                                    <option value="AllButSpecialty">Any (Non Specialty)</option>
                                     <option value="Any">Any</option>
-                                    <option value="Classic Rock">Classic Rock</option>
-                                    <option value="Rock">Rock</option>
-                                    <option value="Folk">Folk</option>
-                                    <option value="Country">Country</option>
-                                    <option value="Pop">Pop</option>
-                                    <option value="Soul">Soul</option>
-                                    <option value="Reggae">Reggae</option>
-                                    <option value="Holiday">Holiday</option>
-                                    <option value="Childrens">Children's</option>
-                                    <option value="60s">60s</option>
-                                    <option value="70s">70s</option>
-                                    <option value="80s">80s</option>
-                                    <option value="90s">90s to Present</option>
-                                    <option value="Favorites">Favorites</option>
+                                    {
+                                        props.genres.map(genre => {
+                                            return hasGenre(genre) && <option value={genre}>{genre}</option>
+                                        })
+                                    }
+                                    {hasGenre("60s") && <option value="60s">60s</option>}
+                                    {hasGenre("70s") && <option value="70s">70s</option>}
+                                    {hasGenre("80s") && <option value="80s">80s</option>}
+                                    {hasGenre("90s") && <option value="90s">90s to Present</option>}
+                                    {hasGenre("Favorites") && <option value="Favorites">Favorites</option>}
                                 </select>
                             </div>
                         </form>
@@ -204,7 +220,7 @@ function RecordManager(props) {
                                 <div className="input-group-append">
                                     <div className="input-group-text clearBtn">
                                         {
-                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "AllButSpecialty")
+                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "Any")
                                         && <i className="fa fa-times" onClick={clearSearch}></i>
                                         }
                                     </div>

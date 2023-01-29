@@ -110,16 +110,11 @@ class AddRecord extends Component {
                                         value={this.state.genre}
                                         onChange={this.onChange}
                                     >
-                                        <option value="Classic Rock">Classic Rock</option>
-                                        <option value="Rock">Rock</option>
-                                        <option value="Folk">Folk</option>
-                                        <option value="Country">Country</option>
-                                        <option value="Pop">Pop</option>
-                                        <option value="Soul">Soul</option>
-                                        <option value="Reggae">Reggae</option>
-                                        <option value="Holiday">Holiday</option>
-                                        <option value="Childrens">Children's</option>
-                                        <option value="Other">Other</option>
+                                        {
+                                            this.props.genres.map(genre => {
+                                                return <option key={genre} value={genre}>{genre}</option>
+                                            })
+                                        }
                                     </select>
                                 </div>
 

@@ -123,7 +123,7 @@ function RecordTable(props) {
       </thead>
       <tbody className="RecordTableBody">
       {
-        recordList.map(( record ) => 
+        recordList.map(record => 
             <tr key={record._id} id={record._id}>
               <td className="CoverThumbnail">
                 <img width="50" height="50" src={record.image} alt=""></img>

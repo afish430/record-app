@@ -14,6 +14,20 @@ function App() {
 
   const [user, setUser] = useState({});
   const [mode, setMode] = useState('');
+  const [genres, setGenres] = useState([
+    "Classic Rock",
+    "Rock",
+    "Folk",
+    "Alternative",
+    "Country",
+    "Pop",
+    "Rap",
+    "Oldies",
+    "Reggae",
+    "Holiday",
+    "Childrens",
+    "Other"
+  ]);
 
   const setCurrentUser = (user) => {
     setUser(user);
@@ -29,15 +43,18 @@ function App() {
         <div>
           <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
           <Route exact path='/'>
-            <RecordManager user={user} mode={mode} setViewMode={setViewMode}/>
+            <RecordManager user={user} mode={mode} genres={genres} setViewMode={setViewMode}/>
           </Route>
           <Route path='/generator'>
-            <RandomRecordGenerator user={user}/>
+            <RandomRecordGenerator user={user} genres={genres}/>
           </Route>
           <Route path='/add-record'>
-            <AddRecord user={user}/>
+            <AddRecord user={user} genres={genres}/>
           </Route>
-          <Route path='/edit-record/:id' component={EditRecord} />
+          <Route
+            path='/edit-record/:id'
+            render={(props) => <EditRecord {...props} genres={genres}/>}
+          />
           <Route path="/login">
             <LoginPage setCurrentUser={setCurrentUser} />
           </Route>
