@@ -36,30 +36,6 @@ function RandomRecordGenerator(props) {
         setSelectedRecord(null);
     };
 
-    const hasGenre = (genre) => {
-        if (genre === "Favorites") {
-            return records.filter(rec => rec.favorite === true).length > 0;
-        }
-        else if (genre === "60s") {
-            return records.filter(rec => rec.year >= 1960 && rec.year < 1970).length > 0;
-        }
-        else if (genre === "70s") {
-            return records.filter(rec => rec.year >= 1970 && rec.year < 1980).length > 0;
-        }
-        else if (genre === "80s") {
-            return records.filter(rec => rec.year >= 1980 && rec.year < 1990).length > 0;
-        }
-        else if (genre === "90s") {
-            return records.filter(rec => rec.year >= 1990).length > 0;
-        }
-        else if (genre === "Favorites") {
-            return records.filter(rec => rec.favorite === true).length > 0;
-        }
-        else {
-            return records.filter(rec => rec.genre === genre).length > 0;
-        } 
-    }
-
     const generateRecord = () => {
         if (records.length) {
             var nameIndex = Math.floor(Math.random() * records.length);
@@ -76,7 +52,10 @@ function RandomRecordGenerator(props) {
                     filteredRecords = filteredRecords.filter(rec => rec.year >= 1980 && rec.year < 1990);
                 }
                 else if (selectedGenre === '90s') {
-                    filteredRecords = filteredRecords.filter(rec => rec.year >= 1990);
+                    filteredRecords = filteredRecords.filter(rec => rec.year >= 1990 && rec.year < 2000);
+                }
+                else if (selectedGenre === '2000s') {
+                    filteredRecords = filteredRecords.filter(rec => rec.year >= 2000);
                 }
                 else if (selectedGenre === 'Favorites') {
                     filteredRecords = filteredRecords.filter(rec => rec.favorite === true);
@@ -126,14 +105,15 @@ function RandomRecordGenerator(props) {
                                     <option value="Any">Any</option>
                                     {
                                         props.genres.map(genre => {
-                                            return hasGenre(genre) && <option value={genre}>{genre}</option>
+                                            return props.hasGenre(genre, records) && <option value={genre}>{genre}</option>
                                         })
                                     }
-                                    {hasGenre("60s") && <option value="60s">60s</option>}
-                                    {hasGenre("70s") && <option value="70s">70s</option>}
-                                    {hasGenre("80s") && <option value="80s">80s</option>}
-                                    {hasGenre("90s") && <option value="90s">90s to Present</option>}
-                                    {hasGenre("Favorites") && <option value="Favorites">Favorites</option>}
+                                    {props.hasGenre("60s", records) && <option value="60s">60s</option>}
+                                    {props.hasGenre("70s", records) && <option value="70s">70s</option>}
+                                    {props.hasGenre("80s",records) && <option value="80s">80s</option>}
+                                    {props.hasGenre("90s", records) && <option value="90s">90s</option>}
+                                    {props.hasGenre("2000s", records) && <option value="2000s">2000 to Present</option>}
+                                    {props.hasGenre("Favorites", records) && <option value="Favorites">Favorites</option>}
                                 </select>
                             </div>
                         </form>

@@ -14,20 +14,59 @@ function App() {
 
   const [user, setUser] = useState({});
   const [mode, setMode] = useState('');
-  const [genres, setGenres] = useState([
-    "Classic Rock",
-    "Rock",
-    "Folk",
+  const genres = [
     "Alternative",
-    "Country",
-    "Pop",
-    "Rap",
-    "Oldies",
-    "Reggae",
-    "Holiday",
+    "Blues",
     "Childrens",
-    "Other"
-  ]);
+    "Classical",
+    "Classic Rock",
+    "Country",
+    "Dance",
+    "Disco",
+    "Folk",
+    "Funk",
+    "Holiday",
+    "Indie Rock",
+    "Jazz",
+    "Oldies",
+    "Opera",
+    "Other",
+    "Pop",
+    "Prog Rock",
+    "Punk",
+    "Rap",
+    "Reggae",
+    "Rock",
+    "Soul",
+    "Soundtrack"
+  ];
+
+  const hasGenre = (genre, records) => {
+    if (genre === "Favorites") {
+        return records.filter(rec => rec.favorite === true).length > 0;
+    }
+    else if (genre === "60s") {
+        return records.filter(rec => rec.year >= 1960 && rec.year < 1970).length > 0;
+    }
+    else if (genre === "70s") {
+        return records.filter(rec => rec.year >= 1970 && rec.year < 1980).length > 0;
+    }
+    else if (genre === "80s") {
+        return records.filter(rec => rec.year >= 1980 && rec.year < 1990).length > 0;
+    }
+    else if (genre === "90s") {
+        return records.filter(rec => rec.year >= 1990 && rec.year < 2000).length > 0;
+    }
+    else if (genre === "2000s") {
+        return records.filter(rec => rec.year >= 2000).length > 0;
+    }
+    else if (genre === "Favorites") {
+        return records.filter(rec => rec.favorite === true).length > 0;
+    }
+    else {
+        return records.filter(rec => rec.genre === genre).length > 0;
+    } 
+}
 
   const setCurrentUser = (user) => {
     setUser(user);
@@ -43,10 +82,10 @@ function App() {
         <div>
           <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
           <Route exact path='/'>
-            <RecordManager user={user} mode={mode} genres={genres} setViewMode={setViewMode}/>
+            <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode}/>
           </Route>
           <Route path='/generator'>
-            <RandomRecordGenerator user={user} genres={genres}/>
+            <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre}/>
           </Route>
           <Route path='/add-record'>
             <AddRecord user={user} genres={genres}/>
