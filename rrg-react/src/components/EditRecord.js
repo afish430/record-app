@@ -20,7 +20,6 @@ class EditRecord extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         axios
             .get('http://localhost:8082/api/records/' + this.props.match.params.id)
             .then(res => {

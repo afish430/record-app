@@ -30,7 +30,7 @@ function RecordManager(props) {
             .then(res => {
                 let sortedRecords = res.data.sort(sortByArtist);
                 setRecords([...sortedRecords]);
-                setFilteredRecords(sortedRecords.filter(r => r.genre !== 'Holiday' && r.genre !== 'Childrens'));
+                setFilteredRecords(sortedRecords);
                 if(hashId){
                     executeScroll(hashId.substring(1)); // remove # part
                 }
@@ -39,7 +39,7 @@ function RecordManager(props) {
                 console.log('Error from RecordManager');
                 console.log(err);
             })
-    }, [hashId]);
+    }, []);
 
     // update filtered records on filter change
     useEffect(() => {
@@ -47,11 +47,9 @@ function RecordManager(props) {
             setFilteredRecords(records.map(rec => rec));
         }
         else if (selectedGenre === '60s') {
-            console.log('is 60s');
             setFilteredRecords(records.filter(rec => rec.year >= 1960 && rec.year < 1970));
         }
         else if (selectedGenre === '70s') {
-            console.log('is 70s');
             setFilteredRecords(records.filter(rec => rec.year >= 1970 && rec.year < 1980));
         }
         else if (selectedGenre === '80s') {
@@ -184,7 +182,7 @@ function RecordManager(props) {
                                     <option value="Any">Any</option>
                                     {
                                         props.genres.map(genre => {
-                                            return props.hasGenre(genre, records) && <option value={genre}>{genre}</option>
+                                            return props.hasGenre(genre, records) && <option key={genre} value={genre}>{genre}</option>
                                         })
                                     }
                                     {props.hasGenre("60s", records) && <option value="60s">60s</option>}

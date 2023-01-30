@@ -5,7 +5,6 @@ import '../styles/App.scss';
 import axios from 'axios';
 
 function RecordTable(props) {
-
     const defaultSortInfo = {
         sortField: "artist",
         direction: "ASC"
