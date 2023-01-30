@@ -17,7 +17,7 @@ function App() {
   const genres = [
     "Alternative",
     "Blues",
-    "Childrens",
+    "Children's",
     "Classical",
     "Classic Rock",
     "Country",

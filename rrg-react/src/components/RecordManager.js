@@ -78,6 +78,10 @@ function RecordManager(props) {
         }
     }
 
+    const scrollToTop = () =>{
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
     const removeRecord = (id) => {
         setRecords(records.filter(rec => rec._id !== id));
         setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
@@ -252,6 +256,9 @@ function RecordManager(props) {
                     }
                 </div>
             </div>
+            <button className="btn btn-link to-top" onClick={scrollToTop}>
+                Top <i className="fa fa-caret-up"></i>
+            </button>
         </div>
     );
 }
