@@ -46,19 +46,22 @@ function RecordManager(props) {
         if (selectedGenre === 'Any') {
             setFilteredRecords(records.map(rec => rec));
         }
-        else if (selectedGenre === '60s') {
+        else if (selectedGenre === 'Pre-1960') {
+            setFilteredRecords(records.filter(rec => rec.year < 1960));
+        }
+        else if (selectedGenre === '1960s') {
             setFilteredRecords(records.filter(rec => rec.year >= 1960 && rec.year < 1970));
         }
-        else if (selectedGenre === '70s') {
+        else if (selectedGenre === '1970s') {
             setFilteredRecords(records.filter(rec => rec.year >= 1970 && rec.year < 1980));
         }
-        else if (selectedGenre === '80s') {
+        else if (selectedGenre === '1980s') {
             setFilteredRecords(records.filter(rec => rec.year >= 1980 && rec.year < 1990));
         }
-        else if (selectedGenre === '90s') {
+        else if (selectedGenre === '1990s') {
             setFilteredRecords(records.filter(rec => rec.year >= 1990 && rec.year < 2000));
         }
-        else if (selectedGenre === '2000s') {
+        else if (selectedGenre === '2000 to Present') {
             setFilteredRecords(records.filter(rec => rec.year >= 2000));
         }
         else if (selectedGenre === 'Favorites') {
@@ -185,11 +188,12 @@ function RecordManager(props) {
                                             return props.hasGenre(genre, records) && <option key={genre} value={genre}>{genre}</option>
                                         })
                                     }
-                                    {props.hasGenre("60s", records) && <option value="60s">60s</option>}
-                                    {props.hasGenre("70s", records) && <option value="70s">70s</option>}
-                                    {props.hasGenre("80s", records) && <option value="80s">80s</option>}
-                                    {props.hasGenre("90s", records) && <option value="90s">90s</option>}
-                                    {props.hasGenre("2000s", records) && <option value="2000s">2000 to Present</option>}
+                                    {props.hasGenre("Pre-1960", records) && <option value="Pre-1960">Pre-1960</option>}
+                                    {props.hasGenre("1960s", records) && <option value="1960s">1960s</option>}
+                                    {props.hasGenre("1970s", records) && <option value="1970s">1970s</option>}
+                                    {props.hasGenre("1980s", records) && <option value="1980s">1980s</option>}
+                                    {props.hasGenre("1990s", records) && <option value="1990s">1990s</option>}
+                                    {props.hasGenre("2000 to Present", records) && <option value="2000 to Present">2000 to Present</option>}
                                     {props.hasGenre("Favorites", records) && <option value="Favorites">Favorites</option>}
                                 </select>
                             </div>

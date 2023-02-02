@@ -45,19 +45,22 @@ function App() {
     if (genre === "Favorites") {
         return records.filter(rec => rec.favorite === true).length > 0;
     }
-    else if (genre === "60s") {
+    else if (genre === "Pre-1960") {
+      return records.filter(rec => rec.year < 1960).length > 0;
+  }
+    else if (genre === "1960s") {
         return records.filter(rec => rec.year >= 1960 && rec.year < 1970).length > 0;
     }
-    else if (genre === "70s") {
+    else if (genre === "1970s") {
         return records.filter(rec => rec.year >= 1970 && rec.year < 1980).length > 0;
     }
-    else if (genre === "80s") {
+    else if (genre === "1980s") {
         return records.filter(rec => rec.year >= 1980 && rec.year < 1990).length > 0;
     }
-    else if (genre === "90s") {
+    else if (genre === "1990s") {
         return records.filter(rec => rec.year >= 1990 && rec.year < 2000).length > 0;
     }
-    else if (genre === "2000s") {
+    else if (genre === "2000 to Present") {
         return records.filter(rec => rec.year >= 2000).length > 0;
     }
     else if (genre === "Favorites") {
