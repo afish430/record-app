@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './styles/App.scss';
 
 import RecordManager from './components/RecordManager';
@@ -9,6 +9,7 @@ import RandomRecordGenerator from './components/RandomRecordGenerator';
 import AppHeader from './components/AppHeader';
 import LoginPage from './components/LoginPage';
 import CreateUserPage from './components/CreateUserPage';
+import NotFoundPage from './components/NotFoundPage';
 
 function App() {
 
@@ -84,6 +85,7 @@ function App() {
       <Router>
         <div>
           <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
+          <Switch>
           <Route exact path='/'>
             <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser}/>
           </Route>
@@ -101,6 +103,8 @@ function App() {
             <LoginPage setCurrentUser={setCurrentUser} />
           </Route>
           <Route path='/create-account' component={CreateUserPage} />
+          <Route component={NotFoundPage} />
+          </Switch>
         </div>
       </Router>
     );
