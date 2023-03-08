@@ -48,7 +48,12 @@ class AddRecord extends Component {
         };
 
         axios
-            .post('http://localhost:8082/api/records', data)
+            .post('http://localhost:8082/api/records', data,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
             .then(res => {
                 this.setState({
                     title: '',

@@ -95,7 +95,7 @@ body {
 
   .record-tile-container {
     width: 375px;
-    height: 595px;
+    min-height: 595px;
     padding: 12px 8px;
 
     &:hover {

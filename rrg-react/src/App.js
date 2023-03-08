@@ -85,10 +85,10 @@ function App() {
         <div>
           <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
           <Route exact path='/'>
-            <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode}/>
+            <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser}/>
           </Route>
           <Route path='/generator'>
-            <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre}/>
+            <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
           </Route>
           <Route path='/add-record'>
             <AddRecord user={user} genres={genres}/>

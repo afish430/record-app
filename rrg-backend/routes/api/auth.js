@@ -4,6 +4,10 @@ const router = express.Router();
 const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 
+const jwt = require("jsonwebtoken")
+const config = require('config');
+const jwtSecret = config.get('jwtSecret');
+
 // @route POST api/auth/signup
 // @description create a new user account
 // @access Public
@@ -72,13 +76,27 @@ router.post('/login', (req, res) => {
                 console.log('Login successful!');
                 return res.status(200).json({
                     success: true,
-                    result: user
+                    result: user,
+                    token: jwt.sign({ userName: user.userName, _id: user._id, email: user.email, isAdmin: user.isAdmin }, jwtSecret)
                 });
             });
         }
     }).catch(err => {
         console.log('An error occurred on the server');
         res.status(500).json({ error: err });
+    });
+});
+
+router.get('/loggedInUser', (req, res) => {
+    jwt.verify(req.headers.token, jwtSecret, function (err, decoded) {
+        if (err) {
+            res.status(401).json({ error: 'Not Authorized' })
+        } else {
+            return res.status(200).json({
+                success: true,
+                user: decoded
+            });
+        }
     });
 });
 

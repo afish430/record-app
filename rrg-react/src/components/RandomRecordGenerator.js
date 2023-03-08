@@ -16,13 +16,31 @@ function RandomRecordGenerator(props) {
 
     useEffect(() => {
         // make sure user is logged in
-        if (!props.user || !props.user._id) {
-            history.push('/login');
-        }
+        axios.get(`http://localhost:8082/api/auth/loggedInUser`,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
+            .then(res => {
+                if (!res.data.user && (!props.user || !props.user._id)) {
+                    history.push('/login');
+                } else {
+                    props.setCurrentUser(res.data.user)
+                }
+            })
+            .catch(err => {
+                history.push('/login');
+            })
 
         // fetch all records for this user
         axios
-            .get(`http://localhost:8082/api/records?userId=${props.user._id}`)
+            .get(`http://localhost:8082/api/records`,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
             .then(res => {
                 setRecords(res.data);
             })

@@ -6,7 +6,7 @@ import '../styles/App.scss';
 import turntable from './../images/turntable.png';
 
 function AppHeader(props) {
-    let currentRoute = window.location.pathname === "generator" ? "Generate" : "Manage";
+    let currentRoute = window.location.pathname === "/generator" ? "Generate" : "Manage";
     const [activeRoute, setActiveRoute] = useState(currentRoute);
     const history = useHistory();
 
@@ -23,6 +23,7 @@ function AppHeader(props) {
     const handleShow = () => setShowModal(true);
     
     const logout = () => {
+        localStorage.setItem("jwt", null);
         props.setCurrentUser({});
         setActiveRoute('Manage');
         history.push('/login');

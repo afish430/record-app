@@ -16,9 +16,22 @@ function RecordManager(props) {
 
     useEffect(() => {
         // make sure user is logged in
-        if (!props.user || !props.user._id) {
-            history.push('/login');
-        }
+        axios.get(`http://localhost:8082/api/auth/loggedInUser`,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
+            .then(res => {
+                if (!res.data.user && (!props.user || !props.user._id)) {
+                    history.push('/login');
+                } else {
+                    props.setCurrentUser(res.data.user)
+                }
+            })
+            .catch(err => {
+                history.push('/login');
+            })
 
         if(!props.mode) {
             props.setViewMode("Tile");
@@ -26,7 +39,12 @@ function RecordManager(props) {
 
         // fetch and sort all records on page load
         axios
-            .get(`http://localhost:8082/api/records?userId=${props.user._id}`)
+            .get(`http://localhost:8082/api/records`,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
             .then(res => {
                 let sortedRecords = res.data.sort(sortByArtist);
                 setRecords([...sortedRecords]);

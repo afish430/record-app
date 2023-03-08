@@ -21,7 +21,12 @@ class EditRecord extends Component {
 
     componentDidMount() {
         axios
-            .get('http://localhost:8082/api/records/' + this.props.match.params.id)
+            .get('http://localhost:8082/api/records/' + this.props.match.params.id,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
             .then(res => {
                 this.setState({
                     title: res.data.title,
@@ -63,7 +68,12 @@ class EditRecord extends Component {
         };
 
         axios
-            .put('http://localhost:8082/api/records/' + this.props.match.params.id, data)
+            .put('http://localhost:8082/api/records/' + this.props.match.params.id, data,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
             .then(res => {
                 this.props.history.push('/#' + this.props.match.params.id);
             })
