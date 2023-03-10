@@ -24,6 +24,7 @@ function LoginPage(props) {
                 setUserName("");
                 setPassword("");
                 props.setCurrentUser(res.data.result);
+                props.setViewMode("Tile");
                 localStorage.setItem("jwt", res.data.token);
                 history.push('/');
             })

@@ -126,7 +126,8 @@ function RandomRecordGenerator(props) {
                                     <option value="Any">Any</option>
                                     {
                                         props.genres.map(genre => {
-                                            return props.hasGenre(genre, records) && <option value={genre}>{genre}</option>
+                                            return props.hasGenre(genre, records) && 
+                                                <option value={genre} key={genre}>{genre}</option>
                                         })
                                     }
                                     {props.hasGenre("Pre-1960", records) && <option value="Pre-1960">Pre-1960</option>}

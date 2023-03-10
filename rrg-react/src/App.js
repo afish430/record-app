@@ -74,40 +74,39 @@ function App() {
 
   const setCurrentUser = (user) => {
     setUser(user);
-    setViewMode("Tile");
   }
 
   const setViewMode = (mode) => {
     setMode(mode);
   }
 
-    return (
-      <Router>
-        <div>
-          <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
-          <Switch>
-          <Route exact path='/'>
-            <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser}/>
-          </Route>
-          <Route path='/generator'>
-            <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
-          </Route>
-          <Route path='/add-record'>
-            <AddRecord user={user} genres={genres}/>
-          </Route>
-          <Route
-            path='/edit-record/:id'
-            render={(props) => <EditRecord {...props} genres={genres}/>}
-          />
-          <Route path="/login">
-            <LoginPage setCurrentUser={setCurrentUser} />
-          </Route>
-          <Route path='/create-account' component={CreateUserPage} />
-          <Route component={NotFoundPage} />
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
+  return (
+    <Router>
+      <div>
+        <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
+        <Switch>
+        <Route exact path='/'>
+          <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser}/>
+        </Route>
+        <Route path='/generator'>
+          <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
+        </Route>
+        <Route path='/add-record'>
+          <AddRecord user={user} genres={genres}/>
+        </Route>
+        <Route
+          path='/edit-record/:id'
+          render={(props) => <EditRecord {...props} genres={genres}/>}
+        />
+        <Route path="/login">
+          <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode}/>
+        </Route>
+        <Route path='/create-account' component={CreateUserPage} />
+        <Route component={NotFoundPage} />
+        </Switch>
+      </div>
+    </Router>
+  );
+}
 
 export default App;

@@ -20,7 +20,7 @@ function RecordTile(props) {
                     props.removeRecord(id);
                 })
                 .catch(err => {
-                    console.log("Error in RecordTile_deleteClick");
+                    console.log("Error in RecordTile.onDeleteClick");
                     console.log(err);
                 })
         }

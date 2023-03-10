@@ -10,7 +10,7 @@ function NotFoundPage(props) {
                 <div className="row">
                     <div className="col-md-4 m-auto text-center">
                         <h1 className="display-5">Page Not Found</h1>
-                        <Link to="/" className="btn btn-light">
+                        <Link to="/" className="btn btn-warning">
                             Back to Home
                         </Link>
                     </div>

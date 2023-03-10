@@ -25,13 +25,18 @@ function RecordTable(props) {
     const onDeleteClick = (id) => {
         if (window.confirm('Are you sure you want to delete this record?')) {
             axios
-                .delete('http://localhost:8082/api/records/' + id)
+                .delete('http://localhost:8082/api/records/' + id,
+                {
+                    headers: {
+                        token: localStorage.getItem("jwt")
+                    }
+                })
                 .then(res => {
                     console.log("Deletion successful");
                     props.removeRecord(id);
                 })
                 .catch(err => {
-                    console.log("Error in RecordTile_deleteClick");
+                    console.log("Error in RecordTable.onDeleteClick");
                     console.log(err);
                 })
         }
