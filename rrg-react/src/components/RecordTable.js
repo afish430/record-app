@@ -133,7 +133,9 @@ function RecordTable(props) {
                 <img width="50" height="50" src={record.image} alt=""></img>
               </td>
               <td>{record.artist}</td>
-              <td>{record.title}</td>
+              <td>
+                <a className="albumLink" href={record.link} target="_blank">{record.title}</a>
+              </td>
               <td>{record.year}</td>
               <td>{record.genre}</td>
               <td>{record.favorite ? 'Yes' : 'No'}</td>

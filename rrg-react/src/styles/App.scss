@@ -264,6 +264,9 @@ form label {
 }
 
 .RecordTableHead {
+  th {
+    border: 2px solid white;
+  }
   th.sortable {
     cursor: pointer;
     min-width: 85px;
@@ -283,8 +286,15 @@ table.table {
 
 .RecordTableBody {
   td {
+    border: 2px solid white;
     vertical-align: middle;
     padding-left: 4px;
+    a.albumLink {
+      color: cyan;
+      &:hover {
+        color: yellow;
+      }
+    }
   }
   .CoverThumbnail {
     padding-right: 2px;
