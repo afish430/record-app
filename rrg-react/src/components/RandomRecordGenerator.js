@@ -26,6 +26,10 @@ function RandomRecordGenerator(props) {
                 if (!res.data.user && (!props.user || !props.user._id)) {
                     history.push('/login');
                 } else {
+                    if (res.data.newToken) {
+                        console.log("updating local storage");
+                        localStorage.setItem("jwt", res.data.newToken);
+                    }
                     props.setCurrentUser(res.data.user)
                 }
             })

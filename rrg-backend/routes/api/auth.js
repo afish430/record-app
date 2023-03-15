@@ -77,7 +77,10 @@ router.post('/login', (req, res) => {
                 return res.status(200).json({
                     success: true,
                     result: user,
-                    token: jwt.sign({ userName: user.userName, _id: user._id, email: user.email, isAdmin: user.isAdmin }, jwtSecret)
+                    token: jwt.sign({ userName: user.userName, _id: user._id, email: user.email, isAdmin: user.isAdmin, issuedAt: new Date() },
+                        jwtSecret,
+                        {expiresIn: '1h'}
+                    )
                 });
             });
         }
@@ -92,9 +95,20 @@ router.get('/loggedInUser', (req, res) => {
         if (err) {
             res.status(401).json({ error: 'Not Authorized' })
         } else {
+            let newToken = null;
+            let expiryTime = new Date(decoded.issuedAt).getTime() + 3600000; // issued time plus 1 hour
+            let currentTime = new Date().getTime();
+            if (currentTime > expiryTime - 600000) { // if within 10 mins of expiry, send new jwt
+                console.log("issuing new token")
+                newToken = jwt.sign({ userName: decoded.userName, _id: decoded._id, email: decoded.email, isAdmin: decoded.isAdmin, issuedAt: new Date() },
+                    jwtSecret,
+                    {expiresIn: '1h'}
+                );
+            }
             return res.status(200).json({
                 success: true,
-                user: decoded
+                user: decoded,
+                newToken: newToken
             });
         }
     });
