@@ -97,7 +97,11 @@ function RecordManager(props) {
     const executeScroll = (id) => {
         const element = document.getElementById(id);
         if (element) {
+            element.classList.add('selectAfterScroll');
             element.scrollIntoView({ behavior: "smooth", block: "center" });
+            setTimeout(() => {
+                element.classList.remove('selectAfterScroll');
+            }, 2000);
         }
     }
 

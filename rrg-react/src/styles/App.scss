@@ -42,6 +42,10 @@ body {
     font-weight: bold;
     font-size: 18px;
   }
+
+  .selectAfterScroll {
+    background-color: yellowgreen !important;
+  }
 }
 
 .AppHeader {
@@ -200,6 +204,7 @@ form label {
   background-color: white;
   position: relative;
   border-radius: 3px;
+  transition: background-color 1s ease;
 
   .star-fav {
     position: absolute;
@@ -285,6 +290,9 @@ table.table {
 }
 
 .RecordTableBody {
+  tr {
+    transition: background-color 1s ease;
+  }
   td {
     border: 2px solid white;
     vertical-align: middle;
