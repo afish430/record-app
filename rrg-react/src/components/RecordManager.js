@@ -101,7 +101,7 @@ function RecordManager(props) {
             element.scrollIntoView({ behavior: "smooth", block: "center" });
             setTimeout(() => {
                 element.classList.remove('selectAfterScroll');
-            }, 2000);
+            }, 1000);
         }
     }
 
