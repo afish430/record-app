@@ -36,10 +36,10 @@ function AppHeader(props) {
                 { props.user.userName && 
                 <>
                 <div className="row">
-                    <Link to="/" className={"btn mr-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
+                    <Link to="/" className={"btn btn-tab mr-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
                         Record Manager
                     </Link>
-                    <Link to="/generator" className={"btn ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
+                    <Link to="/generator" className={"btn btn-tab ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
                         Record Generator
                     </Link>
                 </div>

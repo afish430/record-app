@@ -110,8 +110,13 @@ function RecordManager(props) {
     }
 
     const removeRecord = (id) => {
-        setRecords(records.filter(rec => rec._id !== id));
-        setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
+        const element = document.getElementById(id)
+        element.classList.add('hideBeforeDelete');
+            setTimeout(() => {
+                element.classList.remove('hideBeforeDelete');
+                setRecords(records.filter(rec => rec._id !== id));
+                setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
+            }, 1500);
     }
 
     const handleSearchKeyDown = (e) => {
