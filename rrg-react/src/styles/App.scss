@@ -329,3 +329,24 @@ table.table {
 .NotFoundPage {
   color: yellow;
 }
+
+.RecordStats {
+
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  min-width: 100px;
+  color: white;
+  
+  .chartDiv {
+    .highcharts-container{
+      width: 100% !important;
+      height: 100% !important;
+    }
+    
+    .highcharts-root{
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+}

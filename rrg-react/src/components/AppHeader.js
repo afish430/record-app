@@ -6,16 +6,30 @@ import '../styles/App.scss';
 import turntable from './../images/turntable.png';
 
 function AppHeader(props) {
-    let currentRoute = window.location.pathname === "/generator" ? "Generate" : "Manage";
+    let currentRoute;
+    if (window.location.pathname === "/Generate") {
+        currentRoute = "Generate";
+    }
+    else if (window.location.pathname === "/Stats") {
+        currentRoute = "Stats";
+    }
+    else {
+        currentRoute = "Manage";
+    }
+
     const [activeRoute, setActiveRoute] = useState(currentRoute);
     const history = useHistory();
+
+    const setManageActive = () => {
+        setActiveRoute('Manage');
+    }
 
     const setGenerateActive = () => {
         setActiveRoute('Generate');
     }
 
-    const setManageActive = () => {
-        setActiveRoute('Manage');
+    const setStatsActive = () => {
+        setActiveRoute('Stats');
     }
 
     const [showModal, setShowModal] = useState(false);
@@ -39,8 +53,11 @@ function AppHeader(props) {
                     <Link to="/" className={"btn btn-tab mr-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
                         Record Manager
                     </Link>
-                    <Link to="/generator" className={"btn btn-tab ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
+                    <Link to="/Generate" className={"btn btn-tab ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
                         Record Generator
+                    </Link>
+                    <Link to="/Stats" className={"btn btn-tab ml-2 " + (activeRoute === "Stats" ? "btn-info" : "btn-outline-light")} onClick={setStatsActive}>
+                        Record Stats
                     </Link>
                 </div>
                 <Button variant="info" className="aboutBtn" onClick={handleShow}>

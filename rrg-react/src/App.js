@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './styles/App.scss';
 
 import RecordManager from './components/RecordManager';
+import RandomRecordGenerator from './components/RandomRecordGenerator';
+import RecordStats from './components/RecordStats';
 import AddRecord from './components/AddRecord';
 import EditRecord from './components/EditRecord';
-import RandomRecordGenerator from './components/RandomRecordGenerator';
 import AppHeader from './components/AppHeader';
 import LoginPage from './components/LoginPage';
 import CreateUserPage from './components/CreateUserPage';
@@ -88,8 +89,11 @@ function App() {
         <Route exact path='/'>
           <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser}/>
         </Route>
-        <Route path='/generator'>
+        <Route path='/Generate'>
           <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
+        </Route>
+        <Route path='/Stats'>
+          <RecordStats user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
         </Route>
         <Route path='/add-record'>
           <AddRecord user={user} genres={genres}/>
