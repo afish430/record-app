@@ -53,11 +53,11 @@ function AppHeader(props) {
                     <Link to="/" className={"btn btn-tab mr-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
                         Record Manager
                     </Link>
-                    <Link to="/Generate" className={"btn btn-tab ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
-                        Record Generator
-                    </Link>
                     <Link to="/Stats" className={"btn btn-tab ml-2 " + (activeRoute === "Stats" ? "btn-info" : "btn-outline-light")} onClick={setStatsActive}>
                         Record Stats
+                    </Link>
+                    <Link to="/Generate" className={"btn btn-tab ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
+                        Record Generator
                     </Link>
                 </div>
                 <Button variant="info" className="aboutBtn" onClick={handleShow}>

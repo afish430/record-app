@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useHistory } from 'react-router-dom';
+import RecordTile from './RecordTile';
 import '../styles/App.scss';
 import '../styles/spinning-record.css';
 import axios from 'axios';
@@ -9,6 +10,7 @@ import HighchartsReact from 'highcharts-react-official';
 function RecordStats(props) {
 
     const [records, setRecords] = useState([]);
+    const [recordStats, setRecordStats] = useState({});
     const history = useHistory();
       
 
@@ -51,6 +53,81 @@ function RecordStats(props) {
             })
     }, []);
 
+    useEffect(() => {
+        calculateStats();
+    }, [records]);
+
+    const calculateStats = () => {
+        const recordCount = records.length;
+        const artists = [];
+        const genres = [];
+        let artistCount = 0;
+        let genreCount = 0;
+        let oldestRecord = records[0];
+        let newestRecord = records[0];
+        records.forEach(rec => {
+            if (!artists.includes(rec.artist)) {
+                artistCount++;
+                artists.push(rec.artist);
+            }
+            if (!genres.includes(rec.genre)) {
+                genreCount++;
+                genres.push(rec.genre);
+            }
+            if (rec.year < oldestRecord.year) {
+                oldestRecord = rec;
+            }
+            if (rec.year > newestRecord.year) {
+                newestRecord = rec;
+            }
+        });
+
+        setRecordStats({
+            recordCount,
+            artistCount,
+            genreCount,
+            oldestRecord,
+            newestRecord
+        });
+    }
+
+    const getRecordsByGenre = () => {
+        const genreCounts = {};
+        records.forEach(rec => {
+            if (genreCounts[rec.genre] !== undefined) {
+                genreCounts[rec.genre]++;
+            }
+            else {
+                genreCounts[rec.genre] = 1;
+            }
+        });
+
+        const recordsByGenre = [];
+        for (const key in genreCounts) {
+            recordsByGenre.push({name: key, y: genreCounts[key]})
+        }
+        return recordsByGenre;
+    };
+
+    const getRecordsByDecade = () => {
+        let recordsByDecade = [
+            { name: "Pre-1940", y: records.filter(rec => rec.year < 1940).length },
+            { name: "1940s", y: records.filter(rec => rec.year >= 1940 && rec.year < 1950).length },
+            { name: "1950s", y: records.filter(rec => rec.year >= 1950 && rec.year < 1960).length },
+            { name: "1960s", y: records.filter(rec => rec.year >= 1960 && rec.year < 1970).length },
+            { name: "1970s", y: records.filter(rec => rec.year >= 1970 && rec.year < 1980).length },
+            { name: "1980s", y: records.filter(rec => rec.year >= 1980 && rec.year < 1990).length },
+            { name: "1990s", y: records.filter(rec => rec.year >= 1990 && rec.year < 2000).length },
+            { name: "2000s", y: records.filter(rec => rec.year >= 2000 && rec.year < 2010).length },
+            { name: "2010s", y: records.filter(rec => rec.year >= 2010 && rec.year < 2020).length },
+            { name: "2020s", y: records.filter(rec => rec.year >= 2020).length },
+        ];
+
+        recordsByDecade = recordsByDecade.filter(decade => decade.y > 0);
+        console.log(recordsByDecade);
+        return recordsByDecade;
+    };
+
     const getGenresPieChartOptions = (type) => ({
         chart: {
           type,
@@ -67,8 +144,6 @@ function RecordStats(props) {
         },
         plotOptions: {
             pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
                     format: '<b>{point.name}</b>: {point.percentage:.1f} %'
@@ -84,23 +159,39 @@ function RecordStats(props) {
         ],
     });
 
-    const getRecordsByGenre = () => {
-        const genreCounts = {};
-        records.forEach(rec => {
-            if (genreCounts[rec.genre] !== undefined) {
-                genreCounts[rec.genre]++;
+    const getDecadesBarChartOptions = (type) => ({
+        chart: {
+          type,
+          marginLeft: 100,
+          marginRight: 100
+        },
+        title: {
+          text: "Records by Decade",
+          margin: 10
+        },
+        legend: {
+            enabled: false
+        },
+        xAxis: {
+            categories: getRecordsByDecade().map(decade => decade.name),
+            title: {
+                text: 'Decade'
             }
-            else {
-                genreCounts[rec.genre] = 0;
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Record Count'
             }
-        })
-
-        const recordsByGenre = [];
-        for (const key in genreCounts) {
-            recordsByGenre.push({name: key, y: genreCounts[key]})
-        }
-        return recordsByGenre;
-    };
+        },
+        series: [
+          {
+            name: 'Count',
+            colorByPoint: true,
+            data: getRecordsByDecade(),
+          }
+        ],
+    });
 
     return (
         <div className="RecordStats">
@@ -110,8 +201,33 @@ function RecordStats(props) {
                         <h1 className="display-5">Record Statistics</h1>
                         <div className="chartDiv">
                             <HighchartsReact highcharts={Highcharts} options={getGenresPieChartOptions('pie')} />
+                            <HighchartsReact highcharts={Highcharts} options={getDecadesBarChartOptions('column')} />
                         </div>
-                        <h2 className="display-5">More coming soon!</h2>
+                        {
+                            recordStats.oldestRecord && recordStats.newestRecord &&
+                            <div>
+                                <p>Total Records: {recordStats.recordCount}</p>
+                                <p>Total Artists: {recordStats.artistCount}</p>
+                                <p>Total Genres: {recordStats.genreCount}</p>
+                                <div className="oldest-newest">
+                                    <div>
+                                        <p>Oldest Record*:</p>
+                                        <RecordTile
+                                            record={recordStats.oldestRecord}
+                                            showFooter={false}
+                                        />
+                                    </div>
+                                    <div>
+                                        <p>Newest Record*:</p>
+                                        <RecordTile
+                                            record={recordStats.newestRecord}
+                                            showFooter={false}
+                                        />
+                                    </div>
+                                </div>
+                                <p className="asterisk">*May not reflect ties (records released in the same year)</p>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

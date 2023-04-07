@@ -342,11 +342,41 @@ table.table {
     .highcharts-container{
       width: 100% !important;
       height: 100% !important;
+      margin-bottom: 20px;
     }
     
     .highcharts-root{
       width: 100% !important;
       height: 100% !important;
+    }
+  }
+
+  .oldest-newest {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 100px;
+  }
+
+  p {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .asterisk {
+    font-size: 14px;
+    color: lightgray;
+    font-weight:normal;
+  }
+
+  .record-tile-container {
+    width: 250px;
+    max-height: 455px;
+    padding: 12px 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    .mt-3 {
+      display: none;
     }
   }
 }
