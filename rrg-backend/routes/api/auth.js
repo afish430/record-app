@@ -12,7 +12,6 @@ const jwtSecret = config.get('jwtSecret');
 // @description create a new user account
 // @access Public
 router.post('/signup', (req, res) => {
-    console.log('Creating new user...');
     let { userName, email, password, password2, isAdmin } = req.body;
     
     User.findOne({userName: userName})
@@ -43,9 +42,10 @@ router.post('/signup', (req, res) => {
                         success: true,
                         result: response
                     })
-                    console.log('User created!');
                 })
                 .catch(err => {
+                    console.log('A sign-up error occurred on the server');
+                    console.log(err);
                     res.status(500).json({error: 'An error occurred on the server'});
                     });
                 });
@@ -58,22 +58,18 @@ router.post('/signup', (req, res) => {
 // @description logs a user in
 // @access Public
 router.post('/login', (req, res) => {
-    console.log('Logging in user...');
     let { userName, password } = req.body;
 
     User.findOne({userName: userName})
     .then(user => {
         if (!user) {
-            console.log('User not found...');
             return res.status(400).json({error: 'Incorrect user name or password'});
         }
         else {
             bcrypt.compare(password, user.password).then(isMatch => {
                 if (!isMatch) {
-                    console.log('Passwords do not match...');
                     return res.status(400).json({ error: 'Incorrect user name or password'});
                 }
-                console.log('Login successful!');
                 return res.status(200).json({
                     success: true,
                     result: user,
@@ -85,7 +81,8 @@ router.post('/login', (req, res) => {
             });
         }
     }).catch(err => {
-        console.log('An error occurred on the server');
+        console.log('A login error occurred on the server');
+        console.log(err);
         res.status(500).json({ error: err });
     });
 });
@@ -99,7 +96,6 @@ router.get('/loggedInUser', (req, res) => {
             let expiryTime = new Date(decoded.issuedAt).getTime() + 3600000; // issued time plus 1 hour
             let currentTime = new Date().getTime();
             if (currentTime > expiryTime - 600000) { // if within 10 mins of expiry, send new jwt
-                console.log("issuing new token")
                 newToken = jwt.sign({ userName: decoded.userName, _id: decoded._id, email: decoded.email, isAdmin: decoded.isAdmin, issuedAt: new Date() },
                     jwtSecret,
                     {expiresIn: '1h'}

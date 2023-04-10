@@ -27,7 +27,6 @@ function RecordStats(props) {
                     history.push('/login');
                 } else {
                     if (res.data.newToken) {
-                        console.log("updating local storage");
                         localStorage.setItem("jwt", res.data.newToken);
                     }
                     props.setCurrentUser(res.data.user)
@@ -124,8 +123,29 @@ function RecordStats(props) {
         ];
 
         recordsByDecade = recordsByDecade.filter(decade => decade.y > 0);
-        console.log(recordsByDecade);
         return recordsByDecade;
+    };
+
+    const getTopArtists = () => {
+        let artistCounts = {};
+        records.forEach(rec => {
+            if (artistCounts[rec.artist] !== undefined) {
+                artistCounts[rec.artist]++;
+            }
+            else {
+                artistCounts[rec.artist] = 1;
+            }
+        });
+
+        let topArtists = [];
+        for (const key in artistCounts) {
+            topArtists.push({name: key, y: artistCounts[key]})
+        }
+
+        topArtists.sort((a, b) => b.y - a.y);
+        topArtists = topArtists.slice(0, 10);
+        
+        return topArtists;
     };
 
     const getGenresPieChartOptions = (type) => ({
@@ -156,7 +176,7 @@ function RecordStats(props) {
             colorByPoint: true,
             data: getRecordsByGenre(),
           }
-        ],
+        ]
     });
 
     const getDecadesBarChartOptions = (type) => ({
@@ -190,7 +210,54 @@ function RecordStats(props) {
             colorByPoint: true,
             data: getRecordsByDecade(),
           }
+        ]
+    });
+
+    const getTopArtistsChartOptions = (type) => ({
+        chart: {
+          type,
+          marginLeft: 150,
+          marginRight: 100
+        },
+        title: {
+          text: "Top Artists",
+          margin: 10
+        },
+        legend: {
+            enabled: false
+        },
+        xAxis: {
+            categories: getTopArtists().map(artist => artist.name),
+            title: {
+                text: 'Bands/Artists'
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Record Count'
+            },
+            endOnTick: false
+        },
+        series: [
+          {
+            name: 'Count',
+            colorByPoint: true,
+            data: getTopArtists(),
+          }
         ],
+        tooltip: {
+            formatter: function() {
+                let recordsByArtist = records.filter(rec => rec.artist === this.x);
+                recordsByArtist.sort((a, b) => a.year - b.year);
+                recordsByArtist = recordsByArtist.map(rec => rec.title + ' (' + rec.year + ')');
+                let tooltipText = '<b>' + this.y + ' Records by ' + this.x + '</b>:<br>';
+                recordsByArtist.forEach(title => {
+                    tooltipText += '<i>' + title + '</i><br>';
+                })
+                return tooltipText;
+            }
+        }
     });
 
     return (
@@ -202,6 +269,7 @@ function RecordStats(props) {
                         <div className="chartDiv">
                             <HighchartsReact highcharts={Highcharts} options={getGenresPieChartOptions('pie')} />
                             <HighchartsReact highcharts={Highcharts} options={getDecadesBarChartOptions('column')} />
+                            <HighchartsReact highcharts={Highcharts} options={getTopArtistsChartOptions('bar')} />
                         </div>
                         {
                             recordStats.oldestRecord && recordStats.newestRecord &&
