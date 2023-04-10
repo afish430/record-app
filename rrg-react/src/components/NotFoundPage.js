@@ -5,7 +5,7 @@ import '../styles/skipping-record.css';
 
 function NotFoundPage(props) {
     return (
-        <div className="NotFoundPage">
+        <div className="not-found-page">
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-4 m-auto text-center">

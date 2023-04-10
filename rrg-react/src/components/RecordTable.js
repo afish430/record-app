@@ -77,17 +77,17 @@ function RecordTable(props) {
     const executeScroll = (id) => {
         const element = document.getElementById(id);
         if (element) {
-          element.classList.add('selectAfterScroll');
+          element.classList.add('select-after-scroll');
           element.scrollIntoView({ behavior: "smooth", block: "center" });
           setTimeout(() => {
-            element.classList.remove('selectAfterScroll');
+            element.classList.remove('select-after-scroll');
           }, 1000);
         }
     }
 
   return (
     <Table striped bordered hover size="sm">
-      <thead className="RecordTableHead">
+      <thead className="record-table-head">
         <tr>
           <th></th>
           <th
@@ -125,20 +125,20 @@ function RecordTable(props) {
             {sortInfo.sortField === "favorite" && sortInfo.direction === "ASC" && <i className="fa fa-caret-up"></i>}
             {sortInfo.sortField === "favorite" && sortInfo.direction === "DESC" && <i className="fa fa-caret-down"></i>}
           </th>
-          <th className="buttonColumn">Edit</th>
-          <th className="buttonColumn">Delete</th>
+          <th className="button-column">Edit</th>
+          <th className="button-column">Delete</th>
         </tr>
       </thead>
-      <tbody className="RecordTableBody">
+      <tbody className="record-table-body">
       {
         recordList.map(record => 
             <tr key={record._id} id={record._id}>
-              <td className="CoverThumbnail">
+              <td className="cover-thumbnail">
                 <img width="50" height="50" src={record.image} alt=""></img>
               </td>
               <td>{record.artist}</td>
               <td>
-                <a className="albumLink" href={record.link} target="_blank">{record.title}</a>
+                <a className="album-link" href={record.link} target="_blank">{record.title}</a>
               </td>
               <td>{record.year}</td>
               <td>{record.genre}</td>

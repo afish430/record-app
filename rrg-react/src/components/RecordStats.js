@@ -151,7 +151,8 @@ function RecordStats(props) {
     const getGenresPieChartOptions = (type) => ({
         chart: {
           type,
-          margin: 30
+          margin: 30,
+          height: 450
         },
         title: {
           text: "Records by Genre",
@@ -183,7 +184,8 @@ function RecordStats(props) {
         chart: {
           type,
           marginLeft: 100,
-          marginRight: 100
+          marginRight: 100,
+          height: 450
         },
         title: {
           text: "Records by Decade",
@@ -202,7 +204,8 @@ function RecordStats(props) {
             min: 0,
             title: {
                 text: 'Record Count'
-            }
+            },
+            endOnTick: false
         },
         series: [
           {
@@ -217,7 +220,8 @@ function RecordStats(props) {
         chart: {
           type,
           marginLeft: 150,
-          marginRight: 100
+          marginRight: 100,
+          height: 500
         },
         title: {
           text: "Top Artists",
@@ -261,12 +265,12 @@ function RecordStats(props) {
     });
 
     return (
-        <div className="RecordStats">
+        <div className="record-stats">
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-8 m-auto text-center">
                         <h1 className="display-5">Record Statistics</h1>
-                        <div className="chartDiv">
+                        <div className="chart-div">
                             <HighchartsReact highcharts={Highcharts} options={getGenresPieChartOptions('pie')} />
                             <HighchartsReact highcharts={Highcharts} options={getDecadesBarChartOptions('column')} />
                             <HighchartsReact highcharts={Highcharts} options={getTopArtistsChartOptions('bar')} />
@@ -274,9 +278,6 @@ function RecordStats(props) {
                         {
                             recordStats.oldestRecord && recordStats.newestRecord &&
                             <div>
-                                <p>Total Records: {recordStats.recordCount}</p>
-                                <p>Total Artists: {recordStats.artistCount}</p>
-                                <p>Total Genres: {recordStats.genreCount}</p>
                                 <div className="oldest-newest">
                                     <div>
                                         <p>Oldest Record*:</p>
@@ -294,6 +295,10 @@ function RecordStats(props) {
                                     </div>
                                 </div>
                                 <p className="asterisk">*May not reflect ties (records released in the same year)</p>
+                                <br></br>
+                                <p>Total Records: {recordStats.recordCount}</p>
+                                <p>Total Artists: {recordStats.artistCount}</p>
+                                <p>Total Genres: {recordStats.genreCount}</p>
                             </div>
                         }
                     </div>

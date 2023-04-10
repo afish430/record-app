@@ -6,7 +6,7 @@ import axios from 'axios';
 function RecordTile(props) {
     const record = props.record;
 
-    const onDeleteClick = (id) => {
+    const onDeleteClick = id => {
         if (window.confirm('Are you sure you want to delete this record?')) {
             axios
                 .delete('http://localhost:8082/api/records/' + id,
@@ -26,6 +26,14 @@ function RecordTile(props) {
         }
     };
 
+    const getShortenedTitleIfNeeded = record => {
+        let title = record.title;
+        if (record.artist.length > 20 && record.title.length > 20) {
+            title =  title.slice(0, 16) + "...";
+        }
+        return title;
+    };
+
     return (
         <div className="record-tile-container" id={record._id}>
             <img src={record.image} alt="" />
@@ -43,7 +51,7 @@ function RecordTile(props) {
             }
             <div className="desc">
                 <h2>
-                    {record.title}
+                    {getShortenedTitleIfNeeded(record)}
                 </h2>
                 <h3>{record.artist}</h3>
                 <h4>{record.genre}</h4>

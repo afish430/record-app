@@ -76,7 +76,7 @@ class AddRecord extends Component {
 
     render() {
         return (
-            <div className="AddRecord">
+            <div className="add-record">
                 <div className="container mb-5">
                     <div className="row">
                         <div className="col-md-6 m-auto">

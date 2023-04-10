@@ -38,7 +38,7 @@ function CreateUserPage(props) {
     };
 
     return (
-        <div className="CreateUserPage">
+        <div className="create-user-page">
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-4 m-auto text-center">

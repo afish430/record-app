@@ -97,10 +97,10 @@ function RecordManager(props) {
     const executeScroll = (id) => {
         const element = document.getElementById(id);
         if (element) {
-            element.classList.add('selectAfterScroll');
+            element.classList.add('select-after-scroll');
             element.scrollIntoView({ behavior: "smooth", block: "center" });
             setTimeout(() => {
-                element.classList.remove('selectAfterScroll');
+                element.classList.remove('select-after-scroll');
             }, 1000);
         }
     }
@@ -111,9 +111,9 @@ function RecordManager(props) {
 
     const removeRecord = (id) => {
         const element = document.getElementById(id)
-        element.classList.add('hideBeforeDelete');
+        element.classList.add('hide-before-delete');
             setTimeout(() => {
-                element.classList.remove('hideBeforeDelete');
+                element.classList.remove('hide-before-delete');
                 setRecords(records.filter(rec => rec._id !== id));
                 setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
             }, 1500);
@@ -194,7 +194,7 @@ function RecordManager(props) {
     }
 
     return (
-        <div className="RecordManager">
+        <div className="record-manager">
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 text-center">
@@ -260,7 +260,7 @@ function RecordManager(props) {
                 </div>
 
                 <div className="text-center">
-                    <label className="recordCount">
+                    <label className="record-count">
                         (Showing {filteredRecords.length} Records)
                     </label>
                 </div>

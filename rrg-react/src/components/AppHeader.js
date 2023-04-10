@@ -44,7 +44,7 @@ function AppHeader(props) {
     }
   
     return (
-        <div className="AppHeader text-center">
+        <div className="app-header text-center">
             <div className="container">
                 <h1>The Vinylator<img src={turntable} alt="recordplayer"></img></h1>
                 { props.user.userName && 

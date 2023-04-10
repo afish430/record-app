@@ -86,7 +86,7 @@ class EditRecord extends Component {
 
     render() {
         return (
-            <div className="EditRecord">
+            <div className="edit-record">
                 <div className="container mb-5">
                     <div className="row">
                         <div className="col-md-8 m-auto">

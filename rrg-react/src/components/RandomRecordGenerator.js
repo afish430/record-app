@@ -113,7 +113,7 @@ function RandomRecordGenerator(props) {
     };
 
     return (
-        <div className="RandomRecordGenerator">
+        <div className="random-record-generator">
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-8 m-auto text-center">
