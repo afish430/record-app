@@ -34,7 +34,7 @@ function AppHeader(props) {
 
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
-    const handleShow = () => setShowModal(true);
+    const handleShowModal = () => setShowModal(true);
     
     const logout = () => {
         localStorage.setItem("jwt", null);
@@ -46,6 +46,17 @@ function AppHeader(props) {
     return (
         <div className="app-header text-center">
             <div className="container">
+                { props.user.userName && 
+                    <>
+                        <span className="logout">
+                            <Button variant="danger" onClick={logout}>Logout</Button>
+                        <span>  [{props.user.userName}]</span>
+                        </span>
+                    </>
+                }
+                <Button variant="info" className="about-btn" onClick={handleShowModal}>
+                    About
+                </Button>
                 <h1>The Vinylator<img src={turntable} alt="recordplayer"></img></h1>
                 { props.user.userName && 
                 <>
@@ -60,18 +71,11 @@ function AppHeader(props) {
                         Record Generator
                     </Link>
                 </div>
-                <Button variant="info" className="aboutBtn" onClick={handleShow}>
-                    About
-                </Button>
-                <span className="logout">
-                    <Button variant="danger" onClick={logout}>Logout</Button>
-                    <span>  [{props.user.userName}]</span>
-                </span>
                 </>}
             </div>
             <hr></hr>
 
-            <Modal show={showModal} onHide={handleClose} centered>
+            <Modal show={showModal} onHide={handleClose} centered size="lg">
                 <Modal.Header>
                     <Modal.Title className="m-auto">
                         About The Vinylator
@@ -81,8 +85,14 @@ function AppHeader(props) {
                     The Vinylator is your own personal record collection manager and listening helper.
                     Add, edit and delete records to manage your vinyl collection.
                     You can easily search and filter your collection, and even mark certain records as favorites.
-                    When you just aren't sure what to listen to, the "Random Record Generator" feature is your best friend.
-                    Just hit the "Generate" button and let the music come to you. Happy listening!
+                    The Vinylator will also compile statistics and charts summarizing your musical tastes.
+                    When you just aren't sure what to listen to, the <em>Random Record Generator</em> feature is your best friend.
+                    Just hit the "Generate Record" button and let the music come to you. Happy listening!
+                    <div className="modal-screenshots">
+                        <img src="recordStats.png"></img>
+                        <img src="recordManager.png"></img>
+                        <img src="recordGenerator.png"></img>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer className="text-center">
                     <Button variant="info" onClick={handleClose} className="m-auto">

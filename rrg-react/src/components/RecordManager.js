@@ -203,7 +203,7 @@ function RecordManager(props) {
                             Switch to {props.mode === "Table" ? "Tile" : "Table"} Mode
                         </button>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3 col-sm-12">
                         <form className="form-inline justify-content-left">
                             <div className="form-group">
                                 <label htmlFor="favorite">Filter:</label>
@@ -231,7 +231,7 @@ function RecordManager(props) {
                         </form>
                     </div>
 
-                    <div className="col-md-4 text-center">
+                    <div className="col-md-6 col-sm-12 text-center">
                         <form className="form-inline justify-content-center">
                             <div className="input-group">
                                 <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="search by artist or album"/>
@@ -250,7 +250,7 @@ function RecordManager(props) {
                         </form>
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-3 col-sm-12">
                         <Link to="/add-record" className="btn btn-warning float-right">
                             + Add New Record
                         </Link>
