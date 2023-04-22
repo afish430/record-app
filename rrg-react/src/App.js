@@ -79,7 +79,14 @@ function App() {
     else {
         return records.filter(rec => rec.genre === genre).length > 0;
     } 
-}
+  }
+
+  const tooltipText = {
+    genre: 'Genres are subjective, but choose the one you think fits this album best!',
+    link: 'Enter the URL of a website with more information about this album. Wikipedia is often a good source.',
+    image: 'Find an image of this album cover online. (Again, Wikipedia is usually reliable.) Right-click the image and select "Copy image address.',
+    favorite: 'Is this a "go-to" record that you listen to more than others? Maybe you keep your favorite records in a separate location from the others? If so, mark it as a favorite! (It will be denoted with a yellow star)',
+  };
 
   const setCurrentUser = (user) => {
     setUser(user);
@@ -104,11 +111,11 @@ function App() {
           <RecordStats user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
         </Route>
         <Route path='/add-record'>
-          <AddRecord user={user} genres={genres}/>
+          <AddRecord user={user} genres={genres} tooltipText={tooltipText}/>
         </Route>
         <Route
           path='/edit-record/:id'
-          render={(props) => <EditRecord {...props} genres={genres}/>}
+          render={(props) => <EditRecord {...props} genres={genres} tooltipText={tooltipText}/>}
         />
         <Route path="/login">
           <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode}/>

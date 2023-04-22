@@ -143,7 +143,13 @@ function RecordStats(props) {
         }
 
         topArtists.sort((a, b) => b.y - a.y);
-        topArtists = topArtists.slice(0, 10);
+        if (records.length > 100)
+        {
+            topArtists = topArtists.slice(0, 20);
+        }
+        else{
+            topArtists = topArtists.slice(0, 10);
+        }
         
         return topArtists;
     };
@@ -224,7 +230,7 @@ function RecordStats(props) {
           height: 500
         },
         title: {
-          text: "Top Artists",
+          text: "Top " + getTopArtists().length + " Artists",
           margin: 10
         },
         legend: {
@@ -255,7 +261,8 @@ function RecordStats(props) {
                 let recordsByArtist = records.filter(rec => rec.artist === this.x);
                 recordsByArtist.sort((a, b) => a.year - b.year);
                 recordsByArtist = recordsByArtist.map(rec => rec.title + ' (' + rec.year + ')');
-                let tooltipText = '<b>' + this.y + ' Records by ' + this.x + '</b>:<br>';
+                let recordText = recordsByArtist === 1 ? " Record" : " Records";
+                let tooltipText = '<b>' + this.y + recordText + ' by ' + this.x + '</b>:<br>';
                 recordsByArtist.forEach(title => {
                     tooltipText += '<i>' + title + '</i><br>';
                 })

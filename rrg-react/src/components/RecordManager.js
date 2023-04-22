@@ -236,7 +236,7 @@ function RecordManager(props) {
                             <div className="input-group">
                                 <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="search by artist or album"/>
                                 <div className="input-group-append">
-                                    <div className="input-group-text clearBtn">
+                                    <div className="input-group-text clear-btn" title="Clear Search or Filter">
                                         {
                                         ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "Any")
                                         && <i className="fa fa-times" onClick={clearSearch}></i>

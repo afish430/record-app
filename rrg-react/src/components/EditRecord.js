@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import infoIcon from './../images/info-icon.png';
+import Tooltip from 'react-bootstrap/Tooltip';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import axios from 'axios';
 import '../styles/App.scss';
 
@@ -120,6 +123,16 @@ class EditRecord extends Component {
 
                                 <div className='form-group'>
                                     <label htmlFor="favorite">Genre</label>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                            <Tooltip wrapperClassName="info-tooltip">
+                                                {this.props.tooltipText.genre}
+                                            </Tooltip>
+                                        }
+                                        >
+                                        <img className="info-icon" src={infoIcon}></img>
+                                    </OverlayTrigger>
                                     <select
                                         className="form-control"
                                         id="genre"
@@ -148,6 +161,16 @@ class EditRecord extends Component {
 
                                 <div className='form-group'>
                                     <label htmlFor="link">URL for More Info</label>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                            <Tooltip wrapperClassName="info-tooltip">
+                                                {this.props.tooltipText.link}
+                                            </Tooltip>
+                                        }
+                                        >
+                                        <img className="info-icon" src={infoIcon}></img>
+                                    </OverlayTrigger>
                                     <input
                                         type='text'
                                         placeholder='ex. Wikipedia'
@@ -159,6 +182,16 @@ class EditRecord extends Component {
                                 </div>
                                 <div className='form-group'>
                                     <label htmlFor="image">Image URL</label>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                            <Tooltip wrapperClassName="info-tooltip">
+                                                {this.props.tooltipText.image}
+                                            </Tooltip>
+                                        }
+                                        >
+                                        <img className="info-icon" src={infoIcon}></img>
+                                    </OverlayTrigger>
                                     <input
                                         type='text'
                                         name='image'
@@ -170,6 +203,16 @@ class EditRecord extends Component {
 
                                 <div className='form-group'>
                                     <label htmlFor="favorite">Is this a Favorite?</label>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                            <Tooltip wrapperClassName="info-tooltip">
+                                                {this.props.tooltipText.favorite}
+                                            </Tooltip>
+                                        }
+                                        >
+                                        <img className="info-icon" src={infoIcon}></img>
+                                    </OverlayTrigger>
                                     <select
                                         className="form-control"
                                         id="favorite"
