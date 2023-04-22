@@ -261,7 +261,7 @@ function RecordStats(props) {
                 let recordsByArtist = records.filter(rec => rec.artist === this.x);
                 recordsByArtist.sort((a, b) => a.year - b.year);
                 recordsByArtist = recordsByArtist.map(rec => rec.title + ' (' + rec.year + ')');
-                let recordText = recordsByArtist === 1 ? " Record" : " Records";
+                let recordText = recordsByArtist.length === 1 ? " Record" : " Records";
                 let tooltipText = '<b>' + this.y + recordText + ' by ' + this.x + '</b>:<br>';
                 recordsByArtist.forEach(title => {
                     tooltipText += '<i>' + title + '</i><br>';
