@@ -3,6 +3,13 @@ svg {
   height: 450px;
 }
 
+@media screen and (max-width: 600px) {
+  svg {
+    width: 350px;
+    height: 350px;
+  }
+}
+
 #label {
   fill: url(#yellowRedGradient);
 }

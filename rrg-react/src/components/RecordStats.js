@@ -158,7 +158,7 @@ function RecordStats(props) {
         chart: {
           type,
           margin: 30,
-          height: 450
+          maxHeight: 450
         },
         title: {
           text: "Records by Genre",
@@ -284,7 +284,7 @@ function RecordStats(props) {
                         </div>
                         {
                             recordStats.oldestRecord && recordStats.newestRecord &&
-                            <div>
+                            <>
                                 <div className="oldest-newest">
                                     <div>
                                         <p>Oldest Record*:</p>
@@ -306,7 +306,7 @@ function RecordStats(props) {
                                 <p>Total Records: {recordStats.recordCount}</p>
                                 <p>Total Artists: {recordStats.artistCount}</p>
                                 <p>Total Genres: {recordStats.genreCount}</p>
-                            </div>
+                            </>
                         }
                     </div>
                 </div>

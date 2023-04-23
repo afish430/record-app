@@ -1,18 +1,24 @@
-
-.NotFoundPage svg {
+.not-found-page svg {
   width: 450px;
   height: 450px;
 }
 
-.NotFoundPage #label {
+@media screen and (max-width: 600px) {
+  .not-found-page svg {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+.not-found-page #label {
   fill: url(#skippingRecordGradient);
 }
 
-.NotFoundPage #skippingRecordGradient stop.start-color {
+.not-found-page #skippingRecordGradient stop.start-color {
   stop-color: blue;
 }
 
-.NotFoundPage #skippingRecordGradient stop.end-color {
+.not-found-page #skippingRecordGradient stop.end-color {
   stop-color: green;
 }
 
@@ -22,11 +28,11 @@
   }
 }
 
-.NotFoundPage #record {
+.not-found-page #record {
   transform-origin: center center;
   animation: skip 0.8s linear infinite;
 }
 
-.NotFoundPage .line {
+.not-found-page .line {
   stroke: white;
 }

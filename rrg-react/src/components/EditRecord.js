@@ -124,7 +124,7 @@ class EditRecord extends Component {
                                 <div className='form-group'>
                                     <label htmlFor="favorite">Genre</label>
                                     <OverlayTrigger
-                                        placement="right"
+                                        placement="top"
                                         overlay={
                                             <Tooltip wrapperClassName="info-tooltip">
                                                 {this.props.tooltipText.genre}
@@ -162,7 +162,7 @@ class EditRecord extends Component {
                                 <div className='form-group'>
                                     <label htmlFor="link">URL for More Info</label>
                                     <OverlayTrigger
-                                        placement="right"
+                                        placement="top"
                                         overlay={
                                             <Tooltip wrapperClassName="info-tooltip">
                                                 {this.props.tooltipText.link}
@@ -183,7 +183,7 @@ class EditRecord extends Component {
                                 <div className='form-group'>
                                     <label htmlFor="image">Image URL</label>
                                     <OverlayTrigger
-                                        placement="right"
+                                        placement="top"
                                         overlay={
                                             <Tooltip wrapperClassName="info-tooltip">
                                                 {this.props.tooltipText.image}
@@ -204,7 +204,7 @@ class EditRecord extends Component {
                                 <div className='form-group'>
                                     <label htmlFor="favorite">Is this a Favorite?</label>
                                     <OverlayTrigger
-                                        placement="right"
+                                        placement="top"
                                         overlay={
                                             <Tooltip wrapperClassName="info-tooltip">
                                                 {this.props.tooltipText.favorite}

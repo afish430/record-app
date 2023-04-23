@@ -50,7 +50,7 @@ function AppHeader(props) {
                     <>
                         <span className="logout">
                             <Button variant="danger" onClick={logout}>Logout</Button>
-                        <span>  [{props.user.userName}]</span>
+                        <span className="user-name">  [{props.user.userName}]</span>
                         </span>
                     </>
                 }
@@ -61,7 +61,7 @@ function AppHeader(props) {
                 { props.user.userName && 
                 <>
                 <div className="row">
-                    <Link to="/" className={"btn btn-tab mr-2 " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
+                    <Link to="/" className={"btn btn-tab " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
                         Record Manager
                     </Link>
                     <Link to="/Stats" className={"btn btn-tab ml-2 " + (activeRoute === "Stats" ? "btn-info" : "btn-outline-light")} onClick={setStatsActive}>

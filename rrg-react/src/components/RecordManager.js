@@ -203,8 +203,10 @@ function RecordManager(props) {
                             Switch to {props.mode === "Table" ? "Tile" : "Table"} Mode
                         </button>
                     </div>
+                </div>
+                <div className="row manage-forms">
                     <div className="col-md-3 col-sm-12">
-                        <form className="form-inline justify-content-left">
+                        <form className="form-inline justify-content-center">
                             <div className="form-group">
                                 <label htmlFor="favorite">Filter:</label>
                                 <select
@@ -250,11 +252,10 @@ function RecordManager(props) {
                         </form>
                     </div>
 
-                    <div className="col-md-3 col-sm-12">
-                        <Link to="/add-record" className="btn btn-warning float-right">
+                    <div className="col-md-3 col-sm-12 text-center">
+                        <Link to="/add-record" className="btn btn-warning">
                             + Add New Record
                         </Link>
-                        <br />
                     </div>
 
                 </div>
