@@ -9,7 +9,7 @@ function RecordTile(props) {
     const onDeleteClick = id => {
         if (window.confirm('Are you sure you want to delete this record?')) {
             axios
-                .delete('http://localhost:8082/api/records/' + id,
+                .delete(props.baseUrl + "/records/" + id,
                 {
                     headers: {
                         token: localStorage.getItem("jwt")
@@ -20,8 +20,8 @@ function RecordTile(props) {
                     props.removeRecord(id);
                 })
                 .catch(err => {
-                    console.log("Error in RecordTile.onDeleteClick");
-                    console.log(err);
+                    console.log("An error deleting a record");
+                    // console.log(err);
                 })
         }
     };

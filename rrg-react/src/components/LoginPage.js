@@ -19,14 +19,14 @@ function LoginPage(props) {
         };
         
         axios
-            .post('http://localhost:8082/api/auth/login', user)
+            .post(props.baseUrl + "/auth/login", user)
             .then(res => {
                 setUserName("");
                 setPassword("");
                 props.setCurrentUser(res.data.result);
                 props.setViewMode("Tile");
                 localStorage.setItem("jwt", res.data.token);
-                history.push('/');
+                history.push("/");
             })
             .catch(err => {
                 setErrorMessage(err.response.data.error);

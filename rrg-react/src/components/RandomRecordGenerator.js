@@ -16,7 +16,7 @@ function RandomRecordGenerator(props) {
 
     useEffect(() => {
         // make sure user is logged in
-        axios.get(`http://localhost:8082/api/auth/loggedInUser`,
+        axios.get(props.baseUrl + "/auth/loggedInUser",
                 {
                     headers: {
                         token: localStorage.getItem("jwt")
@@ -24,7 +24,7 @@ function RandomRecordGenerator(props) {
                 })
             .then(res => {
                 if (!res.data.user && (!props.user || !props.user._id)) {
-                    history.push('/login');
+                    history.push("/login");
                 } else {
                     if (res.data.newToken) {
                         console.log("updating local storage");
@@ -39,7 +39,7 @@ function RandomRecordGenerator(props) {
 
         // fetch all records for this user
         axios
-            .get(`http://localhost:8082/api/records`,
+            .get(props.baseUrl + "/records",
                 {
                     headers: {
                         token: localStorage.getItem("jwt")
@@ -49,7 +49,7 @@ function RandomRecordGenerator(props) {
                 setRecords(res.data);
             })
             .catch(err => {
-                console.log('Error from RandomRecordGenerator');
+                console.log("Error from RandomRecordGenerator");
             })
     }, []);
 

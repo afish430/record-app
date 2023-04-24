@@ -16,7 +16,7 @@ function RecordManager(props) {
 
     useEffect(() => {
         // make sure user is logged in
-        axios.get(`http://localhost:8082/api/auth/loggedInUser`,
+        axios.get(props.baseUrl + "/auth/loggedInUser",
                 {
                     headers: {
                         token: localStorage.getItem("jwt")
@@ -24,7 +24,7 @@ function RecordManager(props) {
                 })
             .then(res => {
                 if (!res.data.user && (!props.user || !props.user._id)) {
-                    history.push('/login');
+                    history.push("/login");
                 } else {
                     if (res.data.newToken) {
                         console.log("updating local storage");
@@ -34,7 +34,7 @@ function RecordManager(props) {
                 }
             })
             .catch(err => {
-                history.push('/login');
+                history.push("/login");
             })
 
         if(!props.mode) {
@@ -43,7 +43,7 @@ function RecordManager(props) {
 
         // fetch and sort all records on page load
         axios
-            .get(`http://localhost:8082/api/records`,
+            .get(props.baseUrl + "/records",
                 {
                     headers: {
                         token: localStorage.getItem("jwt")
@@ -59,7 +59,7 @@ function RecordManager(props) {
             })
             .catch(err => {
                 console.log('Error from RecordManager');
-                console.log(err);
+                // console.log(err);
             })
     }, []);
 
@@ -272,7 +272,8 @@ function RecordManager(props) {
                         <RecordTable
                             records={filteredRecords}
                             removeRecord={removeRecord}
-                            recordIdFromHash={hashId}>
+                            recordIdFromHash={hashId}
+                            baseUrl={props.baseUrl}>
                         </RecordTable>
                     }
                 </div>
@@ -285,6 +286,7 @@ function RecordManager(props) {
                                 removeRecord={removeRecord}
                                 showFooter={true}
                                 key={i}
+                                baseUrl={props.baseUrl}
                             />
                         )
                     }

@@ -51,6 +51,8 @@ function App() {
     "Soundtrack"
   ];
 
+  const BASE_URL = "http://localhost:8082/api";
+
   const hasGenre = (genre, records) => {
     if (genre === "Favorites") {
         return records.filter(rec => rec.favorite === true).length > 0;
@@ -84,8 +86,8 @@ function App() {
   const tooltipText = {
     genre: 'Genres are subjective, but choose the one you think fits this album best!',
     link: 'Enter the URL of a website with more information about this album. Wikipedia is often a good source.',
-    image: 'Find an image of this album cover online. (Again, Wikipedia is usually reliable.) Right-click the image and select "Copy image address.',
-    favorite: 'Is this a "go-to" record that you listen to more than others? Maybe you keep your favorite records in a separate location from the others? If so, mark it as a favorite! (It will be denoted with a yellow star)',
+    image: 'Find an image of this album cover online. (Again, Wikipedia is usually reliable.) Right-click the image and select "Copy image address"',
+    favorite: 'Is this a "go-to" record that you listen to more than others? Maybe you keep your favorite records on a separate shelf from the others? If so, mark it as a favorite! (It will be denoted with a yellow star)',
   };
 
   const setCurrentUser = (user) => {
@@ -102,25 +104,25 @@ function App() {
         <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
         <Switch>
         <Route exact path='/'>
-          <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser}/>
+          <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
         </Route>
         <Route path='/Generate'>
-          <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
+          <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
         </Route>
         <Route path='/Stats'>
-          <RecordStats user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser}/>
+          <RecordStats user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
         </Route>
         <Route path='/add-record'>
-          <AddRecord user={user} genres={genres} tooltipText={tooltipText}/>
+          <AddRecord user={user} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>
         </Route>
         <Route
           path='/edit-record/:id'
-          render={(props) => <EditRecord {...props} genres={genres} tooltipText={tooltipText}/>}
+          render={(props) => <EditRecord {...props} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>}
         />
         <Route path="/login">
-          <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode}/>
+          <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode} baseUrl={BASE_URL}/>
         </Route>
-        <Route path='/create-account' component={CreateUserPage} />
+        <Route path='/create-account' component={CreateUserPage} baseUrl={BASE_URL}/>
         <Route component={NotFoundPage} />
         </Switch>
       </div>

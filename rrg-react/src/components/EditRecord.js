@@ -24,7 +24,7 @@ class EditRecord extends Component {
 
     componentDidMount() {
         axios
-            .get('http://localhost:8082/api/records/' + this.props.match.params.id,
+            .get(this.props.baseUrl + "/records/" + this.props.match.params.id,
                 {
                     headers: {
                         token: localStorage.getItem("jwt")
@@ -71,7 +71,7 @@ class EditRecord extends Component {
         };
 
         axios
-            .put('http://localhost:8082/api/records/' + this.props.match.params.id, data,
+            .put(this.props.baseUrl + "/records/" + this.props.match.params.id, data,
                 {
                     headers: {
                         token: localStorage.getItem("jwt")

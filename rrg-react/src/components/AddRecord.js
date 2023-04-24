@@ -51,7 +51,7 @@ class AddRecord extends Component {
         };
 
         axios
-            .post('http://localhost:8082/api/records', data,
+            .post(this.props.baseUrl + '/records', data,
                 {
                     headers: {
                         token: localStorage.getItem("jwt")
@@ -73,7 +73,7 @@ class AddRecord extends Component {
             })
             .catch(err => {
                 this.setState({ errorMessage: 'An Error Occurred.'});
-                console.log(err);
+                // console.log(err);
             })
     };
 

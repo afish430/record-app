@@ -24,7 +24,7 @@ function CreateUserPage(props) {
         };
         
         axios
-            .post('http://localhost:8082/api/auth/signup', newUser)
+            .post(props.baseUrl + "/auth/signup", newUser)
             .then(res => {
                 setSuccessMessage(`The user ${res.data.result.userName} has been created!`);
                 setUserName("");
