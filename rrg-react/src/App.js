@@ -51,7 +51,7 @@ function App() {
     "Soundtrack"
   ];
 
-  const BASE_URL = "http://localhost:8082/api";
+  const BASE_URL = "https://vinylator-api.onrender.com/api"; // http://localhost:8082/api";
 
   const hasGenre = (genre, records) => {
     if (genre === "Favorites") {
@@ -122,7 +122,9 @@ function App() {
         <Route path="/login">
           <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode} baseUrl={BASE_URL}/>
         </Route>
-        <Route path='/create-account' component={CreateUserPage} baseUrl={BASE_URL}/>
+        <Route path='/create-account'>
+          <CreateUserPage baseUrl={BASE_URL}/>
+        </Route>
         <Route component={NotFoundPage} />
         </Switch>
       </div>
