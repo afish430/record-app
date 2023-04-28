@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require("jsonwebtoken")
-// const config = require('config');
-// const jwtSecret = config.get('jwtSecret');
-console.log("JWT Secret is is ");
-console.log(process.env.jwtSecret);
 jwtSecret = process.env.jwtSecret;
 
 const Record = require('../../models/Record');

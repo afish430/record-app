@@ -5,10 +5,6 @@ const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 
 const jwt = require("jsonwebtoken")
-// const config = require('config');
-// const jwtSecret = config.get('jwtSecret');
-console.log("JWT Secret is is ");
-console.log(process.env.jwtSecret);
 jwtSecret = process.env.jwtSecret;
 
 // @route POST api/auth/signup
@@ -61,6 +57,7 @@ router.post('/signup', (req, res) => {
 // @description logs a user in
 // @access Public
 router.post('/login', (req, res) => {
+    console.log("Login request for " + req.body.userName);
     let { userName, password } = req.body;
 
     User.findOne({userName: userName})
