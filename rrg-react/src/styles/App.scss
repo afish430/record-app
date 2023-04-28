@@ -13,7 +13,7 @@ body {
     border-color: yellow;
   
     &:hover {
-      color: cyan;
+      color: black;
       background-color: yellow;
       border-color: yellow;
     }
@@ -22,6 +22,7 @@ body {
   .btn-info {
     &:not(.btn-tab) {
       &:hover {
+        color: black;
         background-color: cyan;
         border-color: cyan;
       }
@@ -30,6 +31,7 @@ body {
 
   .btn-danger {
     &:hover {
+      color: black;
       background-color: red;
       border-color: red;
     }

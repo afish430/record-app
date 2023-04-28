@@ -183,7 +183,32 @@ function RecordStats(props) {
             colorByPoint: true,
             data: getRecordsByGenre(),
           }
-        ]
+        ],
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    chart: {
+                        margin: 10,
+                        height: 250
+                    },
+                    title: {
+                        margin: 10
+                    },
+                    plotOptions: {
+                        pie: {
+                          dataLabels: {
+                            style: {
+                              fontSize: 9,
+                            }
+                          }
+                        }
+                    }
+                }
+            }]
+        }
     });
 
     const getDecadesBarChartOptions = (type) => ({
@@ -219,7 +244,24 @@ function RecordStats(props) {
             colorByPoint: true,
             data: getRecordsByDecade(),
           }
-        ]
+        ],
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    chart: {
+                        marginTop: 30,
+                        marginBottom: 70,
+                        height: 350
+                      },
+                    title: {
+                        margin: 10
+                      },
+                }
+            }]
+        }
     });
 
     const getTopArtistsChartOptions = (type) => ({

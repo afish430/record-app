@@ -20,5 +20,5 @@ app.use(express.json({ extended: false }));
 app.use('/api/auth', auth);
 app.use('/api/records', records);
 
-const port = 8082;
+const port = process.env.PORT || 8082;
 app.listen(port, () => console.log(`Server running on port ${port}`));
