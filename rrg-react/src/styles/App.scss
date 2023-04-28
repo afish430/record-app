@@ -55,6 +55,9 @@ body {
     margin-top: 0;
     width: 75%;
     border-top: 1px solid white;
+    @media only screen and (max-width: 900px) {
+      width: 100%;
+    }
   }
 
   .container select.form-control {
@@ -140,6 +143,11 @@ body {
     border-radius: 5px 5px 0 0;
     border-bottom: none;
     width: 180px;
+    @media only screen and (max-width: 900px) {
+      padding: 3px;
+      width: 130px;
+      font-size: 13px;
+    }
   }
 
   .about-btn {
@@ -149,6 +157,15 @@ body {
 
     @media only screen and (max-width: 900px) {
       position: static !important;
+      float: right;
+      padding: 1px;
+      background: none;
+      border: none;
+      color: cyan;
+      &:hover {
+        background: none !important;
+        border: none !important;
+      }
     }
 
   }
@@ -160,6 +177,16 @@ body {
 
     @media only screen and (max-width: 900px) {
       position: static !important;
+      float: left;
+      .btn {
+        padding: 1px;
+        background: none;
+        border: none;
+        color: #dc3545;
+      }
+      .user-name {
+        display: none;
+      }
     }
   }
 }
@@ -257,6 +284,11 @@ form label {
 
   .manage-forms>div{
     margin-bottom: 5px;
+  }
+
+  .manage-forms .form-group {
+    margin-bottom: 0;
+    text-align: center;
   }
 
   label.record-count {
