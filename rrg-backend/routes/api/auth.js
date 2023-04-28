@@ -5,8 +5,11 @@ const User = require('../../models/User');
 const bcrypt = require('bcrypt');
 
 const jwt = require("jsonwebtoken")
-const config = require('config');
-const jwtSecret = config.get('jwtSecret');
+// const config = require('config');
+// const jwtSecret = config.get('jwtSecret');
+console.log("JWT Secret is is ");
+console.log(process.env.jwtSecret);
+jwtSecret = process.env.jwtSecret;
 
 // @route POST api/auth/signup
 // @description create a new user account
