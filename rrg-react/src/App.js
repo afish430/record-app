@@ -86,7 +86,7 @@ function App() {
   const tooltipText = {
     genre: 'Genres are subjective, but choose the one you think fits this album best!',
     link: 'Enter the URL of a website with more information about this album. Wikipedia is often a good source.',
-    image: 'Find an image of this album cover online. (Again, Wikipedia is usually reliable.) Right-click the image and select "Copy image address." If on mobile, tap the image and then copy its URL from the browser.',
+    image: 'Find an image of this album cover online. Right-click the image and select "Copy image address." If on mobile, tap the image and then copy its URL from the browser. If using Wikipedia on iPhone, you may need to tap into the image, then "Details", then tap the link under that image, then finally copy the URL from the browser.',
     favorite: 'Is this a "go-to" record that you listen to more than others? Maybe you keep your favorite records on a separate shelf from the others? If so, mark it as a favorite! (It will be denoted with a yellow star)',
   };
 
