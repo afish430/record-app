@@ -31,7 +31,7 @@ body {
 
   .btn-danger {
     &:hover {
-      color: black;
+      color: cyan;
       background-color: red;
       border-color: red;
     }
@@ -63,7 +63,6 @@ body {
   }
 
   .container select.form-control {
-    height: 35px !important;
     min-width: 175px;
   }
 
@@ -115,6 +114,12 @@ body {
 
   .select-after-scroll {
     background-color: yellow !important;
+  }
+
+  .loading-records {
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 10px;
   }
 }
 

@@ -8,6 +8,7 @@ import RecordTile from './RecordTile';
 function RandomRecordGenerator(props) {
 
     const [records, setRecords] = useState([]);
+    const [recordsLoaded, setRecordsLoaded] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState({});
     const [generating, setGenerating] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -47,6 +48,7 @@ function RandomRecordGenerator(props) {
                 })
             .then(res => {
                 setRecords(res.data);
+                setRecordsLoaded(true);
             })
             .catch(err => {
                 console.log("Error from RandomRecordGenerator");
@@ -113,6 +115,7 @@ function RandomRecordGenerator(props) {
     };
 
     return (
+        props.user &&
         <div className="random-record-generator">
             <div className="container mb-5">
                 <div className="row">
@@ -145,12 +148,17 @@ function RandomRecordGenerator(props) {
                             </div>
                         </form>
                         <br />
-                        <button
+                        {recordsLoaded && <button
                             className="btn btn-warning btn-lg m-2"
                             onClick={generateRecord}
                         >
                             Generate Record!
-                        </button>
+                        </button>}
+                        {!recordsLoaded &&
+                            <div className="text-center loading-records">
+                                Loading Records...
+                            </div>
+                        }
                         {generating && <div className="text-center mt-4">
                             <svg viewBox="0 0 400 400">
                                 <defs>

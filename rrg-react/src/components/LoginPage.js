@@ -29,7 +29,11 @@ function LoginPage(props) {
                 history.push("/");
             })
             .catch(err => {
-                setErrorMessage(err.response.data.error);
+                if (err && err.response && err.response.data) {
+                    setErrorMessage(err.response.data.error);
+                } else {
+                    setErrorMessage("An error occurred");
+                }
             })
     };
 

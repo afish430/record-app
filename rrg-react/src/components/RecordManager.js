@@ -7,6 +7,7 @@ import RecordTable from './RecordTable';
 
 function RecordManager(props) {
     const [records, setRecords] = useState([]);
+    const [recordsLoaded, setRecordsLoaded] = useState(false);
     const [selectedGenre, setSelectedGenre] = useState('Any');
     const [filteredRecords, setFilteredRecords] = useState([]);
     const recordIdFromHash = useLocation().hash;
@@ -53,13 +54,13 @@ function RecordManager(props) {
                 let sortedRecords = res.data.sort(sortByArtist);
                 setRecords([...sortedRecords]);
                 setFilteredRecords(sortedRecords);
+                setRecordsLoaded(true);
                 if(hashId){
                     executeScroll(hashId.substring(1)); // remove # part
                 }
             })
             .catch(err => {
                 console.log('Error from RecordManager');
-                // console.log(err);
             })
     }, []);
 
@@ -194,6 +195,7 @@ function RecordManager(props) {
     }
 
     return (
+        props.user &&
         <div className="record-manager">
             <div className="container">
                 <div className="row">
@@ -260,11 +262,16 @@ function RecordManager(props) {
 
                 </div>
 
-                <div className="text-center">
+                {recordsLoaded && <div className="text-center">
                     <label className="record-count">
                         (Showing {filteredRecords.length} Records)
                     </label>
-                </div>
+                </div>}
+                {!recordsLoaded &&
+                    <div className="text-center loading-records">
+                        Loading Records...
+                    </div>
+                }
                 
                 <div>
                     {

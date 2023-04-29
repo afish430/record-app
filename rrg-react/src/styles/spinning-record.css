@@ -24,14 +24,15 @@ svg {
 
 @keyframes spin {
   100% {
-    transform: rotate(-360deg);
+    -webkit-transform: rotate(-360deg);
+    transform: rotate(360deg);
   }
 }
 
 #record {
+  -webkit-transform-origin: center center;;
   transform-origin: center center;
   animation: spin 4s linear infinite;
-  animation-direction: reverse;
 }
 
 .line {
