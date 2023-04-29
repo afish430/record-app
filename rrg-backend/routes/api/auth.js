@@ -88,9 +88,12 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/loggedInUser', (req, res) => {
+    if (!req.headers.token) {
+        res.status(401).json({ error: 'Not Authorized' });
+    }
     jwt.verify(req.headers.token, jwtSecret, function (err, decoded) {
         if (err) {
-            res.status(401).json({ error: 'Not Authorized' })
+            res.status(401).json({ error: 'Not Authorized' });
         } else {
             let newToken = null;
             let expiryTime = new Date(decoded.issuedAt).getTime() + 3600000; // issued time plus 1 hour
