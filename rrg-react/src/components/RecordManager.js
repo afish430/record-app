@@ -195,110 +195,125 @@ function RecordManager(props) {
     }
 
     return (
-        props.user &&
         <div className="record-manager">
+            { !props.user._id &&
+            <>
+                <div className="text-center loading-records">
+                    Loading...
+                </div>
+                <div className="text-center m-auto">
+                    <Link to="/login" className="btn-link login-link">
+                        Go to Login
+                    </Link>
+                </div>
+            </>}
+            { props.user._id &&
             <div className="container">
-                <div className="row">
-                    <div className="col-md-12 text-center">
-                        <h1 className="display-5 text-center">Manage Records</h1>
-                        <button className="btn btn-link" onClick={toggleMode}>
-                            Switch to {props.mode === "Table" ? "Tile" : "Table"} Mode
-                        </button>
-                    </div>
-                </div>
-                <div className="row manage-forms">
-                    <div className="col-md-3 col-sm-12">
-                        <form className="form-inline justify-content-center">
-                            <div className="form-group">
-                                <label htmlFor="favorite" className="mr-2">Filter:</label>
-                                <select
-                                    className="form-control"
-                                    name="genre"
-                                    value={selectedGenre}
-                                    onChange={onFilterChange}
-                                >
-                                    <option value="Any">Any</option>
-                                    {
-                                        props.genres.map(genre => {
-                                            return props.hasGenre(genre, records) && <option key={genre} value={genre}>{genre}</option>
-                                        })
-                                    }
-                                    {props.hasGenre("Pre-1960", records) && <option value="Pre-1960">Pre-1960</option>}
-                                    {props.hasGenre("1960s", records) && <option value="1960s">1960s</option>}
-                                    {props.hasGenre("1970s", records) && <option value="1970s">1970s</option>}
-                                    {props.hasGenre("1980s", records) && <option value="1980s">1980s</option>}
-                                    {props.hasGenre("1990s", records) && <option value="1990s">1990s</option>}
-                                    {props.hasGenre("2000 to Present", records) && <option value="2000 to Present">2000 to Present</option>}
-                                    {props.hasGenre("Favorites", records) && <option value="Favorites">Favorites</option>}
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div className="col-md-6 col-sm-12 text-center">
-                        <form className="form-inline justify-content-center">
-                            <div className="input-group">
-                                <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="search by artist or album"/>
-                                <div className="input-group-append">
-                                    <div className="input-group-text clear-btn" title="Clear Search or Filter">
-                                        {
-                                        ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "Any")
-                                        && <i className="fa fa-times" onClick={clearSearch}></i>
-                                        }
-                                    </div>
-                                    <button className="btn btn-warning" type="button" onClick={handleSearchClick}>
-                                        <i className="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div className="col-md-3 col-sm-12 text-center">
-                        <Link to="/add-record" className="btn btn-warning">
-                            + Add New Record
-                        </Link>
-                    </div>
-
-                </div>
-
-                {recordsLoaded && <div className="text-center">
-                    <label className="record-count">
-                        (Showing {filteredRecords.length} Records)
-                    </label>
-                </div>}
                 {!recordsLoaded &&
                     <div className="text-center loading-records">
                         Loading Records...
                     </div>
                 }
+                {recordsLoaded && 
+                <>
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            <h1 className="display-5 text-center">Manage Records</h1>
+                            <button className="btn btn-link" onClick={toggleMode}>
+                                Switch to {props.mode === "Table" ? "Tile" : "Table"} Mode
+                            </button>
+                        </div>
+                    </div>
                 
-                <div>
-                    {
-                        props.mode === "Table" &&
-                        <RecordTable
-                            records={filteredRecords}
-                            removeRecord={removeRecord}
-                            recordIdFromHash={hashId}
-                            baseUrl={props.baseUrl}>
-                        </RecordTable>
-                    }
-                </div>
+                    <div className="row manage-forms">
+                        <div className="col-md-3 col-sm-12">
+                            <form className="form-inline justify-content-center">
+                                <div className="form-group">
+                                    <label htmlFor="favorite" className="mr-2">Filter:</label>
+                                    <select
+                                        className="form-control"
+                                        name="genre"
+                                        value={selectedGenre}
+                                        onChange={onFilterChange}
+                                    >
+                                        <option value="Any">Any</option>
+                                        {
+                                            props.genres.map(genre => {
+                                                return props.hasGenre(genre, records) && <option key={genre} value={genre}>{genre}</option>
+                                            })
+                                        }
+                                        {props.hasGenre("Pre-1960", records) && <option value="Pre-1960">Pre-1960</option>}
+                                        {props.hasGenre("1960s", records) && <option value="1960s">1960s</option>}
+                                        {props.hasGenre("1970s", records) && <option value="1970s">1970s</option>}
+                                        {props.hasGenre("1980s", records) && <option value="1980s">1980s</option>}
+                                        {props.hasGenre("1990s", records) && <option value="1990s">1990s</option>}
+                                        {props.hasGenre("2000 to Present", records) && <option value="2000 to Present">2000 to Present</option>}
+                                        {props.hasGenre("Favorites", records) && <option value="Favorites">Favorites</option>}
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
 
-                <div className="list">
-                    {
-                        props.mode === "Tile" && filteredRecords.map((record, i) =>
-                            <RecordTile
-                                record={record}
+                        <div className="col-md-6 col-sm-12 text-center">
+                            <form className="form-inline justify-content-center">
+                                <div className="input-group">
+                                    <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="search by artist or album"/>
+                                    <div className="input-group-append">
+                                        <div className="input-group-text clear-btn" title="Clear Search or Filter">
+                                            {
+                                            ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "Any")
+                                            && <i className="fa fa-times" onClick={clearSearch}></i>
+                                            }
+                                        </div>
+                                        <button className="btn btn-warning" type="button" onClick={handleSearchClick}>
+                                            <i className="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div className="col-md-3 col-sm-12 text-center">
+                            <Link to="/add-record" className="btn btn-warning">
+                                + Add New Record
+                            </Link>
+                        </div>
+
+                    </div>
+
+                    <div className="text-center">
+                        <label className="record-count">
+                            (Showing {filteredRecords.length} Records)
+                        </label>
+                    </div>
+
+                    <div>
+                        {
+                            props.mode === "Table" &&
+                            <RecordTable
+                                records={filteredRecords}
                                 removeRecord={removeRecord}
-                                showFooter={true}
-                                key={i}
-                                baseUrl={props.baseUrl}
-                            />
-                        )
-                    }
-                </div>
-            </div>
+                                recordIdFromHash={hashId}
+                                baseUrl={props.baseUrl}>
+                            </RecordTable>
+                        }
+                    </div>
+
+                    <div className="list">
+                        {
+                            props.mode === "Tile" && filteredRecords.map((record, i) =>
+                                <RecordTile
+                                    record={record}
+                                    removeRecord={removeRecord}
+                                    showFooter={true}
+                                    key={i}
+                                    baseUrl={props.baseUrl}
+                                />
+                            )
+                        }
+                    </div>
+                </>}
+            </div> }
             <button className="btn btn-link to-top" onClick={scrollToTop}>
                 Top <i className="fa fa-caret-up"></i>
             </button>

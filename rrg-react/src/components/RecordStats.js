@@ -193,7 +193,7 @@ function RecordStats(props) {
                 },
                 chartOptions: {
                     chart: {
-                        margin: 10,
+                        margin: 30,
                         height: 250
                     },
                     title: {
@@ -317,50 +317,55 @@ function RecordStats(props) {
 
     return (
         <div className="record-stats">
-            {recordsLoaded && !records.length &&
-            <div className="text-center loading-records">
-                You need to add some records to your collection to see your stats!
-            </div>
-            }
-            {recordsLoaded && records.length > 0 &&
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-8 m-auto text-center">
                         <h1 className="display-5">Record Statistics</h1>
-                        <div className="chart-div">
-                            <HighchartsReact highcharts={Highcharts} options={getGenresPieChartOptions('pie')} />
-                            <HighchartsReact highcharts={Highcharts} options={getDecadesBarChartOptions('column')} />
-                            <HighchartsReact highcharts={Highcharts} options={getTopArtistsChartOptions('bar')} />
-                        </div>
-                        {
-                            recordStats.oldestRecord && recordStats.newestRecord &&
-                            <>
-                                <div className="oldest-newest">
-                                    <div>
-                                        <p>Oldest Record*:</p>
-                                        <RecordTile
-                                            record={recordStats.oldestRecord}
-                                            showFooter={false}
-                                        />
+                        {!recordsLoaded &&
+                        <div className="text-center loading-records">
+                            Loading Records...
+                        </div>}
+                        {recordsLoaded && !records.length &&
+                        <div className="text-center loading-records">
+                            You need to add some records to your collection to see your stats!
+                        </div>}
+                        {recordsLoaded && records.length > 0 &&
+                        <>
+                            <div className="chart-div">
+                                <HighchartsReact highcharts={Highcharts} options={getGenresPieChartOptions('pie')} />
+                                <HighchartsReact highcharts={Highcharts} options={getDecadesBarChartOptions('column')} />
+                                <HighchartsReact highcharts={Highcharts} options={getTopArtistsChartOptions('bar')} />
+                            </div>
+                            {
+                                recordStats.oldestRecord && recordStats.newestRecord &&
+                                <>
+                                    <div className="oldest-newest">
+                                        <div>
+                                            <p>Oldest Record*:</p>
+                                            <RecordTile
+                                                record={recordStats.oldestRecord}
+                                                showFooter={false}
+                                            />
+                                        </div>
+                                        <div>
+                                            <p>Newest Record*:</p>
+                                            <RecordTile
+                                                record={recordStats.newestRecord}
+                                                showFooter={false}
+                                            />
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p>Newest Record*:</p>
-                                        <RecordTile
-                                            record={recordStats.newestRecord}
-                                            showFooter={false}
-                                        />
-                                    </div>
-                                </div>
-                                <p className="asterisk">*May not reflect ties (records released in the same year)</p>
-                                <br></br>
-                                <p>Total Records: {recordStats.recordCount}</p>
-                                <p>Total Artists: {recordStats.artistCount}</p>
-                                <p>Total Genres: {recordStats.genreCount}</p>
-                            </>
-                        }
+                                    <p className="asterisk">*May not reflect ties (records released in the same year)</p>
+                                    <br></br>
+                                    <p>Total Records: {recordStats.recordCount}</p>
+                                    <p>Total Artists: {recordStats.artistCount}</p>
+                                    <p>Total Genres: {recordStats.genreCount}</p>
+                                </>
+                            }
+                        </>}
                     </div>
                 </div>
-            </div>}
+            </div>
         </div>
     )
 }

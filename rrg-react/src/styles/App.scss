@@ -2,6 +2,9 @@ body {
   background-image: url('../images/vinyl-wallpaper.jpg');
   background-attachment: fixed;
   font-family: Georgia, 'Times New Roman', Times, serif;
+  @media only screen and (max-width: 500px) {
+    background-size: 700px 600px;
+  }
 
   .btn {
     font-weight: 600;
@@ -120,6 +123,7 @@ body {
     font-size: 17px;
     font-weight: bold;
     margin-top: 10px;
+    margin-bottom: 200px;
   }
 }
 
@@ -484,7 +488,7 @@ table.table {
     .highcharts-container{
       width: 100% !important;
       height: 100% !important;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     
     .highcharts-root{
@@ -498,6 +502,9 @@ table.table {
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 0 100px;
+    p {
+      margin-top: 10px;
+    }
     @media only screen and (max-width: 500px) {
       justify-content: center
     }

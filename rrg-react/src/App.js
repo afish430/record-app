@@ -103,29 +103,29 @@ function App() {
       <div>
         <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
         <Switch>
-        <Route exact path='/'>
-          <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
-        </Route>
-        <Route path='/Generate'>
-          <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
-        </Route>
-        <Route path='/Stats'>
-          <RecordStats user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
-        </Route>
-        <Route path='/add-record'>
-          <AddRecord user={user} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>
-        </Route>
-        <Route
-          path='/edit-record/:id'
-          render={(props) => <EditRecord {...props} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>}
-        />
-        <Route path="/login">
-          <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode} baseUrl={BASE_URL}/>
-        </Route>
-        <Route path='/create-account'>
-          <CreateUserPage baseUrl={BASE_URL}/>
-        </Route>
-        <Route component={NotFoundPage} />
+          <Route exact path='/'>
+            <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
+          </Route>
+          <Route path='/Generate'>
+            <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
+          </Route>
+          <Route path='/Stats'>
+            <RecordStats user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
+          </Route>
+          <Route path='/add-record'>
+            <AddRecord user={user} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>
+          </Route>
+          <Route
+            path='/edit-record/:id'
+            render={(props) => <EditRecord {...props} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>}
+          />
+          <Route path="/login">
+            <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode} baseUrl={BASE_URL}/>
+          </Route>
+          <Route path='/create-account'>
+            <CreateUserPage baseUrl={BASE_URL}/>
+          </Route>
+          <Route component={NotFoundPage} />
         </Switch>
       </div>
     </Router>
