@@ -124,7 +124,7 @@ body {
     font-size: 17px;
     font-weight: bold;
     margin-top: 10px;
-    margin-bottom: 500px;
+    margin-bottom: 400px;
   }
 }
 
@@ -224,41 +224,43 @@ body {
 
   .record-tile-container {
     max-width: 375px;
-    min-height: 595px;
+    min-height: 600px;
     padding: 12px 8px;
 
-    &:hover {
-      transform: scale(1.03);
-      transition: all 0.2s ease-out;
-    }
+    // &:hover {
+    //   transform: scale(1.03);
+    //   transition: all 0.2s ease-out;
+    // }
 
     img {
       width: 95%;
       padding: 0;
     }
 
-    .desc h2 {
-      font-size: 1.5em;
-      font-weight: 600;
-    }
-
-    .desc h3 {
-      font-size: 1.55em;
-      font-weight: 600;
-      padding-bottom: 0;
-    }
-
-    .desc h4 {
-      font-size: 1.15em;
-      font-weight: 600;
-      margin-bottom: 5px;
+    .desc {
+      min-height: 210px;
+      padding-top: 10px;
+      h2 {
+        font-size: 1.5em;
+        font-weight: 600;
+      }
+      h3 {
+        font-size: 1.4em;
+        font-weight: 600;
+        padding-bottom: 0;
+      }
+      h4 {
+        font-size: 1.3em;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
     }
 
     .pulsate {
       animation: color_change 0.5s infinite alternate;
       font-size: 1.5em;
       position: absolute;
-      bottom: 15px;
+      bottom: 10px;
       width: 100%;
       left: 0;
     }
@@ -325,8 +327,8 @@ form label {
   }
 
   .record-tile-container {
-    width: 250px;
-    height: 520px;
+    width: 275px;
+    height: 525px;
   }
 
   .hide-before-delete {
@@ -370,6 +372,7 @@ form label {
 
   img {
     width: 100%;
+    min-height: 274px;
     padding: 8px;
   }
 
@@ -392,9 +395,10 @@ form label {
   }
 
   .desc {
-    height: 250px;
-    padding: 10px;
+    padding: 5px 7px;
     text-align: center;
+    position: relative;
+    min-height: 175px;
 
     a, a:visited {
       color: darkcyan;
@@ -408,20 +412,25 @@ form label {
       color: orangered;
       font-size: 1.2em;
       font-weight: 600;
-      padding-bottom: 5px;
     }
 
     h3 {
       color: black;
-      font-size: 1.2em;
+      font-size: 1.15em;
       font-weight: 600;
-      padding-bottom: 5px;
     }
 
     h4 {
       color: black;
       font-size: 1.1em;
       font-weight: 400;
+      margin-bottom: 7px;
+      &.more-info {
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        width: 100%;
+      }
     }
   }
 }
@@ -522,11 +531,12 @@ table.table {
   }
 
   .record-tile-container {
-    width: 250px;
-    max-height: 455px;
+    width: 275px;
+    max-height: 465px;
     padding: 12px 8px;
     margin-top: 5px;
     margin-bottom: 5px;
+    padding-bottom: 7px;
 
     .mt-3 {
       display: none;

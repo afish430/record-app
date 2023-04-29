@@ -319,7 +319,7 @@ function RecordStats(props) {
         <div className="record-stats">
             <div className="container mb-5">
                 <div className="row">
-                    <div className="col-md-8 m-auto text-center">
+                    <div className="col-md-9 m-auto text-center">
                         <h1 className="display-5">Record Statistics</h1>
                         {!recordsLoaded &&
                         <div className="text-center loading-records">

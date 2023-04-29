@@ -21,15 +21,14 @@ function RecordTile(props) {
                 })
                 .catch(err => {
                     console.log("An error deleting a record");
-                    // console.log(err);
                 })
         }
     };
 
     const getShortenedTitleIfNeeded = record => {
         let title = record.title;
-        if (record.artist.length > 20 && record.title.length > 20) {
-            title =  title.slice(0, 16) + "...";
+        if (record.artist.length > 22 && record.title.length > 22) {
+            title =  title.slice(0, 18) + "...";
         }
         return title;
     };
@@ -56,19 +55,19 @@ function RecordTile(props) {
                 <h3>{record.artist}</h3>
                 <h4>{record.genre}</h4>
                 <h4>{record.year}</h4>
-                <h4>
+                <h4 className="more-info text-center">
                     <a target="_blank" rel="noreferrer" href={record.link}>
                         More Info
                     </a>
                 </h4>
-                {!props.showFooter &&
-                    <div className="mt-3">
-                        <strong className="pulsate">
-                            &#9836; Enjoy your record! &#9836;
-                        </strong>
-                    </div>
-                }
             </div>
+            {!props.showFooter &&
+                <div className="mt-3">
+                    <strong className="pulsate">
+                        &#9836; Enjoy your record! &#9836;
+                    </strong>
+                </div>
+            }
             {props.showFooter && <div className="tile-footer">
                 <Link to={`/edit-record/${record._id}`} className="btn btn-info btn-sm btn-block">
                     Edit Record

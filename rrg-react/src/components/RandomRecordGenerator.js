@@ -149,13 +149,13 @@ function RandomRecordGenerator(props) {
                                         {props.hasGenre("1970s", records) && <option value="1970s">1970s</option>}
                                         {props.hasGenre("1980s",records) && <option value="1980s">1980s</option>}
                                         {props.hasGenre("1990s", records) && <option value="1990s">1990s</option>}
-                                        {props.hasGenre("2000 t0 Present", records) && <option value="2000 t0 Present">2000 to Present</option>}
+                                        {props.hasGenre("2000 to Present", records) && <option value="2000 to Present">2000 to Present</option>}
                                         {props.hasGenre("Favorites", records) && <option value="Favorites">Favorites</option>}
                                     </select>
                                 </div>
                             </form>
-                            <br />
-                            <button className="btn btn-warning btn-lg m-2" onClick={generateRecord}>
+
+                            <button className="btn btn-warning btn-lg mt-2" onClick={generateRecord}>
                                 Generate Record!
                             </button>
                             {generating && <div className="text-center mt-4">
