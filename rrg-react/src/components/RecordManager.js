@@ -209,22 +209,21 @@ function RecordManager(props) {
             </>}
             { props.user._id &&
             <div className="container">
-                {!recordsLoaded &&
-                    <div className="text-center loading-records">
-                        Loading Records...
-                    </div>
-                }
-                {recordsLoaded && 
-                <>
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <h1 className="display-5 text-center">Manage Records</h1>
+                            {!recordsLoaded &&
+                            <div className="text-center loading-records">
+                                Loading Records...
+                            </div>}
+                            {recordsLoaded &&
                             <button className="btn btn-link" onClick={toggleMode}>
                                 Switch to {props.mode === "Table" ? "Tile" : "Table"} Mode
-                            </button>
+                            </button>}
                         </div>
                     </div>
-                
+                {recordsLoaded && 
+                <>
                     <div className="row manage-forms">
                         <div className="col-md-3 col-sm-12">
                             <form className="form-inline justify-content-center">

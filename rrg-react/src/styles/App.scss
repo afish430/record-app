@@ -1,9 +1,10 @@
 body {
   background-image: url('../images/vinyl-wallpaper.jpg');
   background-attachment: fixed;
+  background-position: top center;
   font-family: Georgia, 'Times New Roman', Times, serif;
   @media only screen and (max-width: 500px) {
-    background-size: 700px 600px;
+    background-size: auto 800px;
   }
 
   .btn {
@@ -123,7 +124,7 @@ body {
     font-size: 17px;
     font-weight: bold;
     margin-top: 10px;
-    margin-bottom: 200px;
+    margin-bottom: 500px;
   }
 }
 
