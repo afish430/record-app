@@ -210,9 +210,9 @@ function RecordManager(props) {
                     <div className="col-md-3 col-sm-12">
                         <form className="form-inline justify-content-center">
                             <div className="form-group">
-                                <label htmlFor="favorite">Filter:</label>
+                                <label htmlFor="favorite" className="mr-2">Filter:</label>
                                 <select
-                                    className="form-control ml-2"
+                                    className="form-control"
                                     name="genre"
                                     value={selectedGenre}
                                     onChange={onFilterChange}

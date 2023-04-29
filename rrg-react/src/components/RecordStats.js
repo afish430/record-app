@@ -10,6 +10,7 @@ import HighchartsReact from 'highcharts-react-official';
 function RecordStats(props) {
 
     const [records, setRecords] = useState([]);
+    const [recordsLoaded, setRecordsLoaded] = useState(false);
     const [recordStats, setRecordStats] = useState({});
     const history = useHistory();
       
@@ -46,6 +47,7 @@ function RecordStats(props) {
                 })
             .then(res => {
                 setRecords(res.data);
+                setRecordsLoaded(true);
             })
             .catch(err => {
                 console.log('Error from RecordStats');
@@ -315,6 +317,12 @@ function RecordStats(props) {
 
     return (
         <div className="record-stats">
+            {recordsLoaded && !records.length &&
+            <div className="text-center loading-records">
+                You need to add some records to your collection to see your stats!
+            </div>
+            }
+            {recordsLoaded && records.length > 0 &&
             <div className="container mb-5">
                 <div className="row">
                     <div className="col-md-8 m-auto text-center">
@@ -352,9 +360,8 @@ function RecordStats(props) {
                         }
                     </div>
                 </div>
-            </div>
+            </div>}
         </div>
-
     )
 }
 
