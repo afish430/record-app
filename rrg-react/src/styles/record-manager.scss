@@ -1,0 +1,68 @@
+.record-manager {
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    min-width: 100px;
+    color: white;
+  
+    .manage-forms>div{
+      margin-bottom: 5px;
+    }
+  
+    .manage-forms .form-group {
+      margin-bottom: 0;
+      text-align: center;
+      .filter-label {
+        margin-bottom: 2px;
+      }
+    }
+  
+    label.record-count {
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+  
+    .input-group {
+      max-width: 300px;
+    }
+  
+    #searchInput:focus, .btn:focus { 
+      box-shadow: none;
+    }
+  
+    .list {
+      display: grid;
+      margin-bottom: 50px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-column-gap: 2em;
+    }
+  
+    .record-tile-container {
+      width: 275px;
+      height: 525px;
+    }
+  
+    .hide-before-delete {
+      opacity: 0;
+      transition: opacity 1500ms ease-out;
+    }
+  
+    .btn-link {
+      color: yellow;
+      text-decoration: none;
+  
+      &:hover {
+        color: cyan;
+      }
+  
+      &.to-top {
+        position: fixed;
+        bottom: 20px;
+        left: 10px;
+        @media only screen and (max-width: 600px) {
+          left: 0;
+        }
+      }
+    }
+  }

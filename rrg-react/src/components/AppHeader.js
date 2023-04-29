@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import '../styles/App.scss';
+import '../styles/app-header.scss';
 import turntable from './../images/turntable.png';
 
 function AppHeader(props) {

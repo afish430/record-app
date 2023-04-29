@@ -1,0 +1,74 @@
+.app-header {
+    color: white;
+  
+    img {
+      width: 80px;
+      filter: drop-shadow(0 0 10px yellow);
+    }
+  
+    h1 {
+      font-size: 4.5em;
+      margin-top: 10px;
+      margin-left: 5%;
+      text-shadow: 2px 2px 8px black;
+  
+      @media only screen and (max-width: 900px) {
+        font-size: 2.5em;
+      }
+    }
+  
+    .row {
+      justify-content: center;
+    }
+  
+    .btn-tab {
+      border-radius: 5px 5px 0 0;
+      border-bottom: none;
+      width: 180px;
+      @media only screen and (max-width: 900px) {
+        padding: 3px;
+        width: 130px;
+        font-size: 13px;
+      }
+    }
+  
+    .about-btn {
+      position: absolute;
+      top: 30px;
+      right: 60px;
+  
+      @media only screen and (max-width: 900px) {
+        position: static !important;
+        float: right;
+        padding: 1px;
+        background: none;
+        border: none;
+        color: #17a2b8;
+        &:hover {
+          background: none !important;
+          border: none !important;
+        }
+      }
+  
+    }
+  
+    .logout {
+      position: absolute;
+      top: 30px;
+      left: 60px;
+  
+      @media only screen and (max-width: 900px) {
+        position: static !important;
+        float: left;
+        .btn {
+          padding: 1px;
+          background: none;
+          border: none;
+          color: #dc3545;
+        }
+        .user-name {
+          display: none;
+        }
+      }
+    }
+  }

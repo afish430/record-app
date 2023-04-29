@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/App.scss';
+import '../styles/record-generator.scss';
 import '../styles/spinning-record.css';
 import axios from 'axios';
 import {useHistory } from 'react-router-dom';

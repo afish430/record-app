@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/App.scss';
+import '../styles/record-tile.scss';
 import axios from 'axios';
 
 function RecordTile(props) {
@@ -20,7 +21,7 @@ function RecordTile(props) {
                     props.removeRecord(id);
                 })
                 .catch(err => {
-                    console.log("An error deleting a record");
+                    console.log("An error occurred deleting a record");
                 })
         }
     };

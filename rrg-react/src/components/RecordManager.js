@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/App.scss';
+import '../styles/record-manager.scss';
 import axios from 'axios';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import RecordTile from './RecordTile';
@@ -228,7 +229,7 @@ function RecordManager(props) {
                         <div className="col-md-3 col-sm-12">
                             <form className="form-inline justify-content-center">
                                 <div className="form-group">
-                                    <label htmlFor="favorite" className="mr-2">Filter:</label>
+                                    <label className="mr-2 filter-label">Filter:</label>
                                     <select
                                         className="form-control"
                                         name="genre"

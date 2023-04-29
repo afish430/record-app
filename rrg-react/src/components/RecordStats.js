@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {useHistory } from 'react-router-dom';
 import RecordTile from './RecordTile';
 import '../styles/App.scss';
+import '../styles/record-stats.scss';
 import '../styles/spinning-record.css';
 import axios from 'axios';
 import Highcharts from 'highcharts';

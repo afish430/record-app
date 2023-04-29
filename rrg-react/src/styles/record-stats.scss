@@ -1,0 +1,56 @@
+.record-stats {
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    min-width: 100px;
+    color: white;
+    
+    .chart-div {
+      .highcharts-container{
+        width: 100% !important;
+        height: 100% !important;
+        margin-bottom: 30px;
+      }
+      
+      .highcharts-root{
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+  
+    .oldest-newest {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 0 100px;
+      p {
+        margin-top: 10px;
+      }
+      @media only screen and (max-width: 500px) {
+        justify-content: center
+      }
+    }
+  
+    p {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+  
+    .asterisk {
+      font-size: 14px;
+      font-weight:normal;
+    }
+  
+    .record-tile-container {
+      width: 275px;
+      max-height: 465px;
+      padding: 12px 8px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding-bottom: 7px;
+  
+      .mt-3 {
+        display: none;
+      }
+    }
+  }
