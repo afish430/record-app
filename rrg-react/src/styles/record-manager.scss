@@ -4,7 +4,14 @@
     min-height: 100vh;
     min-width: 100px;
     color: white;
-  
+
+    @media (max-width: 800px) {
+      .container {
+        min-width: 80%;
+        max-width: 90%;
+      }
+    }
+
     .manage-forms>div{
       margin-bottom: 5px;
     }

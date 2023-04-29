@@ -56,9 +56,8 @@ function CreateUserPage(props) {
                                 </input>
                             </div>
                             <div className='form-group'>
-                                <label htmlFor="password2">Email:</label>
+                                <label htmlFor="password2">Email: (Optional)</label>
                                 <input
-                                    required
                                     name="email"
                                     type="email"
                                     className="form-control"
