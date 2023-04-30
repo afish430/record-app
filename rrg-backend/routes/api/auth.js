@@ -37,6 +37,7 @@ router.post('/signup', (req, res) => {
                 if (err) throw err;
                 user.password = hash;
                 user.save().then(response => {
+                        console.log('New user created! ' + userName);
                         res.status(200).json({
                         success: true,
                         result: response
@@ -70,6 +71,7 @@ router.post('/login', (req, res) => {
                 if (!isMatch) {
                     return res.status(400).json({ error: 'Incorrect user name or password'});
                 }
+                console.log('Login successful!');
                 return res.status(200).json({
                     success: true,
                     result: user,
@@ -88,22 +90,27 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/loggedInUser', (req, res) => {
+    console.log('Checking if user is logged in...');
     if (!req.headers.token) {
+        console.log('No token, returning 401');
         res.status(401).json({ error: 'Not Authorized' });
     }
     jwt.verify(req.headers.token, jwtSecret, function (err, decoded) {
         if (err) {
+            console.log('jwt.verify error, returning 401');
             res.status(401).json({ error: 'Not Authorized' });
         } else {
             let newToken = null;
             let expiryTime = new Date(decoded.issuedAt).getTime() + 3600000; // issued time plus 1 hour
             let currentTime = new Date().getTime();
             if (currentTime > expiryTime - 600000) { // if within 10 mins of expiry, send new jwt
+                console.log('renewing jwt...');
                 newToken = jwt.sign({ userName: decoded.userName, _id: decoded._id, email: decoded.email, isAdmin: decoded.isAdmin, issuedAt: new Date() },
                     jwtSecret,
                     {expiresIn: '1h'}
                 );
             }
+            console.log('jwt.verify succeeded, returning 200 for user ' + decoded.userName);
             return res.status(200).json({
                 success: true,
                 user: decoded,

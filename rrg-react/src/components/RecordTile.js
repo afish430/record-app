@@ -64,7 +64,7 @@ function RecordTile(props) {
             </div>
             {!props.showFooter &&
                 <div className="mt-3">
-                    <strong className="pulsate">
+                    <strong className="pulsate dance">
                         &#9836; Enjoy your record! &#9836;
                     </strong>
                 </div>

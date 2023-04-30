@@ -52,25 +52,39 @@
       }
   
       .pulsate {
-        animation: color_change 0.5s infinite alternate;
         font-size: 1.5em;
         position: absolute;
         bottom: 10px;
         width: 100%;
         left: 0;
       }
+
+      .dance {
+        animation-name: dance;
+        animation-duration: .5s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        transform-origin: 0 100%;
+      }
   
       .mt-3 {
         margin-top: 0 !important;
       }
-  
-      @keyframes color_change {
+
+      @keyframes dance
+      {
         from {
           color: purple;
         }
         to {
           color: cyan;
         }
+          0%   { transform: skewX(-5deg) scaleY(1);  }
+          10%  { transform: skewX(-5deg) scaleY(1);  }
+          50%  { transform: skewX(0deg)  scaleY(.8); }
+          90%  { transform: skewX(5deg)  scaleY(1);  }
+          100% { transform: skewX(5deg)  scaleY(1);  }
       }
     }
   }

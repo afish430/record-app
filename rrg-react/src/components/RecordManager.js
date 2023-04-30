@@ -61,7 +61,7 @@ function RecordManager(props) {
                 }
             })
             .catch(err => {
-                console.log('Error from RecordManager');
+                console.log('Error fetching records from RecordManager');
             })
     }, []);
 

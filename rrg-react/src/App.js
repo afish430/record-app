@@ -51,7 +51,7 @@ function App() {
     "Soundtrack"
   ];
 
-  const BASE_URL = "https://vinylator-api.onrender.com/api"; // http://localhost:8082/api";
+  const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
 
   const hasGenre = (genre, records) => {
     if (genre === "Favorites") {
