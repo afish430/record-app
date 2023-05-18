@@ -11,12 +11,18 @@ const Record = require('../../models/Record');
 router.get('/', (req, res) => {
     jwt.verify(req.headers.token, jwtSecret, function (err, decoded) {
         if (err) {
+            console.log("records endpoint error, not authorized");
             res.status(401).json({ error: 'Not Authorized' })
         } else {
             Record.find({userId: decoded._id})
-                .then(records => res.json(records))
-                .catch(err => 
-                    res.status(404).json({ error: 'No records found' })
+                .then(records => {
+                    console.log("records endpoint sucess, returning " + records.length + " records");
+                    return res.json(records);
+                })
+                .catch(err => {
+                        console.log("records endpoint error");
+                        return res.status(404).json({ error: 'No records found' })
+                    }
                 );
         }
     });
