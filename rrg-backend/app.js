@@ -9,7 +9,6 @@ const port = 8082;
 // routes
 const auth = require('./routes/api/auth');
 const records = require('./routes/api/records');
-const keepAliveEndpoint = 'http://localhost:' + port + '/keep-alive';
 
 // Connect Database
 connectDB();
@@ -24,12 +23,12 @@ app.use(express.json({ extended: false }));
 app.use('/api/auth', auth);
 app.use('/api/records', records);
 
-app.get('/keep-alive', (req, res) => {
-    res.send('Server is active');
+app.get('/api/keep-alive', (req, res) => {
+    res.send('Staying alive...');
 });
 
 setInterval(() => {
-axios.get(keepAliveEndpoint)
+axios.get('https://vinylator-api.onrender.com/api/keep-alive')
     .then(response => {
     console.log('Keep-alive request successful:', response.data);
     })
