@@ -36,6 +36,6 @@ axios.get(keepAliveEndpoint)
     .catch(error => {
     console.error('Error making keep-alive request:', error.message);
     });
-}, 10 * 60 * 1000); // call every 10 minutes to keep API running
+}, 3 * 60 * 1000); // call every 3 minutes to keep API running
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
