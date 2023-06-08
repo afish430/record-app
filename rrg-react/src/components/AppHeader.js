@@ -18,29 +18,17 @@ function AppHeader(props) {
         currentRoute = "Manage";
     }
 
-    const [activeRoute, setActiveRoute] = useState(currentRoute);
-    const history = useHistory();
-
-    const setManageActive = () => {
-        setActiveRoute('Manage');
-    }
-
-    const setGenerateActive = () => {
-        setActiveRoute('Generate');
-    }
-
-    const setStatsActive = () => {
-        setActiveRoute('Stats');
-    }
+    props.setActiveRoute(currentRoute);
 
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShowModal = () => setShowModal(true);
+    const history = useHistory();
     
     const logout = () => {
         localStorage.setItem("jwt", null);
         props.setCurrentUser({});
-        setActiveRoute('Manage');
+        props.setActiveRoute('Manage');
         history.push('/login');
     }
   
@@ -62,13 +50,13 @@ function AppHeader(props) {
                 { props.user.userName && 
                 <>
                 <div className="row">
-                    <Link to="/" className={"btn btn-tab " + (activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={setManageActive}>
+                    <Link to="/" className={"btn btn-tab " + (props.activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={props.setManageActive}>
                         Manager
                     </Link>
-                    <Link to="/Stats" className={"btn btn-tab ml-2 " + (activeRoute === "Stats" ? "btn-info" : "btn-outline-light")} onClick={setStatsActive}>
+                    <Link to="/Stats" className={"btn btn-tab ml-2 " + (props.activeRoute === "Stats" ? "btn-info" : "btn-outline-light")} onClick={props.setStatsActive}>
                         Statistics
                     </Link>
-                    <Link to="/Generate" className={"btn btn-tab ml-2 " + (activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={setGenerateActive}>
+                    <Link to="/Generate" className={"btn btn-tab ml-2 " + (props.activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={props.setGenerateActive}>
                         Generator
                     </Link>
                 </div>

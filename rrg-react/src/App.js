@@ -13,6 +13,19 @@ import CreateUserPage from './components/CreateUserPage';
 import NotFoundPage from './components/NotFoundPage';
 
 function App() {
+  const [activeRoute, setActiveRoute] = useState('Manage');
+
+  const setManageActive = () => {
+      setActiveRoute('Manage');
+  }
+
+  const setGenerateActive = () => {
+      setActiveRoute('Generate');
+  }
+
+  const setStatsActive = () => {
+      setActiveRoute('Stats');
+  }
 
   const [user, setUser] = useState({});
   const [mode, setMode] = useState('');
@@ -101,26 +114,66 @@ function App() {
   return (
     <Router>
       <div>
-        <AppHeader user={user} setCurrentUser={setCurrentUser}></AppHeader>
+        <AppHeader
+          user={user}
+          setCurrentUser={setCurrentUser}
+          activeRoute={activeRoute}
+          setActiveRoute={setActiveRoute}
+          setManageActive={setManageActive}
+          setGenerateActive={setGenerateActive}
+          setStatsActive={setStatsActive}
+          >
+        </AppHeader>
         <Switch>
           <Route exact path='/'>
-            <RecordManager user={user} mode={mode} genres={genres} hasGenre={hasGenre} setViewMode={setViewMode} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
-          </Route>
-          <Route path='/Generate'>
-            <RandomRecordGenerator user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
+            <RecordManager
+              user={user}
+              mode={mode}
+              genres={genres}
+              hasGenre={hasGenre}
+              setViewMode={setViewMode}
+              setCurrentUser={setCurrentUser}
+              baseUrl={BASE_URL}/>
           </Route>
           <Route path='/Stats'>
-            <RecordStats user={user} genres={genres} hasGenre={hasGenre} setCurrentUser={setCurrentUser} baseUrl={BASE_URL}/>
+            <RecordStats
+              user={user} 
+              genres={genres}
+              hasGenre={hasGenre}
+              setCurrentUser={setCurrentUser}
+              setManageActive={setManageActive}
+              baseUrl={BASE_URL}/>
+          </Route>
+          <Route path='/Generate'>
+            <RandomRecordGenerator
+              user={user}
+              genres={genres}
+              hasGenre={hasGenre}
+              setCurrentUser={setCurrentUser}
+              setManageActive={setManageActive}
+              baseUrl={BASE_URL}/>
           </Route>
           <Route path='/add-record'>
-            <AddRecord user={user} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>
+            <AddRecord
+              user={user}
+              genres={genres}
+              tooltipText={tooltipText}
+              baseUrl={BASE_URL}/>
           </Route>
           <Route
             path='/edit-record/:id'
-            render={(props) => <EditRecord {...props} genres={genres} tooltipText={tooltipText} baseUrl={BASE_URL}/>}
+            render={(props) => 
+            <EditRecord {...props}
+              genres={genres}
+              tooltipText={tooltipText}
+              baseUrl={BASE_URL}
+            />}
           />
           <Route path="/login">
-            <LoginPage setCurrentUser={setCurrentUser} setViewMode={setViewMode} baseUrl={BASE_URL}/>
+            <LoginPage
+              setCurrentUser={setCurrentUser}
+              setViewMode={setViewMode}
+              baseUrl={BASE_URL}/>
           </Route>
           <Route path='/create-account'>
             <CreateUserPage baseUrl={BASE_URL}/>

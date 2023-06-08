@@ -36,6 +36,7 @@ function RandomRecordGenerator(props) {
                 }
             })
             .catch(err => {
+                props.setManageActive();
                 history.push('/login');
             })
 

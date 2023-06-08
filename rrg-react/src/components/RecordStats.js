@@ -35,6 +35,7 @@ function RecordStats(props) {
                 }
             })
             .catch(err => {
+                props.setManageActive();
                 history.push("/login");
             })
 
