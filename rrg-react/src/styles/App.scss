@@ -132,8 +132,12 @@ body {
   }
 }
 
-.add-record, .edit-record, .login-page, .create-user-page {
+.add-record, .edit-record {
   min-height: 100vh;
+  color: white;
+}
+
+.login-page, .create-user-page {
   color: white;
 }
 

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import infoIcon from './../images/info-icon.png';
-import Tooltip from 'react-bootstrap/Tooltip';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios from 'axios';
 import '../styles/App.scss';
 

@@ -3,6 +3,7 @@ import '../styles/App.scss';
 import '../styles/record-manager.scss';
 import axios from 'axios';
 import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import RecordTile from './RecordTile';
 import RecordTable from './RecordTable';
 
@@ -259,14 +260,33 @@ function RecordManager(props) {
                                 <div className="input-group">
                                     <input type="search" id="searchInput" className="form-control searchInput" ref={searchInputRef} onKeyDown={handleSearchKeyDown} placeholder="search by artist or album"/>
                                     <div className="input-group-append">
-                                        <div className="input-group-text clear-btn" title="Clear Search or Filter">
+                                        <div className="input-group-text clear-btn">
                                             {
                                             ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "Any")
-                                            && <i className="fa fa-times" onClick={clearSearch}></i>
+                                            && 
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={
+                                                    <Tooltip wrapperClassName="info-tooltip">
+                                                        Clear Search or Filter
+                                                    </Tooltip>
+                                                }
+                                                >
+                                                <i className="fa fa-times" onClick={clearSearch}></i>
+                                            </OverlayTrigger>
                                             }
                                         </div>
                                         <button className="btn btn-warning" type="button" onClick={handleSearchClick}>
-                                            <i className="fa fa-search"></i>
+                                        <OverlayTrigger
+                                                placement="top"
+                                                overlay={
+                                                    <Tooltip wrapperClassName="info-tooltip">
+                                                        Search by Artist or Album
+                                                    </Tooltip>
+                                                }
+                                                >
+                                                <i className="fa fa-search"></i>
+                                            </OverlayTrigger>
                                         </button>
                                     </div>
                                 </div>
