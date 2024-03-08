@@ -1,48 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
-import '../styles/App.scss';
 import axios from 'axios';
 
-function RecordTable(props) {
+import { Record } from '../types/record';
+
+import '../styles/App.scss';
+
+type RecordTableProps = {
+  records: Record[],
+  removeRecord(id: string): void,
+  baseUrl: string,
+  recordIdFromHash: string;
+}
+
+const RecordTable: React.FC<RecordTableProps> = ({records, removeRecord, baseUrl, recordIdFromHash}) => {
     const defaultSortInfo = {
         sortField: "artist",
         direction: "ASC"
     }
-    const [recordList, setRecordList] = useState(props.records);
+    const [recordList, setRecordList] = useState(records);
     const [sortInfo, setSortInfo] = useState(defaultSortInfo);
 
     useEffect(() => {
-        setRecordList(props.records);
+        setRecordList(records);
         setTimeout(() => {
-            if(props.recordIdFromHash){
-                executeScroll(props.recordIdFromHash.substring(1)); // remove # part
+            if(recordIdFromHash){
+                executeScroll(recordIdFromHash.substring(1)); // remove # part
             }
         }, 0);
          
-    }, [props.records, props.recordIdFromHash]);
+    }, [records, recordIdFromHash]);
 
-    const onDeleteClick = (id) => {
+    const onDeleteClick = (id: string) => {
         if (window.confirm('Are you sure you want to delete this record?')) {
             axios
-                .delete(props.baseUrl + "/records/" + id,
+                .delete(baseUrl + "/records/" + id,
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
                 .then(res => {
                     console.log("Deletion successful");
-                    props.removeRecord(id);
+                    removeRecord(id);
                 })
                 .catch(err => {
                     console.log("An error occurred deleting a record");
-                    // console.log(err);
                 })
         }
     };
 
-    const sortRecordTable = (sortField) => {
+    const sortRecordTable = (sortField: string) => {
         let records= [...recordList];
         let direction = "ASC";
         if (sortInfo.sortField === sortField && sortInfo.direction === "ASC") {
@@ -51,20 +60,20 @@ function RecordTable(props) {
         if (direction === "ASC")
         {
             records.sort((a, b) => {
-                if ( a[sortField] < b[sortField] ){
+                if ( a[sortField as keyof Record] < b[sortField as keyof Record] ){
                     return -1;
                   }
-                else if ( a[sortField] > b[sortField] ){
+                else if ( a[sortField as keyof Record] > b[sortField as keyof Record] ){
                     return 1;
                 }
                 return 0;
             });
         } else {
             records.sort((a, b) => {
-                if ( a[sortField] > b[sortField] ){
+                if ( a[sortField as keyof Record] > b[sortField as keyof Record] ){
                     return -1;
                   }
-                else if ( a[sortField] < b[sortField] ){
+                else if ( a[sortField as keyof Record] < b[sortField as keyof Record] ){
                     return 1;
                 }
                 return 0;
@@ -74,7 +83,7 @@ function RecordTable(props) {
         setRecordList(records);
     }
 
-    const executeScroll = (id) => {
+    const executeScroll = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
           element.classList.add('select-after-scroll');
