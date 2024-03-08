@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { Record } from '../types/record';
+import { Record } from '../shared/types/record';
 
 import '../styles/App.scss';
 import '../styles/record-tile.scss';

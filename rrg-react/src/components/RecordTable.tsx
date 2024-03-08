@@ -3,15 +3,15 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { Record } from '../types/record';
+import { Record } from '../shared/types/record';
 
 import '../styles/App.scss';
 
 type RecordTableProps = {
   records: Record[],
   removeRecord(id: string): void,
-  baseUrl: string,
   recordIdFromHash: string;
+  baseUrl: string,
 }
 
 const RecordTable: React.FC<RecordTableProps> = ({records, removeRecord, baseUrl, recordIdFromHash}) => {
@@ -160,7 +160,7 @@ const RecordTable: React.FC<RecordTableProps> = ({records, removeRecord, baseUrl
               <td>
                 <button
                     type="button" 
-                    className="btn btn-danger btn-sm btn-block mb-1" 
+                    className="btn btn-danger btn-sm btn-block" 
                     onClick={onDeleteClick.bind(this, record._id)}>
                     Delete
                 </button>

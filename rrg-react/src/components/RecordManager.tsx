@@ -1,20 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
-import '../styles/App.scss';
-import '../styles/record-manager.scss';
-import axios from 'axios';
+import { useState, useEffect, useRef, ChangeEvent, ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import axios, {AxiosResponse} from 'axios';
+
 import RecordTile from './RecordTile';
 import RecordTable from './RecordTable';
+import { Record } from '../shared/types/record';
+import { User } from '../shared/types/user';
+import { UserResponse} from '../shared/types/userResponse';
 
-function RecordManager(props) {
-    const [records, setRecords] = useState([]);
-    const [recordsLoaded, setRecordsLoaded] = useState(false);
-    const [selectedGenre, setSelectedGenre] = useState('Any');
-    const [filteredRecords, setFilteredRecords] = useState([]);
+import '../styles/App.scss';
+import '../styles/record-manager.scss';
+
+type RecordManagerProps = {
+    records: Record[],
+    baseUrl: string,
+    recordIdFromHash: string;
+    mode: string;
+    user: User;
+    genres: string[];
+    setCurrentUser(user: User): void;
+    removeRecord(id: string): void;
+    setViewMode(mode: string): void;
+    hasGenre(genre: string, records: Record[]): boolean;
+  }
+
+const RecordManager: React.FC<RecordManagerProps> = (props) => {
+
+    const [records, setRecords] = useState<Record[]>([]);
+    const [recordsLoaded, setRecordsLoaded] = useState<boolean>(false);
+    const [selectedGenre, setSelectedGenre] = useState<string>('Any');
+    const [filteredRecords, setFilteredRecords] = useState<Record[]>([]);
     const recordIdFromHash = useLocation().hash;
     const [hashId, setHashId] = useState(recordIdFromHash);
-    const searchInputRef = useRef(null);
+    const searchInputRef = useRef<HTMLInputElement | null>(null);
     const history = useHistory();
 
     useEffect(() => {
@@ -22,10 +41,10 @@ function RecordManager(props) {
         axios.get(props.baseUrl + "/auth/loggedInUser",
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
-            .then(res => {
+            .then((res: AxiosResponse<UserResponse>) => {
                 if (!res.data.user && (!props.user || !props.user._id)) {
                     history.push("/login");
                 } else {
@@ -49,11 +68,11 @@ function RecordManager(props) {
             .get(props.baseUrl + "/records",
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
-            .then(res => {
-                let sortedRecords = res.data.sort(sortByArtist);
+            .then((res: AxiosResponse<any>) => {
+                let sortedRecords: Record[] = res.data.sort(sortByArtist);
                 setRecords([...sortedRecords]);
                 setFilteredRecords(sortedRecords);
                 setRecordsLoaded(true);
@@ -97,7 +116,7 @@ function RecordManager(props) {
         } 
     }, [selectedGenre, records]);
 
-    const executeScroll = (id) => {
+    const executeScroll = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
             element.classList.add('select-after-scroll');
@@ -112,24 +131,24 @@ function RecordManager(props) {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    const removeRecord = (id) => {
-        const element = document.getElementById(id)
-        element.classList.add('hide-before-delete');
+    const removeRecord = (id: string) => {
+        const element = document.getElementById(id);
+        element?.classList.add('hide-before-delete');
             setTimeout(() => {
-                element.classList.remove('hide-before-delete');
+                element?.classList.remove('hide-before-delete');
                 setRecords(records.filter(rec => rec._id !== id));
                 setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
             }, 1500);
     }
 
-    const handleSearchKeyDown = (e) => {
+    const handleSearchKeyDown: KeyboardEventHandler = (e) => {
         if (e.key === 'Enter') {
             searchRecords();
             e.preventDefault();
         }
     }
 
-    const handleSearchClick = (e) => {
+    const handleSearchClick: MouseEventHandler = (e) => {
         e.preventDefault();
         searchRecords();
     }
@@ -137,21 +156,26 @@ function RecordManager(props) {
     const searchRecords = () => {
         setSelectedGenre('Any');
         setTimeout(() => {
-            const searchTerm = searchInputRef.current.value.toLowerCase();
-            setFilteredRecords(records.filter(
-                rec => rec.artist.toLowerCase().indexOf(searchTerm) !== -1 || rec.title.toLowerCase().indexOf(searchTerm) !== -1)
-            );
+            const searchTerm: string | undefined = searchInputRef.current?.value.toLowerCase();
+            if (searchTerm) {
+                setFilteredRecords(records.filter(
+                    rec => rec.artist.toLowerCase().indexOf(searchTerm) !== -1 || rec.title.toLowerCase().indexOf(searchTerm) !== -1)
+                );
+            }
         }, 100);
     }
 
-    const clearSearch = (e) => {
+    const clearSearch: MouseEventHandler = (e) => {
         e.preventDefault();
+        setHashId("");
         setSelectedGenre('Any');
         setFilteredRecords(records);
-        searchInputRef.current.value = "";
+        if (searchInputRef.current) {
+            searchInputRef.current.value = "";
+        }
     }
 
-    const sortByArtist = (a, b) => {
+    const sortByArtist = (a: Record, b: Record) => {
         let artistA = a.artist;
         let artistB = b.artist;
 
@@ -180,14 +204,16 @@ function RecordManager(props) {
         return 0;
     }
 
-    const onFilterChange = e => {
-        setHashId(null);
-        searchInputRef.current.value = "";
-        setSelectedGenre(e.target.value); // see useEffect() for actual changes
+    const onFilterChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+        setHashId("");
+        if (searchInputRef.current) {
+            searchInputRef.current.value = "";
+        }
+        setSelectedGenre(e.currentTarget.value); // see useEffect() for actual changes
     };
 
     const toggleMode = () => {
-        setHashId(null);
+        setHashId("");
         if(props.mode === "Table") {
            props.setViewMode("Tile");
         }
@@ -262,25 +288,25 @@ function RecordManager(props) {
                                     <div className="input-group-append">
                                         <div className="input-group-text clear-btn">
                                             {
-                                            ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "Any")
-                                            && 
-                                            <OverlayTrigger
-                                                placement="top"
-                                                overlay={
-                                                    <Tooltip wrapperClassName="info-tooltip">
-                                                        Clear Search or Filter
-                                                    </Tooltip>
-                                                }
-                                                >
-                                                <i className="fa fa-times" onClick={clearSearch}></i>
-                                            </OverlayTrigger>
+                                                ((searchInputRef.current && searchInputRef.current.value) || selectedGenre !== "Any")
+                                                && 
+                                                <OverlayTrigger
+                                                    placement="top"
+                                                    overlay={
+                                                        <Tooltip className="info-tooltip">
+                                                            Clear Search or Filter
+                                                        </Tooltip>
+                                                    }
+                                                    >
+                                                    <i className="fa fa-times" onClick={clearSearch}></i>
+                                                </OverlayTrigger>
                                             }
                                         </div>
                                         <button className="btn btn-warning" type="button" onClick={handleSearchClick}>
                                         <OverlayTrigger
                                                 placement="top"
                                                 overlay={
-                                                    <Tooltip wrapperClassName="info-tooltip">
+                                                    <Tooltip className="info-tooltip">
                                                         Search by Artist or Album
                                                     </Tooltip>
                                                 }
@@ -310,12 +336,7 @@ function RecordManager(props) {
                     <div>
                         {
                             props.mode === "Table" &&
-                            <RecordTable
-                                records={filteredRecords}
-                                removeRecord={removeRecord}
-                                recordIdFromHash={hashId}
-                                baseUrl={props.baseUrl}>
-                            </RecordTable>
+                            <RecordTable records={filteredRecords} removeRecord={removeRecord} recordIdFromHash={hashId} baseUrl={props.baseUrl} />
                         }
                     </div>
 

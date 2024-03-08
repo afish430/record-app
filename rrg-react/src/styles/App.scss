@@ -24,9 +24,10 @@ body {
   }
 
   .btn-info {
+    box-shadow: 1px 1px 3px gray;
     &:not(.btn-tab) {
       &:hover {
-        color: black;
+        color: #333;
         background-color: cyan;
         border-color: cyan;
       }
@@ -34,8 +35,8 @@ body {
   }
 
   .btn-danger {
+    box-shadow: 1px 1px 3px #555;
     &:hover {
-      color: cyan;
       background-color: red;
       border-color: red;
     }
@@ -139,53 +140,6 @@ body {
 
 .login-page, .create-user-page {
   color: white;
-}
-
-.record-table-head {
-  th {
-    border: 2px solid white;
-  }
-
-  th.sortable {
-    cursor: pointer;
-    min-width: 85px;
-    i.fa {
-      margin-left: 4px;
-    }
-  }
-
-  th.button-column {
-    min-width: 80px;
-    text-align: center;
-  }
-}
-
-table.table {
-  margin-top: 10px;
-}
-
-.record-table-body {
-  tr {
-    transition: background-color 1s ease;
-  }
-
-  td {
-    border: 2px solid white;
-    vertical-align: middle;
-    padding-left: 4px;
-
-    a.album-link {
-      color: cyan;
-      &:hover {
-        color: yellow;
-        text-decoration: none;
-      }
-    }
-  }
-
-  .cover-thumbnail {
-    padding-right: 2px;
-  }
 }
 
 .not-found-page {
