@@ -5,8 +5,8 @@ import axios, {AxiosResponse} from 'axios';
 
 import RecordTile from './RecordTile';
 import RecordTable from './RecordTable';
-import { Record } from '../shared/types/record';
-import { User } from '../shared/types/user';
+import { Record } from '../types/record';
+import { User } from '../types/user';
 
 import '../styles/App.scss';
 import '../styles/record-manager.scss';
@@ -40,14 +40,13 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
         }
 
         // fetch and sort all records on page load:
-        axios
-            .get(props.baseUrl + "/records",
+        axios.get(props.baseUrl + "/records",
                 {
                     headers: {
                         token: localStorage.getItem("jwt") || ""
                     }
                 })
-            .then((res: AxiosResponse<any>) => {
+            .then((res: AxiosResponse<Record[]>) => {
                 let sortedRecords: Record[] = res.data.sort(sortByArtist);
                 setRecords([...sortedRecords]);
                 setFilteredRecords(sortedRecords);
@@ -129,7 +128,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
         searchRecords();
     }
 
-    const searchRecords = () => {
+    const searchRecords = (): void => {
         setSelectedGenre('Any');
         setTimeout(() => {
             const searchTerm: string | undefined = searchInputRef.current?.value.toLowerCase();
@@ -151,7 +150,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
         }
     }
 
-    const sortByArtist = (a: Record, b: Record) => {
+    const sortByArtist = (a: Record, b: Record): number => {
         let artistA = a.artist;
         let artistB = b.artist;
 
@@ -188,10 +187,10 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
         setSelectedGenre(e.currentTarget.value); // see useEffect() for actual changes
     };
 
-    const toggleMode = () => {
+    const toggleMode = (): void => {
         setHashId("");
         if(props.mode === "Table") {
-           props.setViewMode("Tile");
+            props.setViewMode("Tile");
         }
         else if (props.mode === "Tile") {
             props.setViewMode("Table");

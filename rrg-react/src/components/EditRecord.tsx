@@ -3,8 +3,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios, {AxiosResponse}  from 'axios';
 
-import { Record } from '../shared/types/record';
-import { User } from '../shared/types/user';
+import { Record } from '../types/record';
+import { User } from '../types/user';
+import { TooltipText } from '../types/tooltipText';
 
 import '../styles/App.scss';
 import infoIcon from './../images/info-icon.png';
@@ -13,7 +14,7 @@ type EditRecordProps = {
     baseUrl: string,
     user: User,
     genres: string[],
-    tooltipText: any,
+    tooltipText: TooltipText,
     match: any
 }
 
@@ -30,7 +31,7 @@ const EditRecord: React.FC<EditRecordProps> = (props) => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const history = useHistory();
 
-    // make sure user is logged in
+    // make sure user is logged in:
     if (!props.user || !props.user._id) {
         history.push('/login');
     }

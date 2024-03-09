@@ -2,7 +2,7 @@ import { FormEventHandler, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios, {AxiosResponse} from 'axios';
 
-import { User } from '../shared/types/user';
+import { User } from '../types/user';
 
 import '../styles/App.scss';
 

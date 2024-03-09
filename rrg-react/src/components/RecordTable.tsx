@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { Record } from '../shared/types/record';
+import { Record } from '../types/record';
 
 import '../styles/App.scss';
 
@@ -14,13 +14,18 @@ type RecordTableProps = {
   baseUrl: string
 };
 
+type SortInfo = {
+  sortField: string,
+  direction: string
+}
+
 const RecordTable: React.FC<RecordTableProps> = ({records, removeRecord, baseUrl, recordIdFromHash}) => {
-    const defaultSortInfo = {
+    const defaultSortInfo: SortInfo = {
         sortField: "artist",
         direction: "ASC"
     };
-    const [recordList, setRecordList] = useState(records);
-    const [sortInfo, setSortInfo] = useState(defaultSortInfo);
+    const [recordList, setRecordList] = useState<Record[]>(records);
+    const [sortInfo, setSortInfo] = useState<SortInfo>(defaultSortInfo);
 
     useEffect(() => {
         setRecordList(records);

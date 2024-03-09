@@ -3,7 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios, {AxiosResponse}  from 'axios';
 
-import { User } from '../shared/types/user';
+import { User } from '../types/user';
+import { TooltipText } from '../types/tooltipText';
 
 import '../styles/App.scss';
 import infoIcon from './../images/info-icon.png';
@@ -12,7 +13,7 @@ type AddRecordProps = {
     baseUrl: string,
     user: User,
     genres: string[],
-    tooltipText: any
+    tooltipText: TooltipText
 }
 
 type RecordSubmit = {

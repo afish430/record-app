@@ -4,8 +4,8 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import RecordTile from './RecordTile';
-import { Record } from '../shared/types/record';
-import { User } from '../shared/types/user';
+import { Record } from '../types/record';
+import { User } from '../types/user';
 
 import '../styles/App.scss';
 import '../styles/record-stats.scss';
@@ -37,8 +37,7 @@ const RecordStats: React.FC<RecordStatsProps> = (props) => {
     useEffect(() => {
         props.checkLogin();
         // fetch all records for this user:
-        axios
-            .get(props.baseUrl + "/records",
+        axios.get(props.baseUrl + "/records",
                 {
                     headers: {
                         token: localStorage.getItem("jwt") || ""

@@ -2,8 +2,8 @@ import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import RecordTile from './RecordTile';
-import { Record } from '../shared/types/record';
-import { User } from '../shared/types/user';
+import { Record } from '../types/record';
+import { User } from '../types/user';
 
 import '../styles/App.scss';
 import '../styles/record-generator.scss';

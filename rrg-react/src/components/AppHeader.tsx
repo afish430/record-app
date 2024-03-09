@@ -3,8 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-import { User } from '../shared/types/user';
-import { RecordRoute } from '../shared/types/recordRoute';
+import { User } from '../types/user';
+import { RecordRoute } from '../types/recordRoute';
 
 import '../styles/App.scss';
 import '../styles/app-header.scss';

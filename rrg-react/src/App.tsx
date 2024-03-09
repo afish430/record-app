@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import axios,{AxiosResponse} from 'axios';
 
 import RecordManager from './components/RecordManager';
@@ -12,16 +11,16 @@ import AppHeader from './components/AppHeader';
 import LoginPage from './components/LoginPage';
 import CreateUserPage from './components/CreateUserPage';
 import NotFoundPage from './components/NotFoundPage';
-import { Record } from './shared/types/record';
-import { User } from './shared/types/user';
-import { RecordRoute } from './shared/types/recordRoute';
-import { UserResponse} from './shared/types/userResponse';
+import { Record } from './types/record';
+import { User } from './types/user';
+import { RecordRoute } from './types/recordRoute';
+import { UserResponse} from './types/userResponse';
+import { TooltipText } from './types/tooltipText';
 
 import './styles/App.scss';
 
 const App: React.FC = () => {
   const [activeRoute, setActiveRoute] = useState<RecordRoute>(RecordRoute.Manage);
-  const history = useHistory<History>();
 
   const setManageActive = (): void => {
       setActiveRoute(RecordRoute.Manage);
@@ -34,7 +33,7 @@ const App: React.FC = () => {
   const BASE_URL = "https://vinylator-api.onrender.com/api";
 
   const checkLogin = ():void => {
-    // make sure user is logged in
+    // make sure user is logged in:
     axios.get(BASE_URL + "/auth/loggedInUser",
             {
                 headers: {
@@ -43,7 +42,6 @@ const App: React.FC = () => {
             })
             .then((res: AxiosResponse<UserResponse>) => {
             if (!res.data.user && (!user || !user._id)) {
-                // history.push("/login");
                 window.location.href = "/login";
             } else {
                 if (res.data.newToken) {
@@ -56,7 +54,6 @@ const App: React.FC = () => {
         .catch(err => {
             setManageActive();
             window.location.href = "/login";
-            // history.push('/login');
         })
   }
 
@@ -125,7 +122,7 @@ const App: React.FC = () => {
     } 
   }
 
-  const tooltipText = {
+  const tooltipText: TooltipText = {
     genre: 'Genres are subjective, but choose the one you think fits this album best!',
     link: 'Enter the URL of a website with more information about this album. Wikipedia is often a good source.',
     image: 'Find an image of this album cover online. Right-click the image and select "Copy image address." If on mobile, tap the image and try copying its URL from the browser. If using Wikipedia on iPhone, you may need to tap into the image, then "Details," then tap the link under that image, then finally copy the URL from the browser.',
