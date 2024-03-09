@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios, { AxiosResponse } from 'axios';
+
 import '../styles/App.scss';
-import axios from 'axios';
 
-function CreateUserPage(props) {
+type CreateUserPageProps = {
+    baseUrl: string
+}
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
-    const [userName, setUserName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');
+const CreateUserPage: React.FC<CreateUserPageProps> = ({baseUrl}) => {
 
-    const handleSubmit = e => {
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [successMessage, setSuccessMessage] = useState<string>("");
+    const [userName, setUserName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [password2, setPassword2] = useState<string>("");
+
+    const handleSubmit: FormEventHandler = e => {
         e.preventDefault();
         setErrorMessage("");
         setSuccessMessage("");
@@ -24,8 +29,8 @@ function CreateUserPage(props) {
         };
         
         axios
-            .post(props.baseUrl + "/auth/signup", newUser)
-            .then(res => {
+            .post(baseUrl + "/auth/signup", newUser)
+            .then((res: AxiosResponse<any>) => {
                 setSuccessMessage(`The user ${res.data.result.userName} has been created!`);
                 setUserName("");
                 setEmail("");

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import infoIcon from './../images/info-icon.png';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';

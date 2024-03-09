@@ -7,10 +7,10 @@ import { User } from '../shared/types/user';
 import '../styles/App.scss';
 
 type LoginPageProps = {
-    baseUrl: string;
-    setCurrentUser(user: User): void;
-    setViewMode(mode: string): void;
-}
+    baseUrl: string,
+    setCurrentUser(user: User): void,
+    setViewMode(mode: string): void
+};
 
 const LoginPage: React.FC<LoginPageProps> = (props) => {
 

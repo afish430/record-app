@@ -1,19 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEventHandler, useEffect, useState } from 'react';
+import {useHistory } from 'react-router-dom';
+import axios,{AxiosResponse} from 'axios';
+
+import RecordTile from './RecordTile';
+import { Record } from '../shared/types/record';
+import { User } from '../shared/types/user';
+import { UserResponse} from '../shared/types/userResponse';
+
 import '../styles/App.scss';
 import '../styles/record-generator.scss';
 import '../styles/spinning-record.css';
-import axios from 'axios';
-import {useHistory } from 'react-router-dom';
-import RecordTile from './RecordTile';
 
-function RandomRecordGenerator(props) {
+type RandomRecordGenerator = {
+    baseUrl: string,
+    user: User,
+    genres: string[],
+    setCurrentUser(user: User): void,
+    hasGenre(genre: string, records: Record[]): boolean,
+    setManageActive(): void
+  };
 
-    const [records, setRecords] = useState([]);
-    const [recordsLoaded, setRecordsLoaded] = useState(false);
-    const [selectedRecord, setSelectedRecord] = useState({});
-    const [generating, setGenerating] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [selectedGenre, setSelectedGenre] = useState('Any');
+const RandomRecordGenerator: React.FC<RandomRecordGenerator> = (props) => {
+
+    const [records, setRecords] = useState<Record[]>([]);
+    const [recordsLoaded, setRecordsLoaded] = useState<boolean>(false);
+    const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
+    const [generating, setGenerating] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [selectedGenre, setSelectedGenre] = useState<string>('Any');
     const history = useHistory();
 
     useEffect(() => {
@@ -21,10 +35,10 @@ function RandomRecordGenerator(props) {
         axios.get(props.baseUrl + "/auth/loggedInUser",
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
-            .then(res => {
+                .then((res: AxiosResponse<UserResponse>) => {
                 if (!res.data.user && (!props.user || !props.user._id)) {
                     history.push("/login");
                 } else {
@@ -45,7 +59,7 @@ function RandomRecordGenerator(props) {
             .get(props.baseUrl + "/records",
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
             .then(res => {
@@ -57,15 +71,15 @@ function RandomRecordGenerator(props) {
             })
     }, []);
 
-    const onFilterChange = e => {
+    const onFilterChange: ChangeEventHandler<HTMLSelectElement> = e => {
         setSelectedGenre(e.target.value);
         setSelectedRecord(null);
     };
 
     const generateRecord = () => {
         if (records.length) {
-            var nameIndex = Math.floor(Math.random() * records.length);
-            var filteredRecords = JSON.parse(JSON.stringify(records));
+            var nameIndex: number = Math.floor(Math.random() * records.length);
+            var filteredRecords: Record[] = JSON.parse(JSON.stringify(records));
 
             if (selectedGenre !== 'Any') {
                 if (selectedGenre === 'Pre-1960') {
@@ -94,7 +108,7 @@ function RandomRecordGenerator(props) {
                 }
                 
                 if (filteredRecords.length === 0) {
-                    setSelectedRecord({});
+                    setSelectedRecord(null);
                     setErrorMessage('Record could not be generated. Try changing your filter.');
                     return;
                 }
@@ -102,7 +116,7 @@ function RandomRecordGenerator(props) {
                 nameIndex = Math.floor(Math.random() * filteredRecords.length);
             }
 
-            setSelectedRecord({});
+            setSelectedRecord(null);
             setGenerating(true);
             setErrorMessage('');
 

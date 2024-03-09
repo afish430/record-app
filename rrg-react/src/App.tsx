@@ -12,22 +12,15 @@ import CreateUserPage from './components/CreateUserPage';
 import NotFoundPage from './components/NotFoundPage';
 import { Record } from './shared/types/record';
 import { User } from './shared/types/user';
+import { RecordRoute } from './shared/types/recordRoute';
 
 import './styles/App.scss';
 
 const App: React.FC = () => {
-  const [activeRoute, setActiveRoute] = useState('Manage');
+  const [activeRoute, setActiveRoute] = useState<RecordRoute>(RecordRoute.Manage);
 
-  const setManageActive = () => {
-      setActiveRoute('Manage');
-  }
-
-  const setGenerateActive = () => {
-      setActiveRoute('Generate');
-  }
-
-  const setStatsActive = () => {
-      setActiveRoute('Stats');
+  const setManageActive = (): void => {
+      setActiveRoute(RecordRoute.Manage);
   }
 
   const [user, setUser] = useState<User>({});
@@ -121,14 +114,10 @@ const App: React.FC = () => {
       <div>
         <AppHeader
           user={user}
-          setCurrentUser={setCurrentUser}
           activeRoute={activeRoute}
+          setCurrentUser={setCurrentUser}
           setActiveRoute={setActiveRoute}
-          setManageActive={setManageActive}
-          setGenerateActive={setGenerateActive}
-          setStatsActive={setStatsActive}
-          >
-        </AppHeader>
+        />
         <Switch>
           <Route exact path='/'>
             <RecordManager
@@ -144,7 +133,6 @@ const App: React.FC = () => {
             <RecordStats
               user={user} 
               genres={genres}
-              hasGenre={hasGenre}
               setCurrentUser={setCurrentUser}
               setManageActive={setManageActive}
               baseUrl={BASE_URL}/>

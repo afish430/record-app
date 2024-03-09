@@ -1,30 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import {useHistory } from 'react-router-dom';
-import RecordTile from './RecordTile';
-import '../styles/App.scss';
-import '../styles/record-stats.scss';
-import '../styles/spinning-record.css';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios, {AxiosResponse} from 'axios';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-function RecordStats(props) {
+import RecordTile from './RecordTile';
+import { Record } from '../shared/types/record';
+import { User } from '../shared/types/user';
+import { UserResponse} from '../shared/types/userResponse';
 
-    const [records, setRecords] = useState([]);
-    const [recordsLoaded, setRecordsLoaded] = useState(false);
-    const [recordStats, setRecordStats] = useState({});
+import '../styles/App.scss';
+import '../styles/record-stats.scss';
+import '../styles/spinning-record.css';
+
+type RecordStatsProps = {
+    baseUrl: string,
+    user: User,
+    genres: string[],
+    setCurrentUser(user: User): void,
+    setManageActive(): void
+};
+
+type RecordStatistics = {
+    recordCount?: number,
+    artistCount?: number,
+    genreCount?: number,
+    oldestRecord?: Record,
+    newestRecord?: Record
+};
+
+const RecordStats: React.FC<RecordStatsProps> = (props) => {
+
+    const [records, setRecords] = useState<Record[]>([]);
+    const [recordsLoaded, setRecordsLoaded] = useState<boolean>(false);
+    const [recordStats, setRecordStats] = useState<RecordStatistics>({});
     const history = useHistory();
       
 
     useEffect(() => {
-        // make sure user is logged in
+        // make sure user is logged in:
         axios.get(props.baseUrl + "/auth/loggedInUser",
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
-            .then(res => {
+            .then((res: AxiosResponse<UserResponse>) => {
                 if (!res.data.user && (!props.user || !props.user._id)) {
                     history.push("/login");
                 } else {
@@ -39,12 +60,12 @@ function RecordStats(props) {
                 history.push("/login");
             })
 
-        // fetch all records for this user
+        // fetch all records for this user:
         axios
             .get(props.baseUrl + "/records",
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
             .then(res => {
@@ -61,13 +82,13 @@ function RecordStats(props) {
     }, [records]);
 
     const calculateStats = () => {
-        const recordCount = records.length;
-        const artists = [];
-        const genres = [];
-        let artistCount = 0;
-        let genreCount = 0;
-        let oldestRecord = records[0];
-        let newestRecord = records[0];
+        const recordCount: number = records.length;
+        const artists: string[] = [];
+        const genres: string[] = [];
+        let artistCount: number = 0;
+        let genreCount: number = 0;
+        let oldestRecord: Record = records[0];
+        let newestRecord: Record = records[0];
         records.forEach(rec => {
             if (!artists.includes(rec.artist)) {
                 artistCount++;
@@ -95,7 +116,7 @@ function RecordStats(props) {
     }
 
     const getRecordsByGenre = () => {
-        const genreCounts = {};
+        const genreCounts: any = {};
         records.forEach(rec => {
             if (genreCounts[rec.genre] !== undefined) {
                 genreCounts[rec.genre]++;
@@ -113,7 +134,7 @@ function RecordStats(props) {
     };
 
     const getRecordsByDecade = () => {
-        let recordsByDecade = [
+        let recordsByDecade: any[] = [
             { name: "Pre-1940", y: records.filter(rec => rec.year < 1940).length },
             { name: "1940s", y: records.filter(rec => rec.year >= 1940 && rec.year < 1950).length },
             { name: "1950s", y: records.filter(rec => rec.year >= 1950 && rec.year < 1960).length },
@@ -131,7 +152,7 @@ function RecordStats(props) {
     };
 
     const getTopArtists = () => {
-        let artistCounts = {};
+        let artistCounts: any = {};
         records.forEach(rec => {
             if (artistCounts[rec.artist] !== undefined) {
                 artistCounts[rec.artist]++;
@@ -158,7 +179,7 @@ function RecordStats(props) {
         return topArtists;
     };
 
-    const getGenresPieChartOptions = (type) => ({
+    const getGenresPieChartOptions = (type: any) => ({
         chart: {
           type,
           margin: 30,
@@ -215,7 +236,7 @@ function RecordStats(props) {
         }
     });
 
-    const getDecadesBarChartOptions = (type) => ({
+    const getDecadesBarChartOptions = (type: any) => ({
         chart: {
           type,
           marginLeft: 100,
@@ -268,7 +289,7 @@ function RecordStats(props) {
         }
     });
 
-    const getTopArtistsChartOptions = (type) => ({
+    const getTopArtistsChartOptions = (type: any) => ({
         chart: {
           type,
           marginLeft: 150,
@@ -283,10 +304,7 @@ function RecordStats(props) {
             enabled: false
         },
         xAxis: {
-            categories: getTopArtists().map(artist => artist.name),
-            title: {
-                text: 'Bands/Artists'
-            }
+            categories: getTopArtists().map(artist => artist.name)
         },
         yAxis: {
             min: 0,
@@ -304,12 +322,14 @@ function RecordStats(props) {
         ],
         tooltip: {
             formatter: function() {
-                let recordsByArtist = records.filter(rec => rec.artist === this.x);
+                // @ts-ignore 
+                let recordsByArtist: Record[] = records.filter(rec => rec.artist === this.x);
                 recordsByArtist.sort((a, b) => a.year - b.year);
-                recordsByArtist = recordsByArtist.map(rec => rec.title + ' (' + rec.year + ')');
-                let recordText = recordsByArtist.length === 1 ? " Record" : " Records";
-                let tooltipText = '<b>' + this.y + recordText + ' by ' + this.x + '</b>:<br>';
-                recordsByArtist.forEach(title => {
+                let recordsByArtistText: string[] = recordsByArtist.map(rec => rec.title + ' (' + rec.year + ')');
+                let recordText: string = recordsByArtistText.length === 1 ? " Record" : " Records";
+                // @ts-ignore 
+                let tooltipText: string = '<b>' + this.y + recordText + ' by ' + this.x + '</b>:<br>';
+                recordsByArtistText.forEach(title => {
                     tooltipText += '<i>' + title + '</i><br>';
                 })
                 return tooltipText;

@@ -10,15 +10,15 @@ import '../styles/App.scss';
 type RecordTableProps = {
   records: Record[],
   removeRecord(id: string): void,
-  recordIdFromHash: string;
-  baseUrl: string,
-}
+  recordIdFromHash: string,
+  baseUrl: string
+};
 
 const RecordTable: React.FC<RecordTableProps> = ({records, removeRecord, baseUrl, recordIdFromHash}) => {
     const defaultSortInfo = {
         sortField: "artist",
         direction: "ASC"
-    }
+    };
     const [recordList, setRecordList] = useState(records);
     const [sortInfo, setSortInfo] = useState(defaultSortInfo);
 
@@ -42,7 +42,6 @@ const RecordTable: React.FC<RecordTableProps> = ({records, removeRecord, baseUrl
                     }
                 })
                 .then(res => {
-                    console.log("Deletion successful");
                     removeRecord(id);
                 })
                 .catch(err => {

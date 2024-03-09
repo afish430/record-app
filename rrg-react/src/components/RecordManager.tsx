@@ -13,14 +13,14 @@ import '../styles/App.scss';
 import '../styles/record-manager.scss';
 
 type RecordManagerProps = {
-    baseUrl: string;
-    mode: string;
-    user: User;
-    genres: string[];
-    setCurrentUser(user: User): void;
-    setViewMode(mode: string): void;
-    hasGenre(genre: string, records: Record[]): boolean;
-  }
+    baseUrl: string,
+    mode: string,
+    user: User,
+    genres: string[],
+    setCurrentUser(user: User): void,
+    setViewMode(mode: string): void,
+    hasGenre(genre: string, records: Record[]): boolean
+  };
 
 const RecordManager: React.FC<RecordManagerProps> = (props) => {
 
@@ -46,7 +46,6 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                     history.push("/login");
                 } else {
                     if (res.data.newToken) {
-                        console.log("updating local storage");
                         localStorage.setItem("jwt", res.data.newToken);
                     }
                     props.setCurrentUser(res.data.user)

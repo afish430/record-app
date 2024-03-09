@@ -9,10 +9,10 @@ import '../styles/record-tile.scss';
 
 type RecordTileProps = {
     record: Record,
-    removeRecord(id: string): void,
-    showFooter: boolean,
-    baseUrl: string
-  }
+    showFooter?: boolean,
+    baseUrl?: string,
+    removeRecord?(id: string): void
+};
 
 const RecordTile: React.FC<RecordTileProps> = ({record, removeRecord, showFooter, baseUrl}) => {
 
@@ -26,8 +26,9 @@ const RecordTile: React.FC<RecordTileProps> = ({record, removeRecord, showFooter
                     }
                 })
                 .then(res => {
-                    console.log("Deletion successful");
-                    removeRecord(id);
+                    if (removeRecord) {
+                        removeRecord(id);
+                    }
                 })
                 .catch(err => {
                     console.log("An error occurred deleting a record");

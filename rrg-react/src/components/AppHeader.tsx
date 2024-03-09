@@ -2,33 +2,46 @@ import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+
+import { User } from '../shared/types/user';
+import { RecordRoute } from '../shared/types/recordRoute';
+
 import '../styles/App.scss';
 import '../styles/app-header.scss';
 import turntable from './../images/turntable.png';
 
-function AppHeader(props) {
-    let currentRoute;
+type AppHeaderProps = {
+    user: User,
+    activeRoute: string,
+    setCurrentUser(user: User): void,
+    setActiveRoute(route: RecordRoute): void
+};
+
+const AppHeader: React.FC<AppHeaderProps> = (props) => {
+
+    let currentRoute: RecordRoute;
     if (window.location.pathname === "/Generate") {
-        currentRoute = "Generate";
+        currentRoute = RecordRoute.Generate;
     }
     else if (window.location.pathname === "/Stats") {
-        currentRoute = "Stats";
+        currentRoute = RecordRoute.Stats;
     }
     else {
-        currentRoute = "Manage";
+        currentRoute = RecordRoute.Manage;
     }
 
     props.setActiveRoute(currentRoute);
 
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
+
     const handleClose = () => setShowModal(false);
     const handleShowModal = () => setShowModal(true);
     const history = useHistory();
     
     const logout = () => {
-        localStorage.setItem("jwt", null);
+        localStorage.setItem("jwt", "");
         props.setCurrentUser({});
-        props.setActiveRoute('Manage');
+        props.setActiveRoute(RecordRoute.Manage);
         history.push('/login');
     }
   
@@ -50,13 +63,13 @@ function AppHeader(props) {
                 { props.user.userName && 
                 <>
                 <div className="row">
-                    <Link to="/" className={"btn btn-tab " + (props.activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={props.setManageActive}>
+                    <Link to="/" className={"btn btn-tab " + (props.activeRoute === "Manage" ? "btn-info" : "btn-outline-light")} onClick={() => props.setActiveRoute(RecordRoute.Manage)}>
                         Manager
                     </Link>
-                    <Link to="/Stats" className={"btn btn-tab ml-2 " + (props.activeRoute === "Stats" ? "btn-info" : "btn-outline-light")} onClick={props.setStatsActive}>
+                    <Link to="/Stats" className={"btn btn-tab ml-2 " + (props.activeRoute === "Stats" ? "btn-info" : "btn-outline-light")} onClick={() => props.setActiveRoute(RecordRoute.Stats)}>
                         Statistics
                     </Link>
-                    <Link to="/Generate" className={"btn btn-tab ml-2 " + (props.activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={props.setGenerateActive}>
+                    <Link to="/Generate" className={"btn btn-tab ml-2 " + (props.activeRoute === "Generate" ? "btn-info" : "btn-outline-light")} onClick={() => props.setActiveRoute(RecordRoute.Generate)}>
                         Generator
                     </Link>
                 </div>
