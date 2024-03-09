@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from 'react';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios, {AxiosResponse} from 'axios';
 
@@ -7,7 +7,6 @@ import RecordTile from './RecordTile';
 import RecordTable from './RecordTable';
 import { Record } from '../shared/types/record';
 import { User } from '../shared/types/user';
-import { UserResponse} from '../shared/types/userResponse';
 
 import '../styles/App.scss';
 import '../styles/record-manager.scss';
@@ -19,7 +18,8 @@ type RecordManagerProps = {
     genres: string[],
     setCurrentUser(user: User): void,
     setViewMode(mode: string): void,
-    hasGenre(genre: string, records: Record[]): boolean
+    hasGenre(genre: string, records: Record[]): boolean,
+    checkLogin(): void
   };
 
 const RecordManager: React.FC<RecordManagerProps> = (props) => {
@@ -31,29 +31,9 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
     const recordIdFromHash = useLocation().hash;
     const [hashId, setHashId] = useState(recordIdFromHash);
     const searchInputRef = useRef<HTMLInputElement | null>(null);
-    const history = useHistory();
 
     useEffect(() => {
-        // make sure user is logged in:
-        axios.get(props.baseUrl + "/auth/loggedInUser",
-                {
-                    headers: {
-                        token: localStorage.getItem("jwt") || ""
-                    }
-                })
-            .then((res: AxiosResponse<UserResponse>) => {
-                if (!res.data.user && (!props.user || !props.user._id)) {
-                    history.push("/login");
-                } else {
-                    if (res.data.newToken) {
-                        localStorage.setItem("jwt", res.data.newToken);
-                    }
-                    props.setCurrentUser(res.data.user)
-                }
-            })
-            .catch(err => {
-                history.push("/login");
-            })
+        props.checkLogin();
 
         if(!props.mode) {
             props.setViewMode("Tile");
@@ -81,7 +61,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
             })
     }, []);
 
-    // update filtered records on filter change
+    // update filtered records on filter change:
     useEffect(() => {
         if (selectedGenre === 'Any') {
             setFilteredRecords(records.map(rec => rec));

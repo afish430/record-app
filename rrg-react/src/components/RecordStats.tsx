@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import axios, {AxiosResponse} from 'axios';
+import axios from 'axios';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 import RecordTile from './RecordTile';
 import { Record } from '../shared/types/record';
 import { User } from '../shared/types/user';
-import { UserResponse} from '../shared/types/userResponse';
 
 import '../styles/App.scss';
 import '../styles/record-stats.scss';
@@ -18,7 +16,8 @@ type RecordStatsProps = {
     user: User,
     genres: string[],
     setCurrentUser(user: User): void,
-    setManageActive(): void
+    setManageActive(): void,
+    checkLogin(): void
 };
 
 type RecordStatistics = {
@@ -34,32 +33,9 @@ const RecordStats: React.FC<RecordStatsProps> = (props) => {
     const [records, setRecords] = useState<Record[]>([]);
     const [recordsLoaded, setRecordsLoaded] = useState<boolean>(false);
     const [recordStats, setRecordStats] = useState<RecordStatistics>({});
-    const history = useHistory();
-      
 
     useEffect(() => {
-        // make sure user is logged in:
-        axios.get(props.baseUrl + "/auth/loggedInUser",
-                {
-                    headers: {
-                        token: localStorage.getItem("jwt") || ""
-                    }
-                })
-            .then((res: AxiosResponse<UserResponse>) => {
-                if (!res.data.user && (!props.user || !props.user._id)) {
-                    history.push("/login");
-                } else {
-                    if (res.data.newToken) {
-                        localStorage.setItem("jwt", res.data.newToken);
-                    }
-                    props.setCurrentUser(res.data.user)
-                }
-            })
-            .catch(err => {
-                props.setManageActive();
-                history.push("/login");
-            })
-
+        props.checkLogin();
         // fetch all records for this user:
         axios
             .get(props.baseUrl + "/records",

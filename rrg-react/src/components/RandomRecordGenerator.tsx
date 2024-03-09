@@ -1,11 +1,9 @@
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import {useHistory } from 'react-router-dom';
-import axios,{AxiosResponse} from 'axios';
+import axios from 'axios';
 
 import RecordTile from './RecordTile';
 import { Record } from '../shared/types/record';
 import { User } from '../shared/types/user';
-import { UserResponse} from '../shared/types/userResponse';
 
 import '../styles/App.scss';
 import '../styles/record-generator.scss';
@@ -17,7 +15,8 @@ type RandomRecordGenerator = {
     genres: string[],
     setCurrentUser(user: User): void,
     hasGenre(genre: string, records: Record[]): boolean,
-    setManageActive(): void
+    setManageActive(): void,
+    checkLogin(): void
   };
 
 const RandomRecordGenerator: React.FC<RandomRecordGenerator> = (props) => {
@@ -28,35 +27,11 @@ const RandomRecordGenerator: React.FC<RandomRecordGenerator> = (props) => {
     const [generating, setGenerating] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [selectedGenre, setSelectedGenre] = useState<string>('Any');
-    const history = useHistory();
 
     useEffect(() => {
-        // make sure user is logged in
-        axios.get(props.baseUrl + "/auth/loggedInUser",
-                {
-                    headers: {
-                        token: localStorage.getItem("jwt") || ""
-                    }
-                })
-                .then((res: AxiosResponse<UserResponse>) => {
-                if (!res.data.user && (!props.user || !props.user._id)) {
-                    history.push("/login");
-                } else {
-                    if (res.data.newToken) {
-                        console.log("updating local storage");
-                        localStorage.setItem("jwt", res.data.newToken);
-                    }
-                    props.setCurrentUser(res.data.user)
-                }
-            })
-            .catch(err => {
-                props.setManageActive();
-                history.push('/login');
-            })
-
-        // fetch all records for this user
-        axios
-            .get(props.baseUrl + "/records",
+        props.checkLogin();
+        // fetch all records for this user:
+        axios.get(props.baseUrl + "/records",
                 {
                     headers: {
                         token: localStorage.getItem("jwt") || ""
