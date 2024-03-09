@@ -191,6 +191,7 @@ const App: React.FC = () => {
             path='/edit-record/:id'
             render={(props) => 
             <EditRecord {...props}
+              user={user}
               genres={genres}
               tooltipText={tooltipText}
               baseUrl={BASE_URL}

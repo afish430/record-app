@@ -4,12 +4,14 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios, {AxiosResponse}  from 'axios';
 
 import { Record } from '../shared/types/record';
+import { User } from '../shared/types/user';
 
 import '../styles/App.scss';
 import infoIcon from './../images/info-icon.png';
 
 type EditRecordProps = {
     baseUrl: string,
+    user: User,
     genres: string[],
     tooltipText: any,
     match: any
@@ -27,6 +29,11 @@ const EditRecord: React.FC<EditRecordProps> = (props) => {
     const [userId, setUserId] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
     const history = useHistory();
+
+    // make sure user is logged in
+    if (!props.user || !props.user._id) {
+        history.push('/login');
+    }
 
     useEffect(() => {
         axios.get(props.baseUrl + "/records/" + props.match.params.id,
