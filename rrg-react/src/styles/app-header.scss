@@ -45,6 +45,7 @@
         background: none;
         border: none;
         color: #17a2b8;
+        box-shadow: none;
         &:hover {
           background: none !important;
           border: none !important;
@@ -64,6 +65,7 @@
           padding: 1px;
           background: none;
           border: none;
+          box-shadow: none;
           color: #dc3545;
         }
         .user-name {
