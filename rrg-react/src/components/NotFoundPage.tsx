@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/App.scss';
 import '../styles/skipping-record.css';
 
-function NotFoundPage(props) {
+const NotFoundPage: React.FC = () => {
     return (
         <div className="not-found-page">
             <div className="container mb-5">

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './styles/App.scss';
+import { useHistory } from 'react-router-dom';
+import axios,{AxiosResponse} from 'axios';
 
 import RecordManager from './components/RecordManager';
 import RandomRecordGenerator from './components/RandomRecordGenerator';
@@ -11,25 +12,55 @@ import AppHeader from './components/AppHeader';
 import LoginPage from './components/LoginPage';
 import CreateUserPage from './components/CreateUserPage';
 import NotFoundPage from './components/NotFoundPage';
+import { Record } from './shared/types/record';
+import { User } from './shared/types/user';
+import { RecordRoute } from './shared/types/recordRoute';
+import { UserResponse} from './shared/types/userResponse';
 
-function App() {
-  const [activeRoute, setActiveRoute] = useState('Manage');
+import './styles/App.scss';
 
-  const setManageActive = () => {
-      setActiveRoute('Manage');
+const App: React.FC = () => {
+  const [activeRoute, setActiveRoute] = useState<RecordRoute>(RecordRoute.Manage);
+  const history = useHistory<History>();
+
+  const setManageActive = (): void => {
+      setActiveRoute(RecordRoute.Manage);
   }
 
-  const setGenerateActive = () => {
-      setActiveRoute('Generate');
+  const [user, setUser] = useState<User>({});
+  const [mode, setMode] = useState<string>('');
+
+  // const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
+  const BASE_URL = "https://vinylator-api.onrender.com/api";
+
+  const checkLogin = ():void => {
+    // make sure user is logged in
+    axios.get(BASE_URL + "/auth/loggedInUser",
+            {
+                headers: {
+                    token: localStorage.getItem("jwt") || ""
+                }
+            })
+            .then((res: AxiosResponse<UserResponse>) => {
+            if (!res.data.user && (!user || !user._id)) {
+                // history.push("/login");
+                window.location.href = "/login";
+            } else {
+                if (res.data.newToken) {
+                    console.log("updating local storage");
+                    localStorage.setItem("jwt", res.data.newToken);
+                }
+                setCurrentUser(res.data.user)
+            }
+        })
+        .catch(err => {
+            setManageActive();
+            window.location.href = "/login";
+            // history.push('/login');
+        })
   }
 
-  const setStatsActive = () => {
-      setActiveRoute('Stats');
-  }
-
-  const [user, setUser] = useState({});
-  const [mode, setMode] = useState('');
-  const genres = [
+  const genres: string[] = [
     "Alternative",
     "Blues",
     "Children's",
@@ -64,9 +95,7 @@ function App() {
     "Soundtrack"
   ];
 
-  const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
-
-  const hasGenre = (genre, records) => {
+  const hasGenre = (genre: string, records: Record[]): boolean => {
     if (genre === "Favorites") {
         return records.filter(rec => rec.favorite === true).length > 0;
     }
@@ -103,11 +132,11 @@ function App() {
     favorite: 'Is this a "go-to" record that you listen to more than others? Maybe you keep your favorite records on a separate shelf from the others? If so, list it as a favorite! (Favorites are marked with a yellow star)',
   };
 
-  const setCurrentUser = (user) => {
+  const setCurrentUser = (user: User) => {
     setUser(user);
   }
 
-  const setViewMode = (mode) => {
+  const setViewMode = (mode: string) => {
     setMode(mode);
   }
 
@@ -116,14 +145,9 @@ function App() {
       <div>
         <AppHeader
           user={user}
-          setCurrentUser={setCurrentUser}
           activeRoute={activeRoute}
-          setActiveRoute={setActiveRoute}
-          setManageActive={setManageActive}
-          setGenerateActive={setGenerateActive}
-          setStatsActive={setStatsActive}
-          >
-        </AppHeader>
+          setCurrentUser={setCurrentUser}
+          setActiveRoute={setActiveRoute}/>
         <Switch>
           <Route exact path='/'>
             <RecordManager
@@ -133,16 +157,17 @@ function App() {
               hasGenre={hasGenre}
               setViewMode={setViewMode}
               setCurrentUser={setCurrentUser}
-              baseUrl={BASE_URL}/>
+              baseUrl={BASE_URL}
+              checkLogin={checkLogin}/>
           </Route>
           <Route path='/Stats'>
             <RecordStats
               user={user} 
               genres={genres}
-              hasGenre={hasGenre}
               setCurrentUser={setCurrentUser}
               setManageActive={setManageActive}
-              baseUrl={BASE_URL}/>
+              baseUrl={BASE_URL}
+              checkLogin={checkLogin}/>
           </Route>
           <Route path='/Generate'>
             <RandomRecordGenerator
@@ -151,7 +176,9 @@ function App() {
               hasGenre={hasGenre}
               setCurrentUser={setCurrentUser}
               setManageActive={setManageActive}
-              baseUrl={BASE_URL}/>
+              baseUrl={BASE_URL}
+              checkLogin={checkLogin}
+            />
           </Route>
           <Route path='/add-record'>
             <AddRecord
@@ -164,6 +191,7 @@ function App() {
             path='/edit-record/:id'
             render={(props) => 
             <EditRecord {...props}
+              user={user}
               genres={genres}
               tooltipText={tooltipText}
               baseUrl={BASE_URL}

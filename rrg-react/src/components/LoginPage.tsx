@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import { FormEventHandler, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import axios, {AxiosResponse} from 'axios';
+
+import { User } from '../shared/types/user';
+
 import '../styles/App.scss';
-import axios from 'axios';
 
-function LoginPage(props) {
+type LoginPageProps = {
+    baseUrl: string,
+    setCurrentUser(user: User): void,
+    setViewMode(mode: string): void
+};
 
-    const [errorMessage, setErrorMessage] = useState('');
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+const LoginPage: React.FC<LoginPageProps> = (props) => {
+
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [userName, setUserName] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const history = useHistory();
 
-    const handleSubmit = e => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
         setErrorMessage("");
         let user = {
@@ -20,7 +29,7 @@ function LoginPage(props) {
         
         axios
             .post(props.baseUrl + "/auth/login", user)
-            .then(res => {
+            .then((res: AxiosResponse<any>) => {
                 setUserName("");
                 setPassword("");
                 props.setCurrentUser(res.data.result);

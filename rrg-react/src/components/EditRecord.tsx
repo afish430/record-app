@@ -1,92 +1,95 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import infoIcon from './../images/info-icon.png';
+import { useState, useEffect, FormEventHandler } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
-import axios from 'axios';
-import '../styles/App.scss';
+import axios, {AxiosResponse}  from 'axios';
 
-class EditRecord extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            artist: '',
-            genre: '',
-            year: '',
-            link: '',
-            image: '',
-            favorite: '',
-            userId: '',
-            errorMessage: ''
-        };
+import { Record } from '../shared/types/record';
+import { User } from '../shared/types/user';
+
+import '../styles/App.scss';
+import infoIcon from './../images/info-icon.png';
+
+type EditRecordProps = {
+    baseUrl: string,
+    user: User,
+    genres: string[],
+    tooltipText: any,
+    match: any
+}
+
+const EditRecord: React.FC<EditRecordProps> = (props) => {
+
+    const [title, setTitle] = useState<string>("");
+    const [artist, setArtist] = useState<string>("");
+    const [genre, setGenre] = useState<string>("");
+    const [year, setYear] = useState<number>(1999);
+    const [link, setLink] = useState<string>("");
+    const [image, setImage] = useState<string>("");
+    const [favorite, setFavorite] = useState<boolean>(false);
+    const [userId, setUserId] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const history = useHistory();
+
+    // make sure user is logged in
+    if (!props.user || !props.user._id) {
+        history.push('/login');
     }
 
-    componentDidMount() {
-        axios
-            .get(this.props.baseUrl + "/records/" + this.props.match.params.id,
+    useEffect(() => {
+        axios.get(props.baseUrl + "/records/" + props.match.params.id,
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
-            .then(res => {
-                this.setState({
-                    title: res.data.title,
-                    artist: res.data.artist,
-                    genre: res.data.genre,
-                    year: res.data.year,
-                    link: res.data.link,
-                    image: res.data.image,
-                    favorite: res.data.favorite,
-                    userId: res.data.userId
-                })
+            .then((res: AxiosResponse<Record>) => {
+                setTitle(res.data.title);
+                setArtist(res.data.artist);
+                setGenre(res.data.genre);
+                setYear(res.data.year);
+                setLink(res.data.link);
+                setImage(res.data.image);
+                setFavorite(res.data.favorite);
+                setUserId(res.data.userId);
             })
             .catch(err => {
                 console.log("Error in EditRecord");
             })
-    };
+        }, []);
 
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value });
-    };
+        const onSubmit: FormEventHandler = e => {
+            e.preventDefault();
 
-    onSubmit = e => {
-        e.preventDefault();
+            if (!title || !artist) {
+                setErrorMessage('Album and Artist names are required.');
+                return;
+            }
 
-        if (!this.state.title || !this.state.artist) {
-            this.setState({ errorMessage: 'Album and Artist names are required.'});
-            return;
-        }
+            const data = {
+                title: title,
+                artist: artist,
+                genre: genre,
+                year: year,
+                link: link,
+                image: image,
+                favorite: favorite,
+                userId: userId
+            };
 
-        const data = {
-            title: this.state.title,
-            artist: this.state.artist,
-            genre: this.state.genre,
-            year: this.state.year,
-            link: this.state.link,
-            image: this.state.image,
-            favorite: this.state.favorite,
-            userId: this.state.userId
-        };
-
-        axios
-            .put(this.props.baseUrl + "/records/" + this.props.match.params.id, data,
+            axios.put(props.baseUrl + "/records/" + props.match.params.id, data,
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
-            .then(res => {
-                this.props.history.push('/#' + this.props.match.params.id);
-            })
-            .catch(err => {
-                this.setState({ errorMessage: 'An error occurred.'});
-                console.log(err);
-            })
-    };
+                .then(res => {
+                    history.push('/#' + props.match.params.id);
+                })
+                .catch(err => {
+                    setErrorMessage('An error occurred.');
+                })
+        };
 
-
-    render() {
         return (
             <div className="edit-record">
                 <div className="container mb-5">
@@ -97,15 +100,15 @@ class EditRecord extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-6 m-auto">
-                            <form onSubmit={this.onSubmit}>
+                            <form onSubmit={onSubmit}>
                                 <div className='form-group'>
                                     <label htmlFor="title">Album Title</label>
                                     <input
                                         type='text'
                                         name='title'
                                         className='form-control'
-                                        value={this.state.title}
-                                        onChange={this.onChange}
+                                        value={title}
+                                        onChange={(e) => setTitle(e.target.value)}
                                     />
                                 </div>
 
@@ -115,8 +118,8 @@ class EditRecord extends Component {
                                         type='text'
                                         name='artist'
                                         className='form-control'
-                                        value={this.state.artist}
-                                        onChange={this.onChange}
+                                        value={artist}
+                                        onChange={(e) => setArtist(e.target.value)}
                                     />
                                 </div>
 
@@ -125,8 +128,8 @@ class EditRecord extends Component {
                                     <OverlayTrigger
                                         placement="top"
                                         overlay={
-                                            <Tooltip wrapperClassName="info-tooltip">
-                                                {this.props.tooltipText.genre}
+                                            <Tooltip className="info-tooltip">
+                                                {props.tooltipText.genre}
                                             </Tooltip>
                                         }
                                         >
@@ -136,11 +139,11 @@ class EditRecord extends Component {
                                         className="form-control"
                                         id="genre"
                                         name="genre"
-                                        value={this.state.genre}
-                                        onChange={this.onChange}
+                                        value={genre}
+                                        onChange={(e) => setGenre(e.target.value)}
                                     >
                                         {
-                                            this.props.genres.map(genre => {
+                                            props.genres.map(genre => {
                                                 return <option key={genre} value={genre}>{genre}</option>
                                             })
                                         }
@@ -153,8 +156,8 @@ class EditRecord extends Component {
                                         type='number'
                                         name='year'
                                         className='form-control'
-                                        value={this.state.year}
-                                        onChange={this.onChange}
+                                        value={year}
+                                        onChange={(e) => setYear(parseInt(e.target.value))}
                                     />
                                 </div>
 
@@ -163,8 +166,8 @@ class EditRecord extends Component {
                                     <OverlayTrigger
                                         placement="top"
                                         overlay={
-                                            <Tooltip wrapperClassName="info-tooltip">
-                                                {this.props.tooltipText.link}
+                                            <Tooltip className="info-tooltip">
+                                                {props.tooltipText.link}
                                             </Tooltip>
                                         }
                                         >
@@ -175,8 +178,8 @@ class EditRecord extends Component {
                                         placeholder='ex. Wikipedia'
                                         name='link'
                                         className='form-control'
-                                        value={this.state.link}
-                                        onChange={this.onChange}
+                                        value={link}
+                                        onChange={(e) => setLink(e.target.value)}
                                     />
                                 </div>
                                 <div className='form-group'>
@@ -184,8 +187,8 @@ class EditRecord extends Component {
                                     <OverlayTrigger
                                         placement="top"
                                         overlay={
-                                            <Tooltip wrapperClassName="info-tooltip">
-                                                {this.props.tooltipText.image}
+                                            <Tooltip className="info-tooltip">
+                                                {props.tooltipText.image}
                                             </Tooltip>
                                         }
                                         >
@@ -195,8 +198,8 @@ class EditRecord extends Component {
                                         type='text'
                                         name='image'
                                         className='form-control'
-                                        value={this.state.image}
-                                        onChange={this.onChange}
+                                        value={image}
+                                        onChange={(e) => setImage(e.target.value)}
                                     />
                                 </div>
 
@@ -205,8 +208,8 @@ class EditRecord extends Component {
                                     <OverlayTrigger
                                         placement="top"
                                         overlay={
-                                            <Tooltip wrapperClassName="info-tooltip">
-                                                {this.props.tooltipText.favorite}
+                                            <Tooltip className="info-tooltip">
+                                                {props.tooltipText.favorite}
                                             </Tooltip>
                                         }
                                         >
@@ -216,15 +219,15 @@ class EditRecord extends Component {
                                         className="form-control"
                                         id="favorite"
                                         name="favorite"
-                                        value={this.state.favorite}
-                                        onChange={this.onChange}
+                                        value={favorite ? "true" : "false"}
+                                        onChange={(e) => setFavorite(e.target.value === "true")}
                                     >
                                         <option value="true">Yes</option>
                                         <option value="false">No</option>
                                     </select>
                                 </div>
 
-                                <Link to={"/#" + this.props.match.params.id} className="btn btn-light float-left">
+                                <Link to={"/#" + props.match.params.id} className="btn btn-light float-left">
                                 Cancel
                                 </Link>
                                 <button type="submit" className="btn btn-info mb-2 float-right">Update Record</button>
@@ -233,13 +236,12 @@ class EditRecord extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-6 m-auto text-center">
-                            <strong className="text-danger">{this.state.errorMessage}</strong>
+                            <strong className="text-danger">{errorMessage}</strong>
                         </div>
                     </div>
                 </div>
             </div>
         );
-    }
 }
 
 export default EditRecord;

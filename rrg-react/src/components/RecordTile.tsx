@@ -1,24 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/App.scss';
-import '../styles/record-tile.scss';
 import axios from 'axios';
 
-function RecordTile(props) {
-    const record = props.record;
+import { Record } from '../shared/types/record';
 
-    const onDeleteClick = id => {
+import '../styles/App.scss';
+import '../styles/record-tile.scss';
+
+type RecordTileProps = {
+    record: Record,
+    showFooter?: boolean,
+    baseUrl?: string,
+    removeRecord?(id: string): void
+};
+
+const RecordTile: React.FC<RecordTileProps> = ({record, removeRecord, showFooter, baseUrl}) => {
+
+    const onDeleteClick = (id: string) => {
         if (window.confirm('Are you sure you want to delete this record?')) {
             axios
-                .delete(props.baseUrl + "/records/" + id,
+                .delete(baseUrl + "/records/" + id,
                 {
                     headers: {
-                        token: localStorage.getItem("jwt")
+                        token: localStorage.getItem("jwt") || ""
                     }
                 })
                 .then(res => {
-                    console.log("Deletion successful");
-                    props.removeRecord(id);
+                    if (removeRecord) {
+                        removeRecord(id);
+                    }
                 })
                 .catch(err => {
                     console.log("An error occurred deleting a record");
@@ -26,7 +36,7 @@ function RecordTile(props) {
         }
     };
 
-    const getShortenedTitleIfNeeded = record => {
+    const getShortenedTitleIfNeeded = (record: Record) => {
         let title = record.title;
         if (record.artist.length > 22 && record.title.length > 22) {
             title =  title.slice(0, 18) + "...";
@@ -36,11 +46,13 @@ function RecordTile(props) {
 
     return (
         <div className="record-tile-container" id={record._id}>
-            <img src={record.image} alt="" />
             {
-            !record.image && 
+                record.image && <img src={record.image} alt="" />
+            }
+            {
+                !record.image && 
                 <div className="no-img text-center">
-                    No Image Available
+                    <h4>No Image Available</h4>
                 </div>
             }
             {
@@ -62,21 +74,21 @@ function RecordTile(props) {
                     </a>
                 </h4>
             </div>
-            {!props.showFooter &&
+            {!showFooter &&
                 <div className="mt-3">
                     <strong className="pulsate dance">
                         &#9836; Enjoy your record! &#9836;
                     </strong>
                 </div>
             }
-            {props.showFooter && <div className="tile-footer">
+            {showFooter && <div className="tile-footer">
                 <Link to={`/edit-record/${record._id}`} className="btn btn-info btn-sm btn-block">
                     Edit Record
                 </Link>
                 <button 
                     type="button" 
                     className="btn btn-danger btn-sm btn-block mb-1" 
-                    onClick={onDeleteClick.bind(this, record._id)}
+                    onClick={() => onDeleteClick(record._id)}
                 >
                     Remove Record
                 </button>
