@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './styles/App.scss';
 
 import RecordManager from './components/RecordManager';
 import RandomRecordGenerator from './components/RandomRecordGenerator';
 import RecordStats from './components/RecordStats';
-import AddRecord from './components/AddRecord';
+import NewRecord from './components/NewRecord';
 import EditRecord from './components/EditRecord';
 import AppHeader from './components/AppHeader';
 import LoginPage from './components/LoginPage';
 import CreateUserPage from './components/CreateUserPage';
 import NotFoundPage from './components/NotFoundPage';
+import { Record } from './shared/types/record';
+import { User } from './shared/types/user';
 
-function App() {
+import './styles/App.scss';
+
+const App: React.FC = () => {
   const [activeRoute, setActiveRoute] = useState('Manage');
 
   const setManageActive = () => {
@@ -27,9 +30,9 @@ function App() {
       setActiveRoute('Stats');
   }
 
-  const [user, setUser] = useState({});
-  const [mode, setMode] = useState('');
-  const genres = [
+  const [user, setUser] = useState<User>({});
+  const [mode, setMode] = useState<string>('');
+  const genres: string[] = [
     "Alternative",
     "Blues",
     "Children's",
@@ -64,9 +67,11 @@ function App() {
     "Soundtrack"
   ];
 
-  const BASE_URL = process.env.NODE_ENV !== "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
+  // const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
+  const BASE_URL = "https://vinylator-api.onrender.com/api";
 
-  const hasGenre = (genre, records) => {
+
+  const hasGenre = (genre: string, records: Record[]): boolean => {
     if (genre === "Favorites") {
         return records.filter(rec => rec.favorite === true).length > 0;
     }
@@ -103,11 +108,11 @@ function App() {
     favorite: 'Is this a "go-to" record that you listen to more than others? Maybe you keep your favorite records on a separate shelf from the others? If so, list it as a favorite! (Favorites are marked with a yellow star)',
   };
 
-  const setCurrentUser = (user) => {
+  const setCurrentUser = (user: User) => {
     setUser(user);
   }
 
-  const setViewMode = (mode) => {
+  const setViewMode = (mode: string) => {
     setMode(mode);
   }
 
@@ -154,7 +159,7 @@ function App() {
               baseUrl={BASE_URL}/>
           </Route>
           <Route path='/add-record'>
-            <AddRecord
+            <NewRecord
               user={user}
               genres={genres}
               tooltipText={tooltipText}

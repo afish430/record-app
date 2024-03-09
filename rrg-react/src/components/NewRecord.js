@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import '../styles/App.scss';
 import infoIcon from './../images/info-icon.png';
@@ -6,7 +6,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import axios from 'axios';
 
-class AddRecord extends Component {
+class NewRecord extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -232,4 +232,4 @@ class AddRecord extends Component {
     }
 }
 
-export default withRouter(AddRecord);
+export default withRouter(NewRecord);

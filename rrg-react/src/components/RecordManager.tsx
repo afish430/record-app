@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ChangeEvent, ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from 'react';
+import { useState, useEffect, useRef, ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios, {AxiosResponse} from 'axios';
@@ -13,14 +13,11 @@ import '../styles/App.scss';
 import '../styles/record-manager.scss';
 
 type RecordManagerProps = {
-    records: Record[],
-    baseUrl: string,
-    recordIdFromHash: string;
+    baseUrl: string;
     mode: string;
     user: User;
     genres: string[];
     setCurrentUser(user: User): void;
-    removeRecord(id: string): void;
     setViewMode(mode: string): void;
     hasGenre(genre: string, records: Record[]): boolean;
   }
@@ -37,7 +34,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
     const history = useHistory();
 
     useEffect(() => {
-        // make sure user is logged in
+        // make sure user is logged in:
         axios.get(props.baseUrl + "/auth/loggedInUser",
                 {
                     headers: {
@@ -63,7 +60,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
             props.setViewMode("Tile");
         }
 
-        // fetch and sort all records on page load
+        // fetch and sort all records on page load:
         axios
             .get(props.baseUrl + "/records",
                 {

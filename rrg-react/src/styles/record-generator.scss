@@ -6,6 +6,7 @@
       @media only screen and (max-width: 500px) {
         margin-left: 0 !important;
       }
+      margin-bottom: 20px;
     }
   
     .tile-wrapper {
@@ -16,16 +17,23 @@
         opacity: 0;
       }
     }
+
+    .btn-warning {
+      box-shadow: 1px 1px 3px #555;
+    }
+
+    strong.text-danger {
+      display: inline-block;
+      max-width: 300px;
+      margin: 20px auto;
+      border-radius: 5px;
+      background-color: white;
+    }
   
     .record-tile-container {
       max-width: 375px;
       min-height: 600px;
       padding: 12px 8px;
-  
-      // &:hover {
-      //   transform: scale(1.03);
-      //   transition: all 0.2s ease-out;
-      // }
   
       img {
         width: 95%;
