@@ -26,11 +26,15 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
 
     const [records, setRecords] = useState<Record[]>([]);
     const [recordsLoaded, setRecordsLoaded] = useState<boolean>(false);
+    const [paginatedRecords, setPaginatedRecords] = useState<Record[]>([]);
+    const [recordsOffset, setRecordsOffset] = useState<number>(0);
     const [selectedGenre, setSelectedGenre] = useState<string>('Any');
     const [filteredRecords, setFilteredRecords] = useState<Record[]>([]);
     const recordIdFromHash = useLocation().hash;
     const [hashId, setHashId] = useState(recordIdFromHash);
     const searchInputRef = useRef<HTMLInputElement | null>(null);
+
+    const numberToShow: number = 8;
 
     useEffect(() => {
         props.checkLogin();
@@ -48,6 +52,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                 })
             .then((res: AxiosResponse<Record[]>) => {
                 let sortedRecords: Record[] = res.data.sort(sortByArtist);
+                //setPaginatedRecords([...sortedRecords]);
                 setRecords([...sortedRecords]);
                 setFilteredRecords(sortedRecords);
                 setRecordsLoaded(true);
@@ -59,6 +64,12 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                 console.log('Error fetching records from RecordManager');
             })
     }, []);
+
+    useEffect(() => {
+        console.log("effect called");
+        setPaginatedRecords(records.slice(recordsOffset, recordsOffset + numberToShow));
+    }, [recordsOffset, records]);
+
 
     // update filtered records on filter change:
     useEffect(() => {
@@ -90,6 +101,16 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
             setFilteredRecords(records.filter(rec => rec.genre === selectedGenre));
         } 
     }, [selectedGenre, records]);
+
+    const showNext = () => {
+        setRecordsOffset(recordsOffset + numberToShow);
+        console.log("showing next");
+    }
+
+    const showPrevious = () => {
+        setRecordsOffset(recordsOffset - numberToShow);
+        console.log("showing prev");
+    }
 
     const executeScroll = (id: string) => {
         const element = document.getElementById(id);
@@ -317,7 +338,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
 
                     <div className="list">
                         {
-                            props.mode === "Tile" && filteredRecords.map((record, i) =>
+                            props.mode === "Tile" && paginatedRecords.map((record, i) =>
                                 <RecordTile
                                     record={record}
                                     removeRecord={removeRecord}
@@ -327,6 +348,9 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                                 />
                             )
                         }
+                        <button onClick={showPrevious}>Show Previous</button>
+                        Showing { recordsOffset } to { recordsOffset + numberToShow} of { records.length } records
+                        <button onClick={showNext}>Show Next</button>
                     </div>
                 </>}
             </div> }

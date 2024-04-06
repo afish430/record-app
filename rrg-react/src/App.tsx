@@ -29,8 +29,8 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User>({});
   const [mode, setMode] = useState<string>('');
 
-  // const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
-  const BASE_URL = "https://vinylator-api.onrender.com/api";
+  const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
+  //const BASE_URL = "https://vinylator-api.onrender.com/api";
 
   const checkLogin = ():void => {
     // make sure user is logged in:
