@@ -13,7 +13,7 @@ import turntable from './../images/turntable.png';
 type AppHeaderProps = {
     user: User,
     activeRoute: string,
-    setCurrentUser(user: User): void,
+    setUser(user: User): void,
     setActiveRoute(route: RecordRoute): void
 };
 
@@ -40,7 +40,7 @@ const AppHeader: React.FC<AppHeaderProps> = (props) => {
     
     const logout = () => {
         localStorage.setItem("jwt", "");
-        props.setCurrentUser({});
+        props.setUser({});
         props.setActiveRoute(RecordRoute.Manage);
         history.push('/login');
     }
@@ -91,9 +91,9 @@ const AppHeader: React.FC<AppHeaderProps> = (props) => {
                     When you just aren't sure what to listen to, the <em>Random Record Generator</em> feature is your best friend.
                     Just hit the "Generate Record" button and let the music come to you. Happy listening!
                     <div className="modal-screenshots">
-                        <img src="recordStats.png"></img>
-                        <img src="recordManager.png"></img>
-                        <img src="recordGenerator.png"></img>
+                        <img alt="record-stats" src="recordStats.png"></img>
+                        <img alt="record-manager" src="recordManager.png"></img>
+                        <img alt="record-generator" src="recordGenerator.png"></img>
                     </div>
                 </Modal.Body>
                 <Modal.Footer className="text-center">

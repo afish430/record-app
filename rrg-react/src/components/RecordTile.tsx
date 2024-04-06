@@ -16,7 +16,7 @@ type RecordTileProps = {
 
 const RecordTile: React.FC<RecordTileProps> = ({record, removeRecord, showFooter, baseUrl}) => {
 
-    const onDeleteClick = (id: string) => {
+    const onDeleteClick = (id?: string) => {
         if (window.confirm('Are you sure you want to delete this record?')) {
             axios
                 .delete(baseUrl + "/records/" + id,
@@ -26,7 +26,7 @@ const RecordTile: React.FC<RecordTileProps> = ({record, removeRecord, showFooter
                     }
                 })
                 .then(res => {
-                    if (removeRecord) {
+                    if (removeRecord && id) {
                         removeRecord(id);
                     }
                 })
@@ -67,7 +67,7 @@ const RecordTile: React.FC<RecordTileProps> = ({record, removeRecord, showFooter
                 </h2>
                 <h3>{record.artist}</h3>
                 <h4>{record.genre}</h4>
-                <h4>{record.year}</h4>
+                <h4>{record.year > 0 ? record.year : "Year Unknown"}</h4>
                 <h4 className="more-info text-center">
                     <a target="_blank" rel="noreferrer" href={record.link}>
                         More Info

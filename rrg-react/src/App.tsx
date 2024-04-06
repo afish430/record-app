@@ -27,7 +27,9 @@ const App: React.FC = () => {
   }
 
   const [user, setUser] = useState<User>({});
-  const [mode, setMode] = useState<string>('');
+  const [viewMode, setViewMode] = useState<string>('');
+  const [savedGenre, setSavedGenre] = useState<string>('');
+  const [savedSearch, setSavedSearch] = useState<string>('');
 
   // const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:8082/api" :"https://vinylator-api.onrender.com/api";
   const BASE_URL = "https://vinylator-api.onrender.com/api";
@@ -45,10 +47,9 @@ const App: React.FC = () => {
                 window.location.href = "/login";
             } else {
                 if (res.data.newToken) {
-                    console.log("updating local storage");
                     localStorage.setItem("jwt", res.data.newToken);
                 }
-                setCurrentUser(res.data.user)
+                setUser(res.data.user)
             }
         })
         .catch(err => {
@@ -94,37 +95,31 @@ const App: React.FC = () => {
     favorite: 'Is this a "go-to" record that you listen to more than others? Maybe you keep your favorite records on a separate shelf from the others? If so, list it as a favorite! (Favorites are marked with a yellow star)',
   };
 
-  const setCurrentUser = (user: User) => {
-    setUser(user);
-  }
-
-  const setViewMode = (mode: string) => {
-    setMode(mode);
-  }
-
   return (
     <Router>
       <div>
         <AppHeader
           user={user}
           activeRoute={activeRoute}
-          setCurrentUser={setCurrentUser}
+          setUser={setUser}
           setActiveRoute={setActiveRoute}/>
         <Switch>
           <Route exact path='/'>
             <RecordManager
-              user={user}
-              mode={mode}
               hasGenre={hasGenre}
+              viewMode={viewMode}
               setViewMode={setViewMode}
-              setCurrentUser={setCurrentUser}
+              user={user}
               baseUrl={BASE_URL}
-              checkLogin={checkLogin}/>
+              checkLogin={checkLogin}
+              savedGenre={savedGenre}
+              setSavedGenre={setSavedGenre}
+              savedSearch={savedSearch}
+              setSavedSearch={setSavedSearch}
+              />
           </Route>
           <Route path='/Stats'>
             <RecordStats
-              user={user} 
-              setCurrentUser={setCurrentUser}
               setManageActive={setManageActive}
               baseUrl={BASE_URL}
               checkLogin={checkLogin}/>
@@ -133,7 +128,6 @@ const App: React.FC = () => {
             <RandomRecordGenerator
               user={user}
               hasGenre={hasGenre}
-              setCurrentUser={setCurrentUser}
               setManageActive={setManageActive}
               baseUrl={BASE_URL}
               checkLogin={checkLogin}
@@ -143,7 +137,9 @@ const App: React.FC = () => {
             <AddRecord
               user={user}
               tooltipText={tooltipText}
-              baseUrl={BASE_URL}/>
+              baseUrl={BASE_URL}
+              savedGenre={savedGenre}
+              setSavedGenre={setSavedGenre}/>
           </Route>
           <Route
             path='/edit-record/:id'
@@ -152,11 +148,13 @@ const App: React.FC = () => {
               user={user}
               tooltipText={tooltipText}
               baseUrl={BASE_URL}
+              savedGenre={savedGenre}
+              setSavedGenre={setSavedGenre}
             />}
           />
           <Route path="/login">
             <LoginPage
-              setCurrentUser={setCurrentUser}
+              setUser={setUser}
               setViewMode={setViewMode}
               baseUrl={BASE_URL}/>
           </Route>

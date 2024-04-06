@@ -14,28 +14,32 @@ import '../styles/record-manager.scss';
 
 type RecordManagerProps = {
     baseUrl: string,
-    mode: string,
     user: User,
-    setCurrentUser(user: User): void,
+    viewMode: string,
     setViewMode(mode: string): void,
     hasGenre(genre: string, records: Record[]): boolean,
-    checkLogin(): void
+    checkLogin(): void,
+    savedGenre: string,
+    setSavedGenre(savedGenre: string): void,
+    savedSearch: string,
+    setSavedSearch(savedSearch: string): void,
   };
 
 const RecordManager: React.FC<RecordManagerProps> = (props) => {
 
-    const [records, setRecords] = useState<Record[]>([]);
+    const [allRecords, setAllRecords] = useState<Record[]>([]);
     const [recordsLoaded, setRecordsLoaded] = useState<boolean>(false);
     const [selectedGenre, setSelectedGenre] = useState<string>('Any');
     const [filteredRecords, setFilteredRecords] = useState<Record[]>([]);
     const recordIdFromHash = useLocation().hash;
     const [hashId, setHashId] = useState(recordIdFromHash);
     const searchInputRef = useRef<HTMLInputElement | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     useEffect(() => {
         props.checkLogin();
 
-        if(!props.mode) {
+        if(!props.viewMode) {
             props.setViewMode("Tile");
         }
 
@@ -47,12 +51,20 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                     }
                 })
             .then((res: AxiosResponse<Record[]>) => {
-                let sortedRecords: Record[] = res.data.sort(sortByArtist);
-                setRecords([...sortedRecords]);
-                setFilteredRecords(sortedRecords);
+                let sortedAllRecords: Record[] = res.data.sort(sortByArtist);
+                setAllRecords([...sortedAllRecords]);
+                setFilteredRecords(sortedAllRecords);
                 setRecordsLoaded(true);
-                if(hashId){
-                    executeScroll(hashId.substring(1)); // remove # part
+                if (props.savedGenre && props.savedGenre !== "Any")
+                {
+                    setSelectedGenre(props.savedGenre);
+                }
+                else if (props.savedSearch)
+                {
+                    setSearchTerm(props.savedSearch)
+                }
+                else if(hashId){
+                    executeScroll(hashId); 
                 }
             })
             .catch(err => {
@@ -63,35 +75,55 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
     // update filtered records on filter change:
     useEffect(() => {
         if (selectedGenre === 'Any') {
-            setFilteredRecords(records.map(rec => rec));
+            setFilteredRecords(allRecords.map(rec => rec));
         }
         else if (selectedGenre === 'Pre-1960') {
-            setFilteredRecords(records.filter(rec => rec.year < 1960));
+            setFilteredRecords(allRecords.filter(rec => rec.year < 1960));
         }
         else if (selectedGenre === '1960s') {
-            setFilteredRecords(records.filter(rec => rec.year >= 1960 && rec.year < 1970));
+            setFilteredRecords(allRecords.filter(rec => rec.year >= 1960 && rec.year < 1970));
         }
         else if (selectedGenre === '1970s') {
-            setFilteredRecords(records.filter(rec => rec.year >= 1970 && rec.year < 1980));
+            setFilteredRecords(allRecords.filter(rec => rec.year >= 1970 && rec.year < 1980));
         }
         else if (selectedGenre === '1980s') {
-            setFilteredRecords(records.filter(rec => rec.year >= 1980 && rec.year < 1990));
+            setFilteredRecords(allRecords.filter(rec => rec.year >= 1980 && rec.year < 1990));
         }
         else if (selectedGenre === '1990s') {
-            setFilteredRecords(records.filter(rec => rec.year >= 1990 && rec.year < 2000));
+            setFilteredRecords(allRecords.filter(rec => rec.year >= 1990 && rec.year < 2000));
         }
         else if (selectedGenre === '2000 to Present') {
-            setFilteredRecords(records.filter(rec => rec.year >= 2000));
+            setFilteredRecords(allRecords.filter(rec => rec.year >= 2000));
         }
         else if (selectedGenre === 'Favorites') {
-            setFilteredRecords(records.filter(rec => rec.favorite === true));
+            setFilteredRecords(allRecords.filter(rec => rec.favorite === true));
         }
         else {
-            setFilteredRecords(records.filter(rec => rec.genre === selectedGenre));
-        } 
-    }, [selectedGenre, records]);
+            setFilteredRecords(allRecords.filter(rec => rec.genre === selectedGenre));
+        }
+        props.setSavedGenre(selectedGenre);
+    }, [selectedGenre, allRecords]);
 
-    const executeScroll = (id: string) => {
+    useEffect(() => {
+        setFilteredRecords(allRecords.filter(
+            rec => rec.artist.toLowerCase().indexOf(searchTerm) !== -1 || rec.title.toLowerCase().indexOf(searchTerm) !== -1)
+        );
+        props.setSavedSearch(searchTerm);
+        if (searchInputRef.current) {
+            searchInputRef.current.value = searchTerm;
+        }
+    }, [searchTerm]);
+
+    useEffect(() => {
+        if (hashId) {
+            setTimeout(() => {
+                    executeScroll(hashId);
+            }, 500);
+        }
+    }, [filteredRecords]);
+
+    const executeScroll = (hashId: string) => {
+        const id = hashId.substring(1); // remove # part
         const element = document.getElementById(id);
         if (element) {
             element.classList.add('select-after-scroll');
@@ -100,6 +132,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                 element.classList.remove('select-after-scroll');
             }, 1000);
         }
+        setHashId('');
     }
 
     const scrollToTop = () =>{
@@ -111,7 +144,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
         element?.classList.add('hide-before-delete');
             setTimeout(() => {
                 element?.classList.remove('hide-before-delete');
-                setRecords(records.filter(rec => rec._id !== id));
+                setAllRecords(allRecords.filter(rec => rec._id !== id));
                 setFilteredRecords(filteredRecords.filter(rec => rec._id !== id));
             }, 1500);
     }
@@ -130,21 +163,15 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
 
     const searchRecords = (): void => {
         setSelectedGenre('Any');
-        setTimeout(() => {
-            const searchTerm: string | undefined = searchInputRef.current?.value.toLowerCase();
-            if (searchTerm) {
-                setFilteredRecords(records.filter(
-                    rec => rec.artist.toLowerCase().indexOf(searchTerm) !== -1 || rec.title.toLowerCase().indexOf(searchTerm) !== -1)
-                );
-            }
-        }, 100);
+        setSearchTerm(searchInputRef.current?.value.toLowerCase() || ''); // see useEffect for actual search
     }
 
     const clearSearch: MouseEventHandler = (e) => {
         e.preventDefault();
         setHashId("");
         setSelectedGenre('Any');
-        setFilteredRecords(records);
+        setFilteredRecords(allRecords);
+        setSearchTerm('');
         if (searchInputRef.current) {
             searchInputRef.current.value = "";
         }
@@ -187,12 +214,12 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
         setSelectedGenre(e.currentTarget.value); // see useEffect() for actual changes
     };
 
-    const toggleMode = (): void => {
+    const toggleViewMode = (): void => {
         setHashId("");
-        if(props.mode === "Table") {
+        if(props.viewMode === "Table") {
             props.setViewMode("Tile");
         }
-        else if (props.mode === "Tile") {
+        else if (props.viewMode === "Tile") {
             props.setViewMode("Table");
         }
     }
@@ -220,8 +247,8 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                                 Loading Records...
                             </div>}
                             {recordsLoaded &&
-                            <button className="btn btn-link" onClick={toggleMode}>
-                                Switch to {props.mode === "Table" ? "Tile" : "Table"} Mode
+                            <button className="btn btn-link" onClick={toggleViewMode}>
+                                Switch to {props.viewMode === "Table" ? "Tile" : "Table"} Mode
                             </button>}
                         </div>
                     </div>
@@ -241,16 +268,16 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                                         <option value="Any">Any</option>
                                         {
                                             genres.map(genre => {
-                                                return props.hasGenre(genre, records) && <option key={genre} value={genre}>{genre}</option>
+                                                return props.hasGenre(genre, allRecords) && <option key={genre} value={genre}>{genre}</option>
                                             })
                                         }
-                                        {props.hasGenre("Pre-1960", records) && <option value="Pre-1960">Pre-1960</option>}
-                                        {props.hasGenre("1960s", records) && <option value="1960s">1960s</option>}
-                                        {props.hasGenre("1970s", records) && <option value="1970s">1970s</option>}
-                                        {props.hasGenre("1980s", records) && <option value="1980s">1980s</option>}
-                                        {props.hasGenre("1990s", records) && <option value="1990s">1990s</option>}
-                                        {props.hasGenre("2000 to Present", records) && <option value="2000 to Present">2000 to Present</option>}
-                                        {props.hasGenre("Favorites", records) && <option value="Favorites">Favorites</option>}
+                                        {props.hasGenre("Pre-1960", allRecords) && <option value="Pre-1960">Pre-1960</option>}
+                                        {props.hasGenre("1960s", allRecords) && <option value="1960s">1960s</option>}
+                                        {props.hasGenre("1970s", allRecords) && <option value="1970s">1970s</option>}
+                                        {props.hasGenre("1980s", allRecords) && <option value="1980s">1980s</option>}
+                                        {props.hasGenre("1990s", allRecords) && <option value="1990s">1990s</option>}
+                                        {props.hasGenre("2000 to Present", allRecords) && <option value="2000 to Present">2000 to Present</option>}
+                                        {props.hasGenre("Favorites", allRecords) && <option value="Favorites">Favorites</option>}
                                     </select>
                                 </div>
                             </form>
@@ -310,14 +337,14 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
 
                     <div>
                         {
-                            props.mode === "Table" &&
+                            props.viewMode === "Table" &&
                             <RecordTable records={filteredRecords} removeRecord={removeRecord} recordIdFromHash={hashId} baseUrl={props.baseUrl} />
                         }
                     </div>
 
                     <div className="list">
                         {
-                            props.mode === "Tile" && filteredRecords.map((record, i) =>
+                            props.viewMode === "Tile" && filteredRecords.map((record, i) =>
                                 <RecordTile
                                     record={record}
                                     removeRecord={removeRecord}

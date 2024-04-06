@@ -4,6 +4,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios, {AxiosResponse}  from 'axios';
 
 import { Record } from '../types/record';
+import { RecordSubmit } from '../types/recordSubmit';
 import { User } from '../types/user';
 import { TooltipText } from '../types/tooltipText';
 import genres from '../types/genres';
@@ -15,7 +16,9 @@ type EditRecordProps = {
     baseUrl: string,
     user: User,
     tooltipText: TooltipText,
-    match: any
+    match: any,
+    savedGenre: string,
+    setSavedGenre(savedGenre: string): void
 }
 
 const EditRecord: React.FC<EditRecordProps> = (props) => {
@@ -23,7 +26,7 @@ const EditRecord: React.FC<EditRecordProps> = (props) => {
     const [title, setTitle] = useState<string>("");
     const [artist, setArtist] = useState<string>("");
     const [genre, setGenre] = useState<string>("");
-    const [year, setYear] = useState<number>(1999);
+    const [year, setYear] = useState<number>(0);
     const [link, setLink] = useState<string>("");
     const [image, setImage] = useState<string>("");
     const [favorite, setFavorite] = useState<boolean>(false);
@@ -66,7 +69,7 @@ const EditRecord: React.FC<EditRecordProps> = (props) => {
                 return;
             }
 
-            const data = {
+            const recordToEdit: RecordSubmit = {
                 title: title,
                 artist: artist,
                 genre: genre,
@@ -77,13 +80,17 @@ const EditRecord: React.FC<EditRecordProps> = (props) => {
                 userId: userId
             };
 
-            axios.put(props.baseUrl + "/records/" + props.match.params.id, data,
+            axios.put(props.baseUrl + "/records/" + props.match.params.id, recordToEdit,
                 {
                     headers: {
                         token: localStorage.getItem("jwt") || ""
                     }
                 })
                 .then(res => {
+                    if (props.savedGenre && props.savedGenre != recordToEdit.genre)
+                    {
+                        props.setSavedGenre('Any');
+                    }
                     history.push('/#' + props.match.params.id);
                 })
                 .catch(err => {

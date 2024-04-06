@@ -13,7 +13,6 @@ import '../styles/spinning-record.css';
 type RandomRecordGenerator = {
     baseUrl: string,
     user: User,
-    setCurrentUser(user: User): void,
     hasGenre(genre: string, records: Record[]): boolean,
     setManageActive(): void,
     checkLogin(): void

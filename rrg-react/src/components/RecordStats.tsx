@@ -5,7 +5,6 @@ import HighchartsReact from 'highcharts-react-official';
 
 import RecordTile from './RecordTile';
 import { Record } from '../types/record';
-import { User } from '../types/user';
 
 import '../styles/App.scss';
 import '../styles/record-stats.scss';
@@ -13,8 +12,6 @@ import '../styles/spinning-record.css';
 
 type RecordStatsProps = {
     baseUrl: string,
-    user: User,
-    setCurrentUser(user: User): void,
     setManageActive(): void,
     checkLogin(): void
 };

@@ -8,7 +8,7 @@ import '../styles/App.scss';
 
 type LoginPageProps = {
     baseUrl: string,
-    setCurrentUser(user: User): void,
+    setUser(user: User): void,
     setViewMode(mode: string): void
 };
 
@@ -32,7 +32,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
             .then((res: AxiosResponse<any>) => {
                 setUserName("");
                 setPassword("");
-                props.setCurrentUser(res.data.result);
+                props.setUser(res.data.result);
                 props.setViewMode("Tile");
                 localStorage.setItem("jwt", res.data.token);
                 history.push("/");

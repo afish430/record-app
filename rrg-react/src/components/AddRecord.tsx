@@ -4,6 +4,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import axios, {AxiosResponse}  from 'axios';
 
 import { User } from '../types/user';
+import { RecordSubmit } from '../types/recordSubmit';
 import { TooltipText } from '../types/tooltipText';
 import genres from '../types/genres';
 
@@ -13,19 +14,10 @@ import infoIcon from './../images/info-icon.png';
 type AddRecordProps = {
     baseUrl: string,
     user: User,
-    tooltipText: TooltipText
+    tooltipText: TooltipText,
+    savedGenre: string,
+    setSavedGenre(savedGenre: string): void
 }
-
-type RecordSubmit = {
-    title: string,
-    artist: string,
-    image: string,
-    link: string,
-    genre: string,
-    favorite: boolean,
-    year: number | undefined,
-    userId: string,
-  }
 
 const AddRecord: React.FC<AddRecordProps> = (props) => {
 
@@ -36,7 +28,6 @@ const AddRecord: React.FC<AddRecordProps> = (props) => {
     const [link, setLink] = useState<string>("");
     const [image, setImage] = useState<string>("");
     const [favorite, setFavorite] = useState<boolean>(false);
-    const [userId, setUserId] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
     const history = useHistory();
 
@@ -78,7 +69,11 @@ const AddRecord: React.FC<AddRecordProps> = (props) => {
                     setLink(res.data.link);
                     setImage(res.data.image);
                     setFavorite(res.data.favorite);
-                    setUserId(res.data.userId);
+
+                    if (props.savedGenre && props.savedGenre != res.data.genre)
+                    {
+                        props.setSavedGenre('Any');
+                    }
                     history.push('/#' + res.data._id);
             })
             .catch(err => {
@@ -127,7 +122,7 @@ const AddRecord: React.FC<AddRecordProps> = (props) => {
                                         </Tooltip>
                                     }
                                     >
-                                    <img className="info-icon" src={infoIcon}></img>
+                                    <img className="info-icon" alt="info-icon" src={infoIcon}></img>
                                 </OverlayTrigger>
                                 <select
                                     className="form-control"
@@ -165,7 +160,7 @@ const AddRecord: React.FC<AddRecordProps> = (props) => {
                                         </Tooltip>
                                     }
                                     >
-                                    <img className="info-icon" src={infoIcon}></img>
+                                    <img className="info-icon" alt="info-icon" src={infoIcon}></img>
                                 </OverlayTrigger>
                                 <input
                                     type='text'
@@ -187,7 +182,7 @@ const AddRecord: React.FC<AddRecordProps> = (props) => {
                                         </Tooltip>
                                     }
                                     >
-                                    <img className="info-icon" src={infoIcon}></img>
+                                    <img className="info-icon" alt="info-icon" src={infoIcon}></img>
                                 </OverlayTrigger>
                                 <input
                                     type='text'
@@ -208,7 +203,7 @@ const AddRecord: React.FC<AddRecordProps> = (props) => {
                                         </Tooltip>
                                     }
                                     >
-                                    <img className="info-icon" src={infoIcon}></img>
+                                    <img className="info-icon" alt="info-icon" src={infoIcon}></img>
                                 </OverlayTrigger>
                                 <select
                                     className="form-control"
