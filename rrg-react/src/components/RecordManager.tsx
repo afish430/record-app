@@ -7,6 +7,7 @@ import RecordTile from './RecordTile';
 import RecordTable from './RecordTable';
 import { Record } from '../types/record';
 import { User } from '../types/user';
+import genres from '../types/genres';
 
 import '../styles/App.scss';
 import '../styles/record-manager.scss';
@@ -15,7 +16,6 @@ type RecordManagerProps = {
     baseUrl: string,
     mode: string,
     user: User,
-    genres: string[],
     setCurrentUser(user: User): void,
     setViewMode(mode: string): void,
     hasGenre(genre: string, records: Record[]): boolean,
@@ -240,7 +240,7 @@ const RecordManager: React.FC<RecordManagerProps> = (props) => {
                                     >
                                         <option value="Any">Any</option>
                                         {
-                                            props.genres.map(genre => {
+                                            genres.map(genre => {
                                                 return props.hasGenre(genre, records) && <option key={genre} value={genre}>{genre}</option>
                                             })
                                         }

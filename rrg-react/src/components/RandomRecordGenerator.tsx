@@ -4,6 +4,7 @@ import axios from 'axios';
 import RecordTile from './RecordTile';
 import { Record } from '../types/record';
 import { User } from '../types/user';
+import genres from '../types/genres';
 
 import '../styles/App.scss';
 import '../styles/record-generator.scss';
@@ -12,7 +13,6 @@ import '../styles/spinning-record.css';
 type RandomRecordGenerator = {
     baseUrl: string,
     user: User,
-    genres: string[],
     setCurrentUser(user: User): void,
     hasGenre(genre: string, records: Record[]): boolean,
     setManageActive(): void,
@@ -130,7 +130,7 @@ const RandomRecordGenerator: React.FC<RandomRecordGenerator> = (props) => {
                                     >
                                         <option value="Any">Any</option>
                                         {
-                                            props.genres.map(genre => {
+                                            genres.map(genre => {
                                                 return props.hasGenre(genre, records) && 
                                                     <option value={genre} key={genre}>{genre}</option>
                                             })

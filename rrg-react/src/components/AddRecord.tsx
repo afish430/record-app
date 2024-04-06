@@ -5,6 +5,7 @@ import axios, {AxiosResponse}  from 'axios';
 
 import { User } from '../types/user';
 import { TooltipText } from '../types/tooltipText';
+import genres from '../types/genres';
 
 import '../styles/App.scss';
 import infoIcon from './../images/info-icon.png';
@@ -12,7 +13,6 @@ import infoIcon from './../images/info-icon.png';
 type AddRecordProps = {
     baseUrl: string,
     user: User,
-    genres: string[],
     tooltipText: TooltipText
 }
 
@@ -137,7 +137,7 @@ const AddRecord: React.FC<AddRecordProps> = (props) => {
                                     onChange={(e) => setGenre(e.target.value)}
                                 >
                                     {
-                                        props.genres.map(genre => {
+                                        genres.map(genre => {
                                             return <option key={genre} value={genre}>{genre}</option>
                                         })
                                     }

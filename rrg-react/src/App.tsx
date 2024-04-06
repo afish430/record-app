@@ -57,41 +57,6 @@ const App: React.FC = () => {
         })
   }
 
-  const genres: string[] = [
-    "Alternative",
-    "Blues",
-    "Children's",
-    "Classical",
-    "Classic Rock",
-    "Country",
-    "Country Rock",
-    "Dance",
-    "Disco",
-    "Easy Listening",
-    "Electronic",
-    "Folk",
-    "Funk",
-    "Grunge",
-    "Holiday",
-    "Indie Rock",
-    "International",
-    "Jazz",
-    "Oldies",
-    "Opera",
-    "Other",
-    "Pop",
-    "Prog Rock",
-    "Psychedelic Rock",
-    "Punk",
-    "Rap",
-    "Reggae",
-    "Rock",
-    "Soft Rock",
-    "Ska",
-    "Soul",
-    "Soundtrack"
-  ];
-
   const hasGenre = (genre: string, records: Record[]): boolean => {
     if (genre === "Favorites") {
         return records.filter(rec => rec.favorite === true).length > 0;
@@ -150,7 +115,6 @@ const App: React.FC = () => {
             <RecordManager
               user={user}
               mode={mode}
-              genres={genres}
               hasGenre={hasGenre}
               setViewMode={setViewMode}
               setCurrentUser={setCurrentUser}
@@ -160,7 +124,6 @@ const App: React.FC = () => {
           <Route path='/Stats'>
             <RecordStats
               user={user} 
-              genres={genres}
               setCurrentUser={setCurrentUser}
               setManageActive={setManageActive}
               baseUrl={BASE_URL}
@@ -169,7 +132,6 @@ const App: React.FC = () => {
           <Route path='/Generate'>
             <RandomRecordGenerator
               user={user}
-              genres={genres}
               hasGenre={hasGenre}
               setCurrentUser={setCurrentUser}
               setManageActive={setManageActive}
@@ -180,7 +142,6 @@ const App: React.FC = () => {
           <Route path='/add-record'>
             <AddRecord
               user={user}
-              genres={genres}
               tooltipText={tooltipText}
               baseUrl={BASE_URL}/>
           </Route>
@@ -189,7 +150,6 @@ const App: React.FC = () => {
             render={(props) => 
             <EditRecord {...props}
               user={user}
-              genres={genres}
               tooltipText={tooltipText}
               baseUrl={BASE_URL}
             />}

@@ -14,7 +14,6 @@ import '../styles/spinning-record.css';
 type RecordStatsProps = {
     baseUrl: string,
     user: User,
-    genres: string[],
     setCurrentUser(user: User): void,
     setManageActive(): void,
     checkLogin(): void

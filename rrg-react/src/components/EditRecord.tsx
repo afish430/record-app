@@ -6,6 +6,7 @@ import axios, {AxiosResponse}  from 'axios';
 import { Record } from '../types/record';
 import { User } from '../types/user';
 import { TooltipText } from '../types/tooltipText';
+import genres from '../types/genres';
 
 import '../styles/App.scss';
 import infoIcon from './../images/info-icon.png';
@@ -13,7 +14,6 @@ import infoIcon from './../images/info-icon.png';
 type EditRecordProps = {
     baseUrl: string,
     user: User,
-    genres: string[],
     tooltipText: TooltipText,
     match: any
 }
@@ -144,7 +144,7 @@ const EditRecord: React.FC<EditRecordProps> = (props) => {
                                         onChange={(e) => setGenre(e.target.value)}
                                     >
                                         {
-                                            props.genres.map(genre => {
+                                            genres.map(genre => {
                                                 return <option key={genre} value={genre}>{genre}</option>
                                             })
                                         }
